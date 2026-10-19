@@ -42,3 +42,6 @@
 .entry-search-kind.js{background:#fff5d4;color:#94720f}
 .entry-search-kind.web{background:#e6f7f0;color:#168968}
 @media(max-width:480px){.catalog-entry{gap:7px}.entry-search-kind{padding:4px 5px;font-size:9px}}
+
+/* Web Lab 5.0 — khóa học A-Z */
+.roadmap-dialog-v5{width:min(780px,96vw);max-height:90dvh;overflow:auto}.roadmap-steps-v5{display:grid;gap:10px}.roadmap-progress-v5{padding:14px;background:#efedff;border-radius:12px;color:#6246cb;font-weight:800}.roadmap-card-v5{width:100%;display:flex;align-items:center;gap:14px;padding:15px;border:1px solid #eceaf5;border-radius:12px;text-align:left;background:white;color:#24253e;cursor:pointer}.roadmap-card-v5> b{width:37px;height:37px;flex:none;border-radius:11px;background:#eeeaff;color:#654fd1;display:grid;place-items:center}.roadmap-card-v5 strong,.roadmap-card-v5 small{display:block}.roadmap-card-v5 small{margin-top:4px;color:#858ba0}.roadmap-card-v5:disabled{opacity:.55;cursor:not-allowed}.roadmap-card-v5.done{background:#f0fbf5;border-color:#b7dec6}.roadmap-card-v5.done>b{background:#d4f3df;color:#16804d}
