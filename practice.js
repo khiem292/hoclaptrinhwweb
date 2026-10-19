@@ -74,7 +74,7 @@
     ];
   }
   function render() {
-    const item=currentItem(); if (!item || $('practicePanel')) return;
+    const item=currentItem(); if (!item || item.kind!=='roadmap' || $('practicePanel')) return;
     const project=Boolean(item.practice),goals=goalList(item),done=progress[item.id]||[];
     const panel=document.createElement('section');
     panel.id='practicePanel';panel.className='lesson-section practice-panel';
@@ -85,7 +85,7 @@
       <div id="practiceFeedback" class="practice-feedback" role="status" aria-live="polite">${done.length===goals.length?'🏅 Bạn đã vượt qua tất cả yêu cầu. Hãy chọn bài tiếp theo.':'Tiến độ được lưu ngay trên điện thoại hoặc máy tính này.'}</div>
       <p class="practice-disclaimer">Bộ kiểm tra kiểm tra mã nguồn ở mức cơ bản, không thể xác nhận hoàn toàn tính đúng đắn của giao diện hay thuật toán. Hãy quan sát khung Chạy thử và tự kiểm tra hành vi thực tế.</p>`;
     const end=document.querySelector('#detailPanel .lesson-end');
-    if(end)end.before(panel);else $('detailPanel').append(panel);
+    if(end)end.after(panel);else $('detailPanel').append(panel);
     $('practiceCheck').addEventListener('click',()=>check(item));
     $('practiceHint').addEventListener('click',()=>{const hidden=$('practiceHintText').hidden;$('practiceHintText').hidden=!hidden;$('practiceHint').setAttribute('aria-expanded',String(hidden));});
     $('practiceNew').addEventListener('click',()=>start(item));
@@ -105,7 +105,7 @@
     const missing=results.filter(r=>!r.pass && !old.has(r.id));
     $('practiceFeedback').textContent=done===total?'🏅 Hoàn thành! Bạn đã vượt qua các tiêu chí cơ bản. Thử tự kiểm tra kết quả chạy thực tế nhé.':`Đạt ${done}/${total} yêu cầu. ${missing[0]?.info || 'Tiếp tục hoàn thiện code theo nhiệm vụ.'}`;
     $('practiceFeedback').classList.toggle('is-success',done===total);
-    $('runBtn')?.click();
+    $('runBtn')?.click();if(done===total)window.dispatchEvent(new CustomEvent('weblab:practice-passed',{detail:{id:item.id}}));
   }
   function start(item) {
     if (!confirm('Bắt đầu code trống sẽ thay phần mã ở tab đang luyện. Bạn có thể bấm “Đặt lại” để lấy lại ví dụ gốc. Tiếp tục?'))return;
@@ -123,9 +123,9 @@
   }
   function createLauncher() {
     const hero=document.querySelector('.hero-chips');if(!hero||$('practiceLauncher'))return;
-    const btn=document.createElement('button');btn.type='button';btn.id='practiceLauncher';btn.className='practice-launcher';btn.textContent='🎯 Bài tập tổng hợp';
+    const btn=document.createElement('button');btn.type='button';btn.id='practiceLauncher';btn.className='practice-launcher';btn.textContent='🗺️ Học theo lộ trình';
     btn.addEventListener('click',()=>{
-      window.WEB_LAB_NAVIGATE?.('project:profile');
+      document.getElementById('roadmapDialog')?.showModal();window.WebLabCourse?.render();
       document.querySelector('#detailPanel .practice-panel')?.scrollIntoView({behavior:'smooth',block:'center'});
     });
     hero.append(btn);
