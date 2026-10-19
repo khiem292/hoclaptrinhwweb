@@ -164,5 +164,6 @@
   $('jsCount').textContent=LESSONS.filter(l=>l.kind==='js').length;
   $('webCount').textContent=LESSONS.filter(l=>l.kind==='web').length;
   syncTracks();renderNav();renderCatalog();updateProgress();renderLesson();
+  window.WEB_LAB_NAVIGATE=selectLesson;
   window.__WEB_LAB_TEST__={get count(){return LESSONS.length},get track(){return state.track},get selected(){return state.selected}};
 })();
