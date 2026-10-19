@@ -14,7 +14,7 @@
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
  <title>Web Lab 4.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
- <link rel="stylesheet" href="style.css?v=4.1"
+ <link rel="stylesheet" href="style.css?v=5.0"
  <link rel="stylesheet" href="practice.css?v=4.0">
 </head>
 <body>
@@ -34,7 +34,7 @@
   <main class="workspace">
    <header class="topbar">
     <div class="topbar-left"><button type="button" id="menuBtn" class="icon-btn menu-button" aria-label="Mở danh mục" aria-expanded="false">☰</button><span class="breadcrumb">KHÔNG GIAN HỌC TẬP <span> / </span> <strong>Thư viện web</strong></span></div>
-    <div class="topbar-actions"><button type="button" class="top-link" id="appHelpBtn" aria-label="Hướng dẫn cài Web Lab trên điện thoại">▣ <span>Cài ứng dụng</span></button><button type="button" class="top-link" id="roadmapBtn">◫ <span>Lộ trình</span></button><button type="button" class="top-primary" id="studioBtn">⌘ <span>Sân chơi code</span></button></div>
+    <div class="topbar-actions"><button type="button" class="top-link" id="appHelpBtn" aria-label="Hướng dẫn cài Web Lab trên điện thoại">▣ <span>Cài ứng dụng</span></button><button type="button" class="top-link" id="roadmapBtn">🗺️ <span>Lộ trình học A–Z</span></button><button type="button" class="top-primary" id="studioBtn">⌘ <span>Sân chơi code</span></button></div>
    </header>
    <div class="main-inner">
     <section class="hero" aria-label="Giới thiệu Web Lab">
@@ -51,8 +51,8 @@
    </div>
   </main>
  </div>
- <dialog id="roadmapDialog" class="roadmap-dialog" aria-labelledby="roadmapTitle"><div class="dialog-head"><div><span class="dialog-kicker">GỢI Ý CHO NGƯỜI MỚI BẮT ĐẦU</span><h2 id="roadmapTitle">Lộ trình học làm website</h2></div><button id="closeRoadmap" class="icon-btn" aria-label="Đóng lộ trình">✕</button></div><p class="dialog-intro">Bạn có thể học theo thứ tự dưới đây hoặc tìm ngay kiến thức mình đang cần.</p><div class="roadmap-steps"><button type="button" data-goto="html"><span class="roadmap-num">01</span><span><strong>HTML — Tạo cấu trúc</strong><small>Thẻ, thuộc tính, biểu mẫu, semantic HTML.</small></span><span>↗</span></button><button type="button" data-goto="css"><span class="roadmap-num">02</span><span><strong>CSS — Thiết kế giao diện</strong><small>Màu sắc, Flexbox, Grid, responsive.</small></span><span>↗</span></button><button type="button" data-goto="scss"><span class="roadmap-num">03</span><span><strong>SCSS — CSS nâng cao</strong><small>Biến, nesting, mixin và cách biên dịch SCSS.</small></span><span>↗</span></button><button type="button" data-goto="js"><span class="roadmap-num">04</span><span><strong>JavaScript — Tạo tương tác</strong><small>Biến, hàm, DOM, sự kiện, API.</small></span><span>↗</span></button><button type="button" data-goto="web"><span class="roadmap-num">05</span><span><strong>Web — Làm dự án thật</strong><small>HTTP, Git, deploy, SEO, bảo mật, mini project.</small></span><span>↗</span></button></div><p class="dialog-note">※ Bài SCSS hỗ trợ biên dịch cú pháp cơ bản khi offline; @use và module cần Dart Sass trong VS Code. Backend, database và framework có bài giới thiệu và hướng dẫn, nhưng cần công cụ riêng để chạy đầy đủ.</p></dialog>
- <dialog id="installDialog" class="roadmap-dialog install-dialog" aria-labelledby="installTitle">
+ <dialog id="roadmapDialog" class="roadmap-dialog roadmap-dialog-v5" aria-labelledby="roadmapTitle"><div class="dialog-head"><div><span class="dialog-kicker">KHÓA HỌC TỪ A ĐẾN Z</span><h2 id="roadmapTitle">Lộ trình học làm website</h2></div><button id="closeRoadmap" class="icon-btn" aria-label="Đóng lộ trình">✕</button></div><p class="dialog-intro">14 chặng theo thứ tự: HTML → CSS → SCSS → JavaScript → dự án website. Bài tập có kiểm tra ở cuối chặng; vượt qua mới mở khóa chặng tiếp theo. Thư viện thẻ và thuộc tính HTML chỉ để tra cứu, không có bài tập bắt buộc.</p><p class="roadmap-progress-v5" id="roadmapProgressV5"></p><div id="roadmapStepsV5" class="roadmap-steps-v5"></div><p class="dialog-note">Kiểm tra tự động chủ yếu dựa vào mã nguồn, không đánh giá đầy đủ giao diện hay logic thực thi. Tiến độ lưu trên thiết bị này.</p></dialog>
+<dialog id="installDialog" class="roadmap-dialog install-dialog" aria-labelledby="installTitle">
   <div class="dialog-head"><div><span class="dialog-kicker">WEB LAB TRÊN ĐIỆN THOẠI</span><h2 id="installTitle">Cài Web Lab như một app</h2></div><button type="button" id="closeInstall" class="icon-btn" aria-label="Đóng hướng dẫn">✕</button></div>
   <p class="dialog-intro">Bạn có thể ghim website lên màn hình chính để mở nhanh, không cần App Store.</p>
   <div class="install-guide"><div class="install-guide-step"><b>1</b><span>Mở địa chỉ website <strong>HTTPS</strong> bằng <strong>Safari</strong> trên iPhone.</span></div><div class="install-guide-step"><b>2</b><span>Nhấn <strong>Chia sẻ</strong> (Share) rồi chọn <strong>Thêm vào Màn hình chính</strong> (Add to Home Screen).</span></div><div class="install-guide-step"><b>3</b><span>Bật <strong>Mở dưới dạng ứng dụng</strong> (Open as Web App), nếu có, rồi nhấn <strong>Thêm</strong>.</span></div></div>
@@ -65,8 +65,9 @@
  <script src="scss-data.js"></script>
  <script src="scss-compiler.js"></script>
  <script src="practice-projects.js"></script>
- <script src="script.js?v=4.1"></script>
- <script src="practice.js?v=4.0"></script>
+ <script src="course-data.js?v=5.0"></script>
+ <script src="script.js?v=5.0"></script>
+ <script src="practice.js?v=5.0"></script>
  <script src="pwa.js"></script>
 </body>
 </html>
