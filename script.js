@@ -6,6 +6,7 @@
   const itemMap = new Map(LESSONS.map(item => [item.id,item]));
   const FEATURED=['web:HTML + CSS + JS','tag:div','css:CSS là gì?','scss:SCSS là gì?','js:JavaScript là gì?','attr:aria-label','web:Website hoạt động thế nào?','css:Flexbox là gì?','js:addEventListener click','web:Mini project: Todo List','tag:button','css:Grid là gì?','js:DOM là gì?'];
   const LABELS={html:'HTML',css:'CSS',js:'JAVASCRIPT',scss:'SCSS',web:'WEB & CÔNG CỤ'};
+  const SEARCH_LABELS={html:'HTML',css:'CSS',scss:'SCSS',js:'JS',web:'WEB'};
   const DEFAULT_STUDIO={id:'studio',kind:'web',cat:'web-projects',name:'Sân chơi tự do',summary:'Tự viết một website từ đầu! Chỉnh sửa HTML, CSS, SCSS và JavaScript ngay trong trình duyệt.',syntax:'HTML + CSS + JavaScript = Website của bạn',html:'<main class="card">\n  <p class="eyebrow">✨ WEBSITE CỦA MÌNH</p>\n  <h1>Xin chào Web Lab!</h1>\n  <p>Bạn có thể sửa HTML, CSS và JavaScript.</p>\n  <button id="helloBtn">Bấm thử</button>\n  <p id="message"></p>\n</main>',css:'body { background: #f5f3ff; }\n.card { padding: 24px; border-radius: 16px; background: white; border: 1px solid #ddd6fe; box-shadow: 0 7px 22px #7c3aed18; }\n.eyebrow { letter-spacing: 2px; font-size: 11px; color: #7c3aed; }\nh1 { color: #6d28d9; }\nbutton { background: #7c3aed; color: white; border: 0; padding: 10px 16px; border-radius: 9px; cursor: pointer; }',js:'document.getElementById("helloBtn").addEventListener("click", () => {\n  document.getElementById("message").textContent = "Bạn đã viết JavaScript thành công! 🎉";\n  console.log("Hello from Web Lab!");\n});',tip:'Các tab mô phỏng ba tệp index.html, style.css và script.js; bạn có thể thử chỉnh cả ba rồi chạy lại.',challenge:'Tạo một card giới thiệu bản thân, đổi màu nền và thêm nút tương tác.',related:[]};
   itemMap.set('studio',DEFAULT_STUDIO);
   const trackOf=item=>item.kind==='tag'||item.kind==='attribute'?'html':item.kind;
@@ -50,19 +51,19 @@
       if(state.category==='attributes'&&item.kind!=='attribute')return false;
       if(!['all','favorites','attributes'].includes(state.category)&&item.cat!==state.category)return false;
       if(!words.length)return true;
-      const searchable=normalize([item.name,item.summary,item.syntax,item.cat,item.kind==='attribute'?'thuoc tinh aria html':trackOf(item),item.tip].join(' '));
+      const searchable=normalize([item.name,item.summary,item.syntax,item.cat,item.kind==='attribute'?'thuoc tinh aria html':trackOf(item),item.tip,item.challenge,item.demo,item.html,item.css,item.scss,item.js,...(item.related||[])].join(' '));
       return words.every(w=>searchable.includes(w));
     });
     if(words.length)matches.sort((a,b)=>{
-      const rank=l=>{const name=normalize(l.name),query=normalize(state.query);return name===query?0:name.startsWith(query)?1:name.includes(query)?2:3};return rank(a)-rank(b);
+      const rank=l=>{const name=normalize(l.name),query=normalize(state.query);return name===query?0:name.startsWith(query)?1:name.includes(query)?2:normalize(l.summary).includes(query)?3:normalize(l.syntax).includes(query)?4:5};return rank(a)-rank(b);
     });
     return matches;
   }
   function renderCatalog(){
     const items=filtered();$('resultCount').textContent=items.length;
-    $('resultStatus').textContent=state.query?`Tìm thấy ${items.length} kết quả cho “${state.query.slice(0,45)}”`:`${items.length} bài học để khám phá`;
+    $('resultStatus').textContent=state.query.trim()?`Tìm toàn bộ thư viện: ${items.length} kết quả cho “${state.query.slice(0,45)}”`:`${items.length} bài học để khám phá`;
     const visible=items.slice(0,state.visibleLimit);
-    $('catalogList').innerHTML=items.length?visible.map(item=>`<button type="button" class="catalog-entry ${item.id===state.selected?'selected':''}" data-lesson="${esc(item.id)}" aria-current="${item.id===state.selected?'true':'false'}"><span class="entry-icon ${trackOf(item)}">${iconFor(item)}</span><span class="entry-content"><strong>${esc(friendly(item))}${state.favorites.has(item.id)?' ♥':''}</strong><small>${esc(item.summary)}</small></span><span class="entry-arrow">›</span></button>`).join('')+(visible.length<items.length?`<button class="more-btn" type="button" id="moreBtn">Hiển thị thêm (${items.length-visible.length} bài) ↓</button>`:''):`<div class="catalog-empty"><div class="big">🔍</div>Không tìm thấy bài học nào.<br>Hãy thử từ khóa khác hoặc chọn “Tất cả”.</div>`;
+    $('catalogList').innerHTML=items.length?visible.map(item=>`<button type="button" class="catalog-entry ${item.id===state.selected?'selected':''}" data-lesson="${esc(item.id)}" aria-current="${item.id===state.selected?'true':'false'}"><span class="entry-icon ${trackOf(item)}">${iconFor(item)}</span><span class="entry-content"><strong>${esc(friendly(item))}${state.favorites.has(item.id)?' ♥':''}</strong><small>${esc(item.summary)}</small></span><span class="entry-search-kind ${trackOf(item)}">${SEARCH_LABELS[trackOf(item)]}</span><span class="entry-arrow">›</span></button>`).join('')+(visible.length<items.length?`<button class="more-btn" type="button" id="moreBtn">Hiển thị thêm (${items.length-visible.length} bài) ↓</button>`:''):`<div class="catalog-empty"><div class="big">🔍</div>Không tìm thấy bài học nào.<br>Hãy thử từ khóa khác hoặc chọn “Tất cả”.</div>`;
     $('catalogList').querySelectorAll('[data-lesson]').forEach(btn=>btn.addEventListener('click',()=>selectLesson(btn.dataset.lesson)));
     $('moreBtn')?.addEventListener('click',()=>{state.visibleLimit+=70;renderCatalog()});
   }
@@ -157,7 +158,19 @@
   $('closeRoadmap').addEventListener('click',()=>$('roadmapDialog').close());
   $('roadmapDialog').querySelectorAll('[data-goto]').forEach(button=>button.addEventListener('click',()=>{const track=button.dataset.goto;switchTrack(track);$('roadmapDialog').close();const first=track==='html'?'tag:html':track==='css'?'css:CSS là gì?':track==='js'?'js:JavaScript là gì?':track==='scss'?'scss:SCSS là gì?':'web:Website hoạt động thế nào?';selectLesson(first);$('searchInput').scrollIntoView({behavior:'smooth',block:'center'})}));
   document.querySelectorAll('[data-track]').forEach(button=>button.addEventListener('click',()=>switchTrack(button.dataset.track)));
-  $('searchInput').addEventListener('input',event=>{state.query=event.target.value;state.visibleLimit=70;renderCatalog()});
+  $('searchInput').addEventListener('input',event=>{
+    state.query=event.target.value;
+    state.visibleLimit=70;
+    // Mỗi lần nhập từ khóa đều tìm toàn bộ bài học, bất kể danh mục được chọn trước đó.
+    if(normalize(state.query)){state.track='all';state.category='all';syncTracks();renderNav();}
+    renderCatalog();
+  });
+  $('searchInput').addEventListener('keydown',event=>{
+    if(event.key==='Enter'&&normalize(state.query)){
+      const first=filtered()[0];
+      if(first){event.preventDefault();selectLesson(first.id);$('searchInput').blur();}
+    }
+  });
   document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();$('searchInput').focus();$('searchInput').select()}if(event.key==='Escape')closeMenu()});
   $('htmlCount').textContent=LESSONS.filter(l=>trackOf(l)==='html').length;
   $('cssCount').textContent=LESSONS.filter(l=>l.kind==='css').length;
