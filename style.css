@@ -12,3 +12,24 @@
 @media(max-width:720px){.topbar{padding-top:env(safe-area-inset-top);height:calc(62px + env(safe-area-inset-top))}.sidebar{padding-top:env(safe-area-inset-top)}.main-inner{padding-bottom:calc(12px + env(safe-area-inset-bottom))}.toast{bottom:calc(14px + env(safe-area-inset-bottom))}.editor-head{align-items:stretch;flex-direction:column;padding:0 6px}.editor-tabs{justify-content:space-between}.editor-tab{padding:12px 7px;font-size:10px}.editor-actions{justify-content:flex-end;padding:0 3px 5px}.lesson-heading .kind-pill{max-width:100%;white-space:normal}.track-tabs{overflow-x:auto;scrollbar-width:thin;padding-bottom:5px}.track-tab{flex-shrink:0}.roadmap-dialog{max-height:85dvh;overflow:auto}}
 
 @media(max-width:720px){.topbar-actions #appHelpBtn{display:flex;padding:10px 12px}.topbar-actions #appHelpBtn span{display:none}.topbar-actions{gap:4px}}
+
+
+/* iOS Safari: prevent automatic focus zoom when the software keyboard opens.
+   Text inputs must have a computed font size of at least 16px on touch devices.
+   Keep pinch-to-zoom accessible; do not disable viewport scaling. */
+@media (hover: none) and (pointer: coarse) {
+  .search-box input,
+  .editor-textarea,
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select,
+  [contenteditable="true"] {
+    font-size: 16px;
+  }
+
+  /* Preserve usable coding space with the larger editor font. */
+  .editor-textarea {
+    line-height: 1.55;
+    padding: 12px;
+  }
+}
