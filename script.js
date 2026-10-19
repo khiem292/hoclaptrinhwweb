@@ -1,12 +1,12 @@
-/* Web Lab v2 — Vanilla JavaScript, chạy offline. */
+/* Web Lab v3 — Vanilla JavaScript, chạy offline. */
 (() => {
   'use strict';
   const { LESSONS, CATEGORIES } = window.HTML_LAB_DATA;
   const $ = id => document.getElementById(id);
   const itemMap = new Map(LESSONS.map(item => [item.id,item]));
-  const FEATURED=['web:HTML + CSS + JS','tag:div','css:CSS là gì?','js:JavaScript là gì?','attr:aria-label','web:Website hoạt động thế nào?','css:Flexbox là gì?','js:addEventListener click','web:Mini project: Todo List','tag:button','css:Grid là gì?','js:DOM là gì?'];
-  const LABELS={html:'HTML',css:'CSS',js:'JAVASCRIPT',web:'WEB & CÔNG CỤ'};
-  const DEFAULT_STUDIO={id:'studio',kind:'web',cat:'web-projects',name:'Sân chơi tự do',summary:'Tự viết một website từ đầu! Chỉnh sửa ba tệp HTML, CSS và JavaScript ngay trong trình duyệt.',syntax:'HTML + CSS + JavaScript = Website của bạn',html:'<main class="card">\n  <p class="eyebrow">✨ WEBSITE CỦA MÌNH</p>\n  <h1>Xin chào Web Lab!</h1>\n  <p>Bạn có thể sửa HTML, CSS và JavaScript.</p>\n  <button id="helloBtn">Bấm thử</button>\n  <p id="message"></p>\n</main>',css:'body { background: #f5f3ff; }\n.card { padding: 24px; border-radius: 16px; background: white; border: 1px solid #ddd6fe; box-shadow: 0 7px 22px #7c3aed18; }\n.eyebrow { letter-spacing: 2px; font-size: 11px; color: #7c3aed; }\nh1 { color: #6d28d9; }\nbutton { background: #7c3aed; color: white; border: 0; padding: 10px 16px; border-radius: 9px; cursor: pointer; }',js:'document.getElementById("helloBtn").addEventListener("click", () => {\n  document.getElementById("message").textContent = "Bạn đã viết JavaScript thành công! 🎉";\n  console.log("Hello from Web Lab!");\n});',tip:'Các tab mô phỏng ba tệp index.html, style.css và script.js; bạn có thể thử chỉnh cả ba rồi chạy lại.',challenge:'Tạo một card giới thiệu bản thân, đổi màu nền và thêm nút tương tác.',related:[]};
+  const FEATURED=['web:HTML + CSS + JS','tag:div','css:CSS là gì?','scss:SCSS là gì?','js:JavaScript là gì?','attr:aria-label','web:Website hoạt động thế nào?','css:Flexbox là gì?','js:addEventListener click','web:Mini project: Todo List','tag:button','css:Grid là gì?','js:DOM là gì?'];
+  const LABELS={html:'HTML',css:'CSS',js:'JAVASCRIPT',scss:'SCSS',web:'WEB & CÔNG CỤ'};
+  const DEFAULT_STUDIO={id:'studio',kind:'web',cat:'web-projects',name:'Sân chơi tự do',summary:'Tự viết một website từ đầu! Chỉnh sửa HTML, CSS, SCSS và JavaScript ngay trong trình duyệt.',syntax:'HTML + CSS + JavaScript = Website của bạn',html:'<main class="card">\n  <p class="eyebrow">✨ WEBSITE CỦA MÌNH</p>\n  <h1>Xin chào Web Lab!</h1>\n  <p>Bạn có thể sửa HTML, CSS và JavaScript.</p>\n  <button id="helloBtn">Bấm thử</button>\n  <p id="message"></p>\n</main>',css:'body { background: #f5f3ff; }\n.card { padding: 24px; border-radius: 16px; background: white; border: 1px solid #ddd6fe; box-shadow: 0 7px 22px #7c3aed18; }\n.eyebrow { letter-spacing: 2px; font-size: 11px; color: #7c3aed; }\nh1 { color: #6d28d9; }\nbutton { background: #7c3aed; color: white; border: 0; padding: 10px 16px; border-radius: 9px; cursor: pointer; }',js:'document.getElementById("helloBtn").addEventListener("click", () => {\n  document.getElementById("message").textContent = "Bạn đã viết JavaScript thành công! 🎉";\n  console.log("Hello from Web Lab!");\n});',tip:'Các tab mô phỏng ba tệp index.html, style.css và script.js; bạn có thể thử chỉnh cả ba rồi chạy lại.',challenge:'Tạo một card giới thiệu bản thân, đổi màu nền và thêm nút tương tác.',related:[]};
   itemMap.set('studio',DEFAULT_STUDIO);
   const trackOf=item=>item.kind==='tag'||item.kind==='attribute'?'html':item.kind;
   const originalSort=(a,b)=>{const x=FEATURED.indexOf(a.id),y=FEATURED.indexOf(b.id);if(x>=0||y>=0)return (x<0?999:x)-(y<0?999:y);return a.name.localeCompare(b.name,'vi')};
@@ -20,13 +20,14 @@
   function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>$('toast').classList.remove('show'),2350)}
   function friendly(item){return item.kind==='tag'?`<${item.name}>`:item.name}
   function typeLabel(item){return item.kind==='attribute'?'THUỘC TÍNH HTML':item.kind==='tag'?'THẺ HTML':LABELS[item.kind]||'BÀI HỌC'}
-  function iconFor(item){return item.kind==='tag'?'&lt;/&gt;':item.kind==='attribute'?'@':item.kind==='css'?'CSS':item.kind==='js'?'JS':'⌘'}
+  function iconFor(item){return item.kind==='tag'?'&lt;/&gt;':item.kind==='attribute'?'@':item.kind==='css'?'CSS':item.kind==='scss'?'Sass':item.kind==='js'?'JS':'⌘'}
   function groupCount(cat){if(cat.id==='all')return LESSONS.length;if(cat.id==='favorites')return [...state.favorites].filter(id=>itemMap.has(id)&&id!=='studio').length;return LESSONS.filter(l=>l.cat===cat.id).length}
   function renderNav(){
     const sections=[
       {name:'TỔNG QUAN',cats:CATEGORIES.filter(c=>['all','favorites'].includes(c.id))},
       {name:'HTML',cats:CATEGORIES.filter(c=>!c.track&&!['all','favorites'].includes(c.id))},
       {name:'CSS',cats:CATEGORIES.filter(c=>c.track==='css')},
+      {name:'SCSS / SASS',cats:CATEGORIES.filter(c=>c.track==='scss')},
       {name:'JAVASCRIPT',cats:CATEGORIES.filter(c=>c.track==='js')},
       {name:'WEB & CÔNG CỤ',cats:CATEGORIES.filter(c=>c.track==='web')}
     ];
@@ -70,14 +71,14 @@
     const same=LESSONS.filter(l=>l.id!==item.id&&l.cat===item.cat);
     return [...new Map([...fromRelated,...same].map(l=>[l.id,l])).values()].slice(0,5);
   }
-  function currentCode(item){const saved=state.drafts[item.id]||{};const oldFormat=typeof saved==='string'?{html:saved}:saved;return {html:oldFormat.html??item.html??item.demo??'',css:oldFormat.css??item.css??'',js:oldFormat.js??item.js??''};}
+  function currentCode(item){const saved=state.drafts[item.id]||{};const oldFormat=typeof saved==='string'?{html:saved}:saved;return {html:oldFormat.html??item.html??item.demo??'',css:oldFormat.css??item.css??'',scss:oldFormat.scss??item.scss??'',js:oldFormat.js??item.js??''};}
   function lessonMarkup(item){const track=trackOf(item),done=state.completed.has(item.id),fav=state.favorites.has(item.id),related=similar(item),studio=item.id==='studio';
     return `<div class="detail-top"><div class="breadcrumbs"><span>THƯ VIỆN</span><span>›</span><span>${esc(track.toUpperCase())}</span><span>›</span><b>${esc(item.name)}</b></div><button id="favoriteBtn" class="icon-btn ${fav?'saved':''}" type="button" aria-label="${fav?'Bỏ yêu thích':'Thêm vào yêu thích'}" title="${fav?'Bỏ yêu thích':'Yêu thích'}">${fav?'♥':'♡'}</button></div>
       <div class="lesson-heading"><h2>${esc(friendly(item))}</h2><span class="kind-pill ${track}">${esc(studio?'PLAYGROUND':typeLabel(item))}</span></div>
       <p class="lesson-lead">${esc(item.summary)}</p>
-      <div class="info-note"><span class="emoji">💡</span><div><strong>${studio?'Không gian sáng tạo':'Hiểu nhanh'}</strong><br>${esc(studio?'Đây là khu vực thử nghiệm tự do. Mã bạn sửa được lưu trên trình duyệt hiện tại; nút Đặt lại sẽ khôi phục code mẫu.':item.kind==='attribute'?'Thuộc tính được viết trong thẻ mở HTML để mô tả hoặc điều chỉnh hành vi của phần tử.':item.kind==='tag'?'Thẻ HTML mô tả nội dung và cấu trúc của trang. CSS định dạng và JavaScript thêm tương tác.':item.kind==='css'?'CSS dùng selector và các thuộc tính để quyết định cách phần tử HTML hiển thị.':'Hãy kết hợp HTML, CSS và JavaScript để hiểu cách website hoạt động trong thực tế.')}</div></div>
+      <div class="info-note"><span class="emoji">💡</span><div><strong>${studio?'Không gian sáng tạo':'Hiểu nhanh'}</strong><br>${esc(studio?'Đây là khu vực thử nghiệm tự do. Mã bạn sửa được lưu trên trình duyệt hiện tại; nút Đặt lại sẽ khôi phục code mẫu.':item.kind==='attribute'?'Thuộc tính được viết trong thẻ mở HTML để mô tả hoặc điều chỉnh hành vi của phần tử.':item.kind==='tag'?'Thẻ HTML mô tả nội dung và cấu trúc của trang. CSS định dạng và JavaScript thêm tương tác.':item.kind==='css'?'CSS dùng selector và các thuộc tính để quyết định cách phần tử HTML hiển thị.':item.kind==='scss'?'SCSS mở rộng CSS với biến, lồng selector và mixin. SCSS phải biên dịch thành CSS mới hiển thị được.':'Hãy kết hợp HTML, CSS và JavaScript để hiểu cách website hoạt động trong thực tế.')}</div></div>
       <section class="lesson-section"><div class="section-header"><h3>✧ Cú pháp / khái niệm</h3><span class="section-hint">Ghi nhớ nhanh</span></div><div class="syntax-line">${esc(item.syntax)}</div></section>
-      <section class="lesson-section"><div class="section-header"><h3>⌘ Trình soạn thảo — hãy tự sửa code</h3><span class="section-hint">3 tệp làm việc cùng nhau</span></div><div class="editor-frame"><div class="editor-head"><div class="editor-tabs" role="tablist" aria-label="Chọn ngôn ngữ sửa code"><button type="button" class="editor-tab html" data-editor="html" role="tab" aria-selected="true"><span class="dot"></span> HTML</button><button type="button" class="editor-tab css" data-editor="css" role="tab" aria-selected="false"><span class="dot"></span> CSS</button><button type="button" class="editor-tab js" data-editor="js" role="tab" aria-selected="false"><span class="dot"></span> JavaScript</button></div><div class="editor-actions"><button type="button" id="resetBtn" title="Khôi phục ví dụ">↺ Đặt lại</button><button type="button" id="copyBtn" title="Sao chép tab đang mở">⧉ Sao chép</button></div></div><div class="editor-pane"><textarea id="codeEditor" class="editor-textarea" spellcheck="false" aria-label="Trình sửa mã nguồn"></textarea></div><div class="editor-tip"><span>Tab: thụt lề · Ctrl + Enter: chạy thử</span><button type="button" class="run-btn" id="runBtn">▶ Chạy thử</button></div></div></section>
+      <section class="lesson-section"><div class="section-header"><h3>⌘ Trình soạn thảo — hãy tự sửa code</h3><span class="section-hint">4 ngôn ngữ, cùng chạy thử</span></div><div class="editor-frame"><div class="editor-head"><div class="editor-tabs" role="tablist" aria-label="Chọn ngôn ngữ sửa code"><button type="button" class="editor-tab html" data-editor="html" role="tab" aria-selected="true"><span class="dot"></span> HTML</button><button type="button" class="editor-tab css" data-editor="css" role="tab" aria-selected="false"><span class="dot"></span> CSS</button><button type="button" class="editor-tab scss" data-editor="scss" role="tab" aria-selected="false"><span class="dot"></span> SCSS</button><button type="button" class="editor-tab js" data-editor="js" role="tab" aria-selected="false"><span class="dot"></span> JavaScript</button></div><div class="editor-actions"><button type="button" id="resetBtn" title="Khôi phục ví dụ">↺ Đặt lại</button><button type="button" id="copyBtn" title="Sao chép tab đang mở">⧉ Sao chép</button></div></div><div class="editor-pane"><textarea id="codeEditor" class="editor-textarea" spellcheck="false" aria-label="Trình sửa mã nguồn"></textarea></div><div class="editor-tip"><span>Tab: thụt lề · Ctrl + Enter: chạy thử</span><button type="button" class="run-btn" id="runBtn">▶ Chạy thử</button></div></div><details class="scss-readout" id="scssDetails"><summary>CSS được biên dịch từ SCSS <span>↗ Xem mã CSS</span></summary><div class="scss-status" id="scssStatus">Viết SCSS rồi nhấn Chạy thử để xem mã CSS tạo ra.</div><pre class="scss-output" id="scssOutput">Chưa có SCSS.</pre></details></section>
       <section class="lesson-section"><div class="section-header"><h3>◉ Kết quả chạy thử</h3><span class="section-hint">Live Preview</span></div><div class="preview-card"><div class="preview-toolbar"><span><i class="preview-status"></i> Trình duyệt mô phỏng</span><div class="device-actions"><button type="button" class="device-btn" data-device="desktop">▣ Màn hình rộng</button><button type="button" class="device-btn" data-device="mobile">▯ 375px</button></div></div><div class="preview-stage"><iframe class="preview-frame" id="previewFrame" sandbox="allow-scripts allow-forms" referrerpolicy="no-referrer" title="Khung chạy thử HTML, CSS, JavaScript"></iframe></div><div class="console-head"><span>⌁ Console <span id="consoleCount">(0)</span></span><button type="button" id="clearConsole">Xóa log</button></div><div class="console-output" id="consoleOutput" role="log" aria-label="Nhật ký JavaScript"><div class="console-empty">Nhật ký console.log() và lỗi JavaScript sẽ hiện ở đây.</div></div></div></section>
       <section class="lesson-section"><div class="tip-box">💡 <strong>Ghi nhớ:</strong> ${esc(item.tip||'Thử thay đổi ví dụ để học thêm.')}</div></section>
       <section class="lesson-section"><div class="section-header"><h3>🎯 Bài tập nhỏ cho bạn</h3><span class="section-hint">Tự tay thực hành</span></div><div class="challenge">✦ &nbsp;${esc(item.challenge||'Hãy thay đổi ví dụ và chạy thử.')}</div></section>
@@ -94,9 +95,23 @@
     textarea.addEventListener('input',persistDraft);
     textarea.addEventListener('keydown',event=>{if(event.key==='Tab'){event.preventDefault();textarea.setRangeText('  ',textarea.selectionStart,textarea.selectionEnd,'end');persistDraft();}if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();runPreview();toast('Đã chạy code!')}});
     document.querySelectorAll('[data-editor]').forEach(btn=>btn.addEventListener('click',()=>selectTab(btn.dataset.editor)));
-    function runPreview(){code[active]=textarea.value;updatePreview(code)}
-    $('runBtn').addEventListener('click',()=>{runPreview();toast('Đã cập nhật kết quả!')});
-    $('resetBtn').addEventListener('click',()=>{delete state.drafts[item.id];persist('drafts',state.drafts);code={html:item.html??item.demo??'',css:item.css??'',js:item.js??''};textarea.value=code[active];runPreview();toast('Đã khôi phục code mẫu.')});
+    async function runPreview(){
+      code[active]=textarea.value;
+      const compiled=$('scssOutput'),status=$('scssStatus'),details=$('scssDetails');
+      let out=code.css||'';
+      if(code.scss?.trim()){
+        status.textContent='Đang biên dịch SCSS...';status.classList.remove('error');
+        try{
+          const result=await window.WebLabSCSS.compile(code.scss);
+          out+='\n'+result.css;
+          compiled.textContent=result.css||'/* Không có CSS được tạo ra */';
+          status.textContent='✓ Đã biên dịch bằng '+result.engine+(result.engine.includes('offline')?' (chỉ hỗ trợ một phần cú pháp SCSS)':'');
+        }catch(error){compiled.textContent='Lỗi SCSS: '+error.message;status.textContent='✕ Lỗi biên dịch SCSS — hãy sửa cú pháp và chạy lại.';status.classList.add('error');details.open=true;setTimeout(()=>appendConsole('error','SCSS: '+error.message),0);}
+      }else{compiled.textContent='Chưa có SCSS. Hãy mở tab SCSS để thử.';status.textContent='Bạn có thể viết SCSS ở bất kỳ bài học nào.';status.classList.remove('error');}
+      updatePreview({...code,css:out});
+    }
+    $('runBtn').addEventListener('click',()=>{runPreview();toast('Đã yêu cầu chạy thử!')});
+    $('resetBtn').addEventListener('click',()=>{delete state.drafts[item.id];persist('drafts',state.drafts);code={html:item.html??item.demo??'',css:item.css??'',scss:item.scss??'',js:item.js??''};textarea.value=code[active];runPreview();toast('Đã khôi phục code mẫu.')});
     $('copyBtn').addEventListener('click',async()=>{const value=textarea.value;try{await navigator.clipboard.writeText(value);toast('Đã sao chép code!')}catch{textarea.focus();textarea.select();try{document.execCommand('copy');toast('Đã sao chép code!')}catch{toast('Hãy dùng Ctrl + C để sao chép.')};}});
     $('favoriteBtn').addEventListener('click',()=>{if(state.favorites.has(item.id))state.favorites.delete(item.id);else state.favorites.add(item.id);persist('favorites',[...state.favorites]);renderNav();renderCatalog();renderLesson();toast(state.favorites.has(item.id)?'Đã lưu yêu thích!':'Đã bỏ yêu thích.')});
     $('completeBtn').addEventListener('click',()=>{if(state.completed.has(item.id))state.completed.delete(item.id);else state.completed.add(item.id);persist('completed',[...state.completed]);updateProgress();renderLesson();toast(state.completed.has(item.id)?'Chúc mừng! Đã hoàn thành bài.':'Đã bỏ đánh dấu hoàn thành.')});
@@ -128,7 +143,7 @@
     frame.srcdoc=doc;
   }
   window.addEventListener('message',event=>{const data=event.data;if(!data||typeof data!=='object'||data.webLabRunner!==state.runId)return;if(event.source!==$('previewFrame')?.contentWindow)return;appendConsole(data.level,data.message)});
-  function selectLesson(id){if(!itemMap.has(id))return;state.selected=id;state.editorTab=itemMap.get(id)?.kind==='css'?'css':itemMap.get(id)?.kind==='js'?'js':'html';renderCatalog();renderLesson();if(window.matchMedia('(max-width:1050px)').matches)$('detailPanel').scrollIntoView({block:'start',behavior:'smooth'})}
+  function selectLesson(id){if(!itemMap.has(id))return;state.selected=id;state.editorTab=itemMap.get(id)?.kind==='css'?'css':itemMap.get(id)?.kind==='scss'?'scss':itemMap.get(id)?.kind==='js'?'js':'html';renderCatalog();renderLesson();if(window.matchMedia('(max-width:1050px)').matches)$('detailPanel').scrollIntoView({block:'start',behavior:'smooth'})}
   function updateProgress(){const count=[...state.completed].filter(id=>itemMap.has(id)&&id!=='studio').length;const percent=Math.round(count/LESSONS.length*100);$('progressPct').textContent=percent+'%';$('progressBar').style.width=percent+'%';$('progressText').textContent=`Đã học ${count}/${LESSONS.length} bài • tiếp tục nhé!`}
   function switchTrack(track){state.track=track;state.category='all';state.visibleLimit=70;syncTracks();renderNav();renderCatalog();closeMenu();}
   function closeMenu(){$('sidebar').classList.remove('open');$('scrim').hidden=true;$('menuBtn').setAttribute('aria-expanded','false')}
@@ -136,9 +151,11 @@
   $('scrim').addEventListener('click',closeMenu);
   $('brandLink').addEventListener('click',e=>{e.preventDefault();switchTrack('all');selectLesson('web:HTML + CSS + JS');window.scrollTo({top:0,behavior:'smooth'})});
   $('studioBtn').addEventListener('click',()=>{switchTrack('all');selectLesson('studio');toast('Sân chơi code của bạn đã sẵn sàng!')});
+  $('appHelpBtn').addEventListener('click',()=>$('installDialog').showModal());
+  $('closeInstall').addEventListener('click',()=>$('installDialog').close());
   $('roadmapBtn').addEventListener('click',()=>$('roadmapDialog').showModal());
   $('closeRoadmap').addEventListener('click',()=>$('roadmapDialog').close());
-  $('roadmapDialog').querySelectorAll('[data-goto]').forEach(button=>button.addEventListener('click',()=>{const track=button.dataset.goto;switchTrack(track);$('roadmapDialog').close();const first=track==='html'?'tag:html':track==='css'?'css:CSS là gì?':track==='js'?'js:JavaScript là gì?':'web:Website hoạt động thế nào?';selectLesson(first);$('searchInput').scrollIntoView({behavior:'smooth',block:'center'})}));
+  $('roadmapDialog').querySelectorAll('[data-goto]').forEach(button=>button.addEventListener('click',()=>{const track=button.dataset.goto;switchTrack(track);$('roadmapDialog').close();const first=track==='html'?'tag:html':track==='css'?'css:CSS là gì?':track==='js'?'js:JavaScript là gì?':track==='scss'?'scss:SCSS là gì?':'web:Website hoạt động thế nào?';selectLesson(first);$('searchInput').scrollIntoView({behavior:'smooth',block:'center'})}));
   document.querySelectorAll('[data-track]').forEach(button=>button.addEventListener('click',()=>switchTrack(button.dataset.track)));
   $('searchInput').addEventListener('input',event=>{state.query=event.target.value;state.visibleLimit=70;renderCatalog()});
   document.addEventListener('keydown',event=>{if((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='k'){event.preventDefault();$('searchInput').focus();$('searchInput').select()}if(event.key==='Escape')closeMenu()});

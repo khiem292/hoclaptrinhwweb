@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "Web Lab 3.0 - Học lập trình web",
+  "short_name": "Web Lab",
+  "description": "Tra cứu và thực hành HTML, CSS, SCSS, JavaScript bằng tiếng Việt. Học và chạy thử code trực tiếp.",
+  "lang": "vi",
+  "dir": "ltr",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f8fd",
+  "theme_color": "#f7f8fd",
+  "icons": [
+    {"src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ],
+  "categories": ["education", "productivity", "developer tools"]
+}
