@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="vi">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <meta name="theme-color" content="#f7f8fd">
+ <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
+ <title>Web Lab — Học lập trình website bằng thực hành</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+   <a class="brand" href="#" id="brandLink" aria-label="Web Lab - về tất cả bài học"><span class="brand-mark">&lt;/&gt;</span><span class="brand-text"><strong>web<span>lab</span><span class="brand-period">.</span></strong><small>Học web từ A đến Z</small></span></a>
+   <div class="sidebar-scroll">
+     <div class="side-label">KHÁM PHÁ</div>
+     <nav id="navList" aria-label="Danh mục bài học"></nav>
+   </div>
+   <div class="sidebar-foot">
+    <div class="progress-card"><div class="progress-title"><span>✦ Tiến độ học tập</span><strong id="progressPct">0%</strong></div><div class="progress-track"><div id="progressBar"></div></div><p id="progressText">Hành trình của bạn bắt đầu ở đây.</p></div>
+    <div class="sidebar-credit"><span class="status-dot"></span> Hoạt động offline <span>•</span> v2.0</div>
+   </div>
+  </aside>
+  <div class="drawer-scrim" id="scrim" hidden></div>
+  <main class="workspace">
+   <header class="topbar">
+    <div class="topbar-left"><button type="button" id="menuBtn" class="icon-btn menu-button" aria-label="Mở danh mục" aria-expanded="false">☰</button><span class="breadcrumb">KHÔNG GIAN HỌC TẬP <span> / </span> <strong>Thư viện web</strong></span></div>
+    <div class="topbar-actions"><button type="button" class="top-link" id="roadmapBtn">◫ <span>Lộ trình</span></button><button type="button" class="top-primary" id="studioBtn">⌘ <span>Sân chơi code</span></button></div>
+   </header>
+   <div class="main-inner">
+    <section class="hero" aria-label="Giới thiệu Web Lab">
+     <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> TRUNG TÂM THỰC HÀNH FRONTEND</span><h1>Học làm web.<br><em>Hiểu từ gốc.</em></h1><p>Tra cứu kiến thức HTML, CSS, JavaScript và phát triển website. Đọc giải thích, tự sửa code và xem kết quả ngay lập tức.</p><div class="hero-chips"><span>✦ Kiến thức tiếng Việt</span><span>⌘ Editor 3 ngôn ngữ</span><span>⚡ Chạy trực tiếp</span></div></div>
+     <div class="hero-window" aria-hidden="true"><div class="window-head"><span class="dots"><i></i><i></i><i></i></span><span>my-first-website</span><span>↗</span></div><div class="window-code"><div><span class="pink">&lt;h1&gt;</span>Hello, world!<span class="pink">&lt;/h1&gt;</span></div><div><span class="yellow">h1</span> { <span class="blue">color</span>: <span class="green">purple</span>; }</div><div><span class="blue">console</span>.<span class="yellow">log</span>(<span class="green">"Let's build!"</span>);</div></div><div class="window-bottom"><span>● Running</span><span>HTML · CSS · JS</span></div></div>
+    </section>
+    <section class="stats-row" aria-label="Thống kê thư viện"><div class="stat"><span class="stat-icon stat-orange">▤</span><span><strong id="htmlCount">—</strong><small>Thẻ & thuộc tính HTML</small></span></div><div class="stat"><span class="stat-icon stat-blue">✿</span><span><strong id="cssCount">—</strong><small>Bài học CSS</small></span></div><div class="stat"><span class="stat-icon stat-yellow">JS</span><span><strong id="jsCount">—</strong><small>Bài học JavaScript</small></span></div><div class="stat"><span class="stat-icon stat-green">⌘</span><span><strong id="webCount">—</strong><small>Web & dự án</small></span></div></section>
+    <section class="finder" aria-label="Tìm kiếm và lọc bài học"><div class="finder-top"><h2>Thư viện kiến thức <span class="sparkle">✳</span></h2><span class="finder-caption">Tìm hiểu một khái niệm mỗi ngày</span></div><label class="search-box" for="searchInput"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg><input id="searchInput" type="search" placeholder="Tìm HTML, CSS, JavaScript, API... ví dụ: div, flexbox, addEventListener" autocomplete="off"><kbd>Ctrl K</kbd></label><div class="track-tabs" role="group" aria-label="Lọc theo công nghệ"><button type="button" data-track="all" class="track-tab active">✦ Tất cả</button><button type="button" data-track="html" class="track-tab"><span class="track-dot html"></span> HTML</button><button type="button" data-track="css" class="track-tab"><span class="track-dot css"></span> CSS</button><button type="button" data-track="js" class="track-tab"><span class="track-dot js"></span> JavaScript</button><button type="button" data-track="web" class="track-tab"><span class="track-dot web"></span> Web & công cụ</button></div></section>
+    <div class="learn-grid">
+     <section class="catalog" aria-label="Danh sách bài học"><div class="catalog-top"><div><h2>Chọn bài học</h2><p id="resultStatus">Đang tải thư viện...</p></div><span class="count-pill" id="resultCount">0</span></div><div class="catalog-content" id="catalogList"></div><div class="catalog-bottom">⌕ Mẹo: nhấn <kbd>Ctrl K</kbd> để tìm nhanh.</div></section>
+     <article class="lesson" id="detailPanel" aria-live="polite"><div class="loading">Đang chuẩn bị bài học...</div></article>
+    </div>
+    <footer class="footer">Web Lab <span>✦</span> Học bằng cách tự tay làm. <span>Hoàn toàn miễn phí, không cần tài khoản.</span></footer>
+   </div>
+  </main>
+ </div>
+ <dialog id="roadmapDialog" class="roadmap-dialog" aria-labelledby="roadmapTitle"><div class="dialog-head"><div><span class="dialog-kicker">GỢI Ý CHO NGƯỜI MỚI BẮT ĐẦU</span><h2 id="roadmapTitle">Lộ trình học làm website</h2></div><button id="closeRoadmap" class="icon-btn" aria-label="Đóng lộ trình">✕</button></div><p class="dialog-intro">Bạn có thể học theo thứ tự dưới đây hoặc tìm ngay kiến thức mình đang cần.</p><div class="roadmap-steps"><button type="button" data-goto="html"><span class="roadmap-num">01</span><span><strong>HTML — Tạo cấu trúc</strong><small>Thẻ, thuộc tính, biểu mẫu, semantic HTML.</small></span><span>↗</span></button><button type="button" data-goto="css"><span class="roadmap-num">02</span><span><strong>CSS — Thiết kế giao diện</strong><small>Màu sắc, Flexbox, Grid, responsive.</small></span><span>↗</span></button><button type="button" data-goto="js"><span class="roadmap-num">03</span><span><strong>JavaScript — Tạo tương tác</strong><small>Biến, hàm, DOM, sự kiện, API.</small></span><span>↗</span></button><button type="button" data-goto="web"><span class="roadmap-num">04</span><span><strong>Web — Làm dự án thật</strong><small>HTTP, Git, deploy, SEO, bảo mật, mini project.</small></span><span>↗</span></button></div><p class="dialog-note">※ Backend, database và framework có bài giới thiệu và hướng dẫn, nhưng cần công cụ riêng để chạy đầy đủ.</p></dialog>
+ <div class="toast" id="toast" role="status" aria-live="polite"></div>
+ <script src="html-data.js"></script>
+ <script src="extra-data.js"></script>
+ <script src="script.js"></script>
+</body>
+</html>
