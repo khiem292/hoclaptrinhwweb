@@ -1,0 +1,19 @@
+/* Web Lab 4.0 — practice and projects */
+.practice-panel{border:1px solid #ddd5fa;background:linear-gradient(180deg,#faf8ff,#fff);border-radius:14px;padding:20px;margin-top:24px}
+.practice-heading{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.practice-kicker{font-size:10px;letter-spacing:1px;color:#7453c9;font-weight:850}
+.practice-heading h3{font-size:18px;line-height:1.4;margin:8px 0 6px;color:#282842}
+.practice-heading p{font-size:12px;line-height:1.7;color:#777893;margin:0}
+.practice-heading strong{background:#ede8fd;color:#6748cc;border-radius:12px;padding:9px 11px;white-space:nowrap;font-size:14px}
+.practice-goals{display:grid;gap:10px;margin:19px 0;padding:0;list-style:none}
+.practice-goal{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e9e8f2;border-radius:11px;padding:12px 13px;font-size:12px;line-height:1.65;color:#50536e}
+.practice-marker{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:#f0edff;color:#6b50c9;font-size:12px;font-weight:800}
+.practice-goal.passed{background:#effaf4;border-color:#ceebd9;color:#22794d}.practice-goal.passed .practice-marker{background:#d8f5e3;color:#257b4e}
+.practice-actions{display:flex;gap:8px;flex-wrap:wrap}.practice-actions button{border:1px solid #e0d9f2;border-radius:9px;padding:11px 13px;font-size:12px;font-weight:750;background:#fff;color:#65549d}
+.practice-actions .practice-check{background:#694fd1;color:#fff;border-color:#694fd1}.practice-actions button:hover{filter:brightness(.96)}
+.practice-hint,.practice-feedback{font-size:12px;line-height:1.75;border-radius:10px;padding:12px 14px;margin-top:12px;background:#f4f1ff;color:#6a5799}
+.practice-hint p{margin:7px 0 0;overflow-wrap:anywhere}.practice-feedback{background:#f6f7fb;color:#626982}.practice-feedback.is-success{background:#effaf4;color:#236e4b}
+.practice-disclaimer{color:#9294a8;font-size:10px;line-height:1.7;margin:10px 0 0}
+.practice-launcher{background:#fff;color:#6244c4;border:1px solid #d8cdfd;border-radius:8px;padding:9px 12px;font-weight:800;font-size:11px}
+.practice-launcher:hover{background:#f1edff}
+@media(max-width:720px){.practice-panel{padding:14px}.practice-actions button{width:100%;font-size:13px}.practice-heading h3{font-size:16px}.practice-heading p,.practice-goal{font-size:13px}.practice-launcher{font-size:11px}}
