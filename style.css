@@ -33,3 +33,12 @@
     padding: 12px;
   }
 }
+
+/* Web Lab 4.1 — nhãn công nghệ trong kết quả tìm kiếm toàn thư viện. */
+.entry-search-kind{display:inline-flex;align-items:center;justify-content:center;flex:none;padding:4px 6px;border-radius:6px;background:#f1effe;color:#6c58c7;font-size:10px;font-weight:750;letter-spacing:.02em;white-space:nowrap}
+.entry-search-kind.html{background:#fff0e8;color:#bd692c}
+.entry-search-kind.css{background:#eaf1ff;color:#356cc7}
+.entry-search-kind.scss{background:#fbeaf6;color:#af4b91}
+.entry-search-kind.js{background:#fff5d4;color:#94720f}
+.entry-search-kind.web{background:#e6f7f0;color:#168968}
+@media(max-width:480px){.catalog-entry{gap:7px}.entry-search-kind{padding:4px 5px;font-size:9px}}
