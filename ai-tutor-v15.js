@@ -81,8 +81,17 @@ async function checkStatus(){
   const response=await request({action:'status'});
   const data=await response.json().catch(()=>({}));
   if(!response.ok)throw Error(data.error||'Không kiểm tra được máy chủ AI.');
-  ready=Boolean(data.configured);
-  status(ready?'Đã kết nối máy chủ · 12 lượt hỏi/ngày, tối thiểu 20 giây mỗi lượt.':'Gia sư AI chưa kích hoạt API key trên Supabase.',ready?'ok':'warn');
+  ready=Boolean(data.configured)&&data.verified!==false;
+  if(!data.configured){
+   status('Chưa tìm thấy OPENAI_API_KEY trong Supabase.','error');
+  }else if(data.verified===false){
+   const extra=data.provider_code?' · Mã lỗi: '+data.provider_code:'';
+   status((data.diagnostic||'Khóa API chưa được OpenAI xác thực.')+extra,'error');
+  }else if(data.verified===true){
+   status('✓ Khóa OpenAI đã được xác thực · 12 lượt hỏi/ngày · 20 giây mỗi lượt.','ok');
+  }else{
+   status(data.diagnostic||'Tạm thời chưa kiểm tra được khóa. Bạn có thể thử lại sau.','warn');
+  }
  }catch(e){
   ready=null;status('Không kiểm tra được AI: '+String(e.message||e),'warn');
  }finally{checking=false;renderControls()}
@@ -108,7 +117,7 @@ async function ask(){
   ready=true;status('✓ Đã trả lời · Còn '+Math.max(0,Number(data.remaining??0))+' lượt trong ngày.','ok');
  }catch(e){
   if(!field.value.trim())field.value=question;
-  if(e.kind==='not_configured')ready=false;
+  if(['not_configured','invalid_key','access_denied','model_unavailable'].includes(e.kind))ready=false;
   status(String(e.message||'Kết nối AI bị gián đoạn.'),'error');
  }finally{busy=false;renderControls()}
 }
