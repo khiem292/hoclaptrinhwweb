@@ -48,3 +48,27 @@
 
 /* Editor completion and sequential lessons */
 .editor-pane{position:relative}.weblab-suggestions{position:absolute;top:6px;right:8px;z-index:15;display:grid;gap:3px;background:#fff;border:1px solid #d9d9ef;box-shadow:0 8px 24px #0002;border-radius:10px;padding:5px;max-width:65%;max-height:210px;overflow:auto}.weblab-suggestions button{border:0;background:transparent;padding:7px 12px;text-align:left;border-radius:6px;color:#443777;font:600 12px ui-monospace,monospace}.weblab-suggestions button:hover,.weblab-suggestions button:focus{background:#eeeafe}.practice-next-wrap{display:flex;justify-content:flex-end;margin:14px 0}.practice-next-wrap button:disabled{opacity:.46;cursor:not-allowed}@media(hover:none) and (pointer:coarse){.weblab-suggestions button{font-size:16px}}
+
+
+/* Web Lab 6.0 — lộ trình đa chủ đề + lý thuyết sát bài thực hành */
+.learning-tracks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 12px}
+.learning-track{text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:7px;min-height:88px;padding:14px;border:1px solid #e2e0f0;border-radius:13px;background:#fff;color:#353852;box-shadow:0 2px 9px #25205708;cursor:pointer}
+.learning-track strong{font-size:12.5px;line-height:1.5;overflow-wrap:anywhere}
+.learning-track small{font-size:11px;color:#80849a}
+.learning-track.active{border-color:#947eeb;background:#f4f0ff;box-shadow:0 0 0 2px #947eeb22}
+.learning-track.active strong{color:#573bb0}
+.learning-track-about{color:#777b90;line-height:1.6;font-size:13px;padding:0 3px;margin:0 0 12px}
+.lesson-guide{border:1px solid #e1def6;background:linear-gradient(150deg,#faf9ff,#fff);padding:18px;border-radius:17px}
+.lesson-guide-intro{color:#5d627c;font-size:13.5px;line-height:1.75;margin:12px 0 18px}
+.lesson-guide-grid{display:grid;gap:13px}
+.lesson-guide-card{padding:17px;border:1px solid #e7e5f0;border-radius:13px;background:#fff;min-width:0}
+.lesson-guide-head{display:flex;align-items:center;gap:11px}
+.lesson-guide-step{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#eee9ff;color:#5c42bd;font-weight:800;flex:none}
+.lesson-guide-head h4{margin:0 0 4px;font-size:15px;line-height:1.45;color:#2c2e48}
+.lesson-guide-lang{display:inline-flex;border-radius:6px;padding:2px 6px;background:#f4f3f8;color:#73768a;font-size:10px;font-weight:800;letter-spacing:.04em}
+.lesson-guide-card p{font-size:13.5px;color:#5a6077;line-height:1.75;margin:13px 0}
+.lesson-guide-example-head{font-size:12px;font-weight:800;color:#5a4cb0;margin-bottom:7px}
+.lesson-guide-code{font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;display:block;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:14px;border-radius:10px;background:#202337;color:#f2f2fb;margin:0}
+.lesson-guide-footer{font-size:12.5px;color:#5e6a81;line-height:1.65;margin:14px 0 0}
+@media(max-width:720px){.learning-tracks{grid-template-columns:1fr 1fr;gap:8px}.learning-track{padding:11px;min-height:85px}.learning-track strong{font-size:12px}.lesson-guide{padding:13px}.lesson-guide-card{padding:13px}.lesson-guide-code{font-size:12px}}
+@media(max-width:380px){.learning-tracks{grid-template-columns:1fr}.lesson-guide-head h4{font-size:14px}}

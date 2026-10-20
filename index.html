@@ -13,8 +13,8 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 5.5 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
- <link rel="stylesheet" href="style.css?v=5.2">
+ <title>Web Lab 6.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <link rel="stylesheet" href="style.css?v=6.0">
  <link rel="stylesheet" href="practice.css?v=5.5">
  <style id="practice-inline-styles">
 /* Web Lab 4.0 — practice and projects */
@@ -112,6 +112,32 @@
 #practicePanel .practice-goal::marker{content:""!important}
 
  </style>
+ <style id="weblab-course-guide-styles">
+
+/* Web Lab 6.0 — lộ trình đa chủ đề + lý thuyết sát bài thực hành */
+.learning-tracks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0 12px}
+.learning-track{text-align:left;display:flex;flex-direction:column;justify-content:space-between;gap:7px;min-height:88px;padding:14px;border:1px solid #e2e0f0;border-radius:13px;background:#fff;color:#353852;box-shadow:0 2px 9px #25205708;cursor:pointer}
+.learning-track strong{font-size:12.5px;line-height:1.5;overflow-wrap:anywhere}
+.learning-track small{font-size:11px;color:#80849a}
+.learning-track.active{border-color:#947eeb;background:#f4f0ff;box-shadow:0 0 0 2px #947eeb22}
+.learning-track.active strong{color:#573bb0}
+.learning-track-about{color:#777b90;line-height:1.6;font-size:13px;padding:0 3px;margin:0 0 12px}
+.lesson-guide{border:1px solid #e1def6;background:linear-gradient(150deg,#faf9ff,#fff);padding:18px;border-radius:17px}
+.lesson-guide-intro{color:#5d627c;font-size:13.5px;line-height:1.75;margin:12px 0 18px}
+.lesson-guide-grid{display:grid;gap:13px}
+.lesson-guide-card{padding:17px;border:1px solid #e7e5f0;border-radius:13px;background:#fff;min-width:0}
+.lesson-guide-head{display:flex;align-items:center;gap:11px}
+.lesson-guide-step{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#eee9ff;color:#5c42bd;font-weight:800;flex:none}
+.lesson-guide-head h4{margin:0 0 4px;font-size:15px;line-height:1.45;color:#2c2e48}
+.lesson-guide-lang{display:inline-flex;border-radius:6px;padding:2px 6px;background:#f4f3f8;color:#73768a;font-size:10px;font-weight:800;letter-spacing:.04em}
+.lesson-guide-card p{font-size:13.5px;color:#5a6077;line-height:1.75;margin:13px 0}
+.lesson-guide-example-head{font-size:12px;font-weight:800;color:#5a4cb0;margin-bottom:7px}
+.lesson-guide-code{font:13px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;display:block;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;padding:14px;border-radius:10px;background:#202337;color:#f2f2fb;margin:0}
+.lesson-guide-footer{font-size:12.5px;color:#5e6a81;line-height:1.65;margin:14px 0 0}
+@media(max-width:720px){.learning-tracks{grid-template-columns:1fr 1fr;gap:8px}.learning-track{padding:11px;min-height:85px}.learning-track strong{font-size:12px}.lesson-guide{padding:13px}.lesson-guide-card{padding:13px}.lesson-guide-code{font-size:12px}}
+@media(max-width:380px){.learning-tracks{grid-template-columns:1fr}.lesson-guide-head h4{font-size:14px}}
+
+ </style>
 </head>
 <body>
  <div class="app-shell">
@@ -147,7 +173,7 @@
    </div>
   </main>
  </div>
- <dialog id="roadmapDialog" class="roadmap-dialog roadmap-dialog-v5" aria-labelledby="roadmapTitle"><div class="dialog-head"><div><span class="dialog-kicker">KHÓA HỌC TỪ A ĐẾN Z</span><h2 id="roadmapTitle">Lộ trình học làm website</h2></div><button id="closeRoadmap" class="icon-btn" aria-label="Đóng lộ trình">✕</button></div><p class="dialog-intro">14 chặng theo thứ tự: HTML → CSS → SCSS → JavaScript → dự án website. Bài tập có kiểm tra ở cuối chặng; vượt qua mới mở khóa chặng tiếp theo. Thư viện thẻ và thuộc tính HTML chỉ để tra cứu, không có bài tập bắt buộc.</p><p class="roadmap-progress-v5" id="roadmapProgressV5"></p><div id="roadmapStepsV5" class="roadmap-steps-v5"></div><p class="dialog-note">Kiểm tra tự động chủ yếu dựa vào mã nguồn, không đánh giá đầy đủ giao diện hay logic thực thi. Tiến độ lưu trên thiết bị này.</p></dialog>
+ <dialog id="roadmapDialog" class="roadmap-dialog roadmap-dialog-v5" aria-labelledby="roadmapTitle"><div class="dialog-head"><div><span class="dialog-kicker">KHÓA HỌC TỪ A ĐẾN Z</span><h2 id="roadmapTitle">Lộ trình học làm website</h2></div><button id="closeRoadmap" class="icon-btn" aria-label="Đóng lộ trình">✕</button></div><p class="dialog-intro">7 lộ trình, 66 bài thực hành: Frontend A–Z, HTML/CSS nâng cao, JavaScript, SCSS, UI/UX, dự án và kỹ năng web. Bài tập có kiểm tra ở cuối chặng; vượt qua mới mở khóa chặng tiếp theo. Thư viện thẻ và thuộc tính HTML chỉ để tra cứu, không có bài tập bắt buộc.</p><p class="roadmap-progress-v5" id="roadmapProgressV5"></p><div id="roadmapTracksV6" class="learning-tracks" aria-label="Chọn lộ trình học"></div><p id="roadmapAboutV6" class="learning-track-about"></p><div id="roadmapStepsV5" class="roadmap-steps-v5"></div><p class="dialog-note">Kiểm tra tự động chủ yếu dựa vào mã nguồn, không đánh giá đầy đủ giao diện hay logic thực thi. Tiến độ lưu trên thiết bị này.</p></dialog>
 <dialog id="installDialog" class="roadmap-dialog install-dialog" aria-labelledby="installTitle">
   <div class="dialog-head"><div><span class="dialog-kicker">WEB LAB TRÊN ĐIỆN THOẠI</span><h2 id="installTitle">Cài Web Lab như một app</h2></div><button type="button" id="closeInstall" class="icon-btn" aria-label="Đóng hướng dẫn">✕</button></div>
   <p class="dialog-intro">Bạn có thể ghim website lên màn hình chính để mở nhanh, không cần App Store.</p>
@@ -162,8 +188,9 @@
  <script src="scss-compiler.js"></script>
  <script src="practice-projects.js"></script>
  <script src="course-data.js?v=5.0"></script>
- <script src="script.js?v=5.2"></script>
- <script src="practice.js?v=5.2"></script>
+ <script src="learning-paths.js?v=6.0"></script>
+ <script src="script.js?v=6.0"></script>
+ <script src="practice.js?v=6.0"></script>
  <script src="editor-assist.js?v=5.2"></script>
  <script src="pwa.js"></script>
 </body>
