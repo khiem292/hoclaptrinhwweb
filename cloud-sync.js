@@ -9,7 +9,7 @@ const configured=/^https:\/\/[a-z0-9.-]+(?::443)?$/i.test(url)&&key.length>12;
 const $=id=>document.getElementById(id);
 const SESSION_KEY='webLab:cloudSession';
 const FIELD_KEYS=['favorites','completed','drafts','practiceV4','draftUpdatedAt','cloudStamps'];
-let session=null,inFlight=null,timer=null,busy=false,refreshPromise=null,restoring=false;
+let session=null,inFlight=null,timer=null,busy=false,refreshPromise=null,restoring=false,recoveryToken=null;
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
 const read=(key,fb)=>{try{const s=localStorage.getItem('webLab:'+key);return s===null?fb:JSON.parse(s)}catch{return fb}};
 const write=(key,value)=>{try{localStorage.setItem('webLab:'+key,JSON.stringify(value))}catch{}};
@@ -153,6 +153,41 @@ async function signUp(email,password){
   setSession(d);notify('✅ Đã tạo tài khoản. Đang đồng bộ...');await sync({refreshView:true});
  }else{notify('📩 Nếu bạn nhận được thư xác nhận, hãy nhấn liên kết trong email. Sau khi xác nhận, quay lại Web Lab để đăng nhập. Nếu gặp lỗi 404, kiểm tra Site URL và Redirect URLs trong Supabase.');}
 }
+async function sendPasswordRecovery(){
+ const email=$('accountLoginEmail')?.value?.trim();
+ if(!email||!$('accountLoginEmail').checkValidity()){notify('Vui lòng nhập địa chỉ email tài khoản trước khi chọn Quên mật khẩu.');return}
+ const redirectTo=new URL('./',window.location.href).href;
+ await request('/auth/v1/recover?redirect_to='+encodeURIComponent(redirectTo),{
+   method:'POST',body:{email}
+ });
+ notify('📩 Nếu email này có tài khoản Web Lab, bạn sẽ nhận được thư đặt lại mật khẩu. Hãy dùng liên kết mới nhất và kiểm tra cả thư rác.');
+}
+function checkRecoveryCallback(dialog){
+ const fragment=new URLSearchParams(location.hash.startsWith('#')?location.hash.slice(1):'');
+ if(fragment.get('type')!=='recovery')return;
+ recoveryToken=fragment.get('access_token');
+ // Strip sensitive callback tokens from the address bar and browser history.
+ history.replaceState(null,'',location.pathname+location.search);
+ if(!recoveryToken){
+   notify('Liên kết đặt lại mật khẩu chưa hợp lệ. Hãy yêu cầu gửi lại email.');
+   return;
+ }
+ const login=$('accountSignedOut'),recover=$('accountRecovery');
+ if(login)login.hidden=true;
+ if(recover)recover.hidden=false;
+ notify('🔐 Đã mở liên kết xác nhận. Hãy nhập mật khẩu mới để hoàn tất.');
+ if(!dialog.open)dialog.showModal();
+}
+async function changeRecoveredPassword(password){
+ if(!recoveryToken)throw Error('Liên kết đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.');
+ await request('/auth/v1/user',{method:'PUT',token:recoveryToken,body:{password}});
+ recoveryToken=null;
+ $('accountRecovery').hidden=true;
+ $('accountSignedOut').hidden=false;
+ $('accountNewPassword').value='';
+ $('accountNewPasswordConfirm').value='';
+ notify('✅ Đã đổi mật khẩu. Bây giờ bạn có thể đăng nhập bằng mật khẩu mới.');
+}
 async function logout(){
  try{if(session){const token=await freshToken();await request('/auth/v1/logout',{method:'POST',token})}}catch{}
  clearSession();notify('Đã đăng xuất. Tiến độ offline vẫn còn trên thiết bị này. Trên máy dùng chung, hãy xóa dữ liệu website nếu cần.');
@@ -182,6 +217,21 @@ function init(){
   try{await signIn(email,password);$('accountLoginPassword').value='';}
   catch(err){notify('⚠ '+err.message)}finally{busy=false}
  });
+ $('accountForgotPassword')?.addEventListener('click',async()=>{
+  if(busy)return;busy=true;notify('Đang gửi hướng dẫn lấy lại mật khẩu...');
+  try{await sendPasswordRecovery()}catch(error){notify('⚠ Không gửi được email: '+error.message)}
+  finally{busy=false}
+ });
+ $('accountRecoveryForm')?.addEventListener('submit',async event=>{
+   event.preventDefault();
+   if(busy)return;
+   const password=$('accountNewPassword').value,confirm=$('accountNewPasswordConfirm').value;
+   if(password.length<8){notify('Mật khẩu cần từ 8 ký tự trở lên.');return}
+   if(password!==confirm){notify('Hai lần nhập mật khẩu chưa trùng nhau.');return}
+   busy=true;notify('Đang cập nhật mật khẩu...');
+   try{await changeRecoveredPassword(password)}catch(error){notify('⚠ Không đổi được mật khẩu: '+error.message)}
+   finally{busy=false}
+ });
  $('accountRegister')?.addEventListener('click',async()=>{
   if(busy)return;
   const email=$('accountLoginEmail').value.trim(),password=$('accountLoginPassword').value;
@@ -196,6 +246,7 @@ function init(){
  window.addEventListener('online',schedule);
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&session)schedule()});
  updateUI();
+ checkRecoveryCallback(dialog);
  if(session){
   updateSyncStatus('Đã nhận phiên đăng nhập. Đang kiểm tra dữ liệu...');
   sync({refreshView:true}).catch(error=>notify('⚠ Đồng bộ chưa hoàn tất: '+error.message));
