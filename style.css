@@ -115,3 +115,22 @@
 .vscode-status{gap:9px;padding:6px 9px;font-size:10px;flex-wrap:wrap}.vscode-status .vscode-diagnostics{width:100%}.vscode-suggestions button{font-size:16px;padding:10px}
 }
 @media(max-width:385px){.vscode-tools{width:100%;justify-content:space-between}.vscode-auto{font-size:10px}}
+
+/* Web Lab 8.0: account and guide */
+
+.guide-deep{margin-top:16px;border:1px solid #ede8f9;border-radius:12px;padding:15px;background:#faf9ff}
+.guide-deep h5{font-size:13px;color:#6047b1;margin:14px 0 5px;font-weight:850}.guide-deep h5:first-child{margin-top:0}
+.guide-deep p{font-size:13px;line-height:1.8;color:#555d77;margin:0 0 12px;overflow-wrap:anywhere}
+.account-dialog{width:min(540px,96vw);max-height:90dvh;overflow:auto;border:1px solid #e3dcf9;border-radius:19px;background:white;color:#2a2d48;padding:23px;box-shadow:0 20px 70px #17182855}
+.account-dialog::backdrop{background:#111528a8}.account-dialog [hidden]{display:none!important}
+.account-alert{background:#fffaed;border:1px solid #eadaaf;border-radius:11px;padding:14px;color:#644b23;line-height:1.7;font-size:13px;overflow-wrap:anywhere}
+.account-form{display:grid;gap:15px;margin-top:16px}.account-form label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#43436c}
+.account-form input{width:100%;min-width:0;border:1px solid #d8d3ed;border-radius:10px;padding:12px;background:#fff;color:#26283f;outline:0;font-size:16px!important}
+.account-form input:focus{border-color:#957bef;box-shadow:0 0 0 3px #ece8fc}
+.account-buttons{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.account-buttons button{flex:1;min-width:120px;min-height:44px;padding:12px;border-radius:10px;background:#fff;color:#6650b3;border:1px solid #dfd8f4;font-weight:800;font-size:13px;cursor:pointer}
+.account-buttons button.account-primary{background:#6d53d7;color:#fff;border-color:#6d53d7}
+.account-note,.account-privacy{color:#7a8095;font-size:12px;line-height:1.65;margin:9px 0}.account-privacy{padding-top:13px;border-top:1px solid #eeeaf6}
+.account-signed{background:#eefaf2;border-radius:10px;padding:13px;color:#217b4d;font-size:13px;overflow-wrap:anywhere}
+.account-feedback{background:#f2efff;padding:12px;border-radius:10px;color:#5e4a9e;font-size:13px;line-height:1.6}
+@media(max-width:720px){.account-dialog{padding:16px}.guide-deep{padding:12px}}
