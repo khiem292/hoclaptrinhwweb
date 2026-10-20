@@ -1,9 +1,9 @@
 /* Web Lab v3, cache scoped to the GitHub Pages folder. */
-const CACHE='weblab-pwa-v15.0';
+const CACHE='weblab-pwa-v15.1';
 const CORE=[
  './', './index.html', './style.css?v=12.0', './practice.css?v=5.5', './html-data.js',
  './extra-data.js', './scss-data.js', './scss-compiler.js',
- './learning-paths.js?v=6.0', './learning-guide-deep.js?v=8.0', './script.js?v=14.0', './dsa-course.js?v=14.0', './dsa-bridge.js?v=14.0', './dsa-check.js?v=14.0', './dsa-course.css?v=14.0', './practice-projects.js', './course-data.js?v=5.0', './practice.js?v=14.0', './editor-vscode.js?v=7.0', './cloud-config.js?v=8.2', './cloud-sync.js?v=11.0', './gamification.js?v=14.0', './ai-tutor-v15.js?v=15.0', './ai-tutor-v15.css?v=15.0', './workspace-v13.js?v=13.0', './workspace-v13.css?v=13.0', './header-responsive.css?v=13.1', './release-notifications.js?v=13.0', './release.json', './pwa.js', './manifest.webmanifest',
+ './learning-paths.js?v=6.0', './learning-guide-deep.js?v=8.0', './script.js?v=14.0', './dsa-course.js?v=14.0', './dsa-bridge.js?v=14.0', './dsa-check.js?v=14.0', './dsa-course.css?v=14.0', './practice-projects.js', './course-data.js?v=5.0', './practice.js?v=14.0', './editor-vscode.js?v=7.0', './cloud-config.js?v=8.2', './cloud-sync.js?v=11.0', './gamification.js?v=14.0', './ai-tutor-v15.js?v=15.1', './ai-tutor-v15.css?v=15.0', './workspace-v13.js?v=13.0', './workspace-v13.css?v=13.0', './header-responsive.css?v=13.1', './release-notifications.js?v=13.0', './release.json', './pwa.js', './manifest.webmanifest',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png'
 ];
 self.addEventListener('install',event=>{
