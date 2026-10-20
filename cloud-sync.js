@@ -22,7 +22,33 @@ function snapshot(){return{
  draftUpdatedAt:read('draftUpdatedAt',{}),
  stamps:read('cloudStamps',{})
 }}
-function jsonEqual(a,b){return JSON.stringify(a)===JSON.stringify(b)}
+// JSON.stringify depends on object key insertion order, which differs between
+// snapshot() and merge(). A normal comparison caused a reload on EVERY login
+// sync, creating an infinite refresh loop on Safari/iPhone.
+function stableValue(value){
+ if(Array.isArray(value))return value.map(stableValue);
+ if(value!==null&&typeof value==='object'){
+  return Object.fromEntries(Object.keys(value).sort().map(key=>[key,stableValue(value[key])]));
+ }
+ return value;
+}
+function jsonEqual(a,b){return JSON.stringify(stableValue(a))===JSON.stringify(stableValue(b))}
+function progressEqual(a,b){
+ return ['favorites','completed','drafts','practiceV4','draftUpdatedAt'].every(field=>jsonEqual(a[field],b[field]));
+}
+const RELOAD_GUARD='webLab:cloudLastAutoReload';
+function safeRefresh(){
+ // Even unexpected conflicts must never trap a learner in a reload loop.
+ try{
+  const last=Number(sessionStorage.getItem(RELOAD_GUARD)||0);
+  if(Date.now()-last<20000){
+   updateSyncStatus('✅ Đã đồng bộ. Dữ liệu mới sẽ hiện khi bạn mở lại bài học.');
+   return;
+  }
+  sessionStorage.setItem(RELOAD_GUARD,String(Date.now()));
+ }catch{}
+ location.reload();
+}
 function stamp(field){const s=read('cloudStamps',{});s[field]=Date.now();write('cloudStamps',s)}
 function merge(remote,local){
  const r=remote&&typeof remote==='object'?remote:{}, l=local&&typeof local==='object'?local:{};
@@ -116,12 +142,16 @@ async function sync({refreshView=false}={}){
     updateSyncStatus('☁ Đang đồng bộ dữ liệu...');
     const remote=await cloudRow();
     const merged=merge(remote,before);
-    await saveCloud(merged);
-    if(!jsonEqual(before,merged)){
+    const changedLocal=!jsonEqual(before,merged);
+    const changedProgress=!progressEqual(before,merged);
+    // Avoid redundant writes on login and page load.
+    if(!jsonEqual(remote,merged))await saveCloud(merged);
+    if(changedLocal){
      adopt(merged);
-     if(refreshView){
-       updateSyncStatus('✅ Đã tải dữ liệu, đang cập nhật giao diện...');
-       location.reload();return;
+     if(refreshView&&changedProgress){
+      updateSyncStatus('✅ Đã lấy tiến độ mới, đang cập nhật bài học...');
+      safeRefresh();
+      return;
      }
     }
     updateSyncStatus('✅ Đồng bộ thành công lúc '+new Date().toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}));
