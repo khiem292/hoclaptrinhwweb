@@ -13,9 +13,105 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 5.4 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <title>Web Lab 5.5 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
  <link rel="stylesheet" href="style.css?v=5.2">
- <link rel="stylesheet" href="practice.css?v=5.4">
+ <link rel="stylesheet" href="practice.css?v=5.5">
+ <style id="practice-inline-styles">
+/* Web Lab 4.0 — practice and projects */
+.practice-panel{border:1px solid #ddd5fa;background:linear-gradient(180deg,#faf8ff,#fff);border-radius:14px;padding:20px;margin-top:24px}
+.practice-heading{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.practice-kicker{font-size:10px;letter-spacing:1px;color:#7453c9;font-weight:850}
+.practice-heading h3{font-size:18px;line-height:1.4;margin:8px 0 6px;color:#282842}
+.practice-heading p{font-size:12px;line-height:1.7;color:#777893;margin:0}
+.practice-heading strong{background:#ede8fd;color:#6748cc;border-radius:12px;padding:9px 11px;white-space:nowrap;font-size:14px}
+.practice-goals{display:grid;gap:10px;margin:19px 0;padding:0;list-style:none}
+.practice-goal{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #e9e8f2;border-radius:11px;padding:12px 13px;font-size:12px;line-height:1.65;color:#50536e}
+.practice-marker{display:grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;background:#f0edff;color:#6b50c9;font-size:12px;font-weight:800}
+.practice-goal.passed{background:#effaf4;border-color:#ceebd9;color:#22794d}.practice-goal.passed .practice-marker{background:#d8f5e3;color:#257b4e}
+.practice-actions{display:flex;gap:8px;flex-wrap:wrap}.practice-actions button{border:1px solid #e0d9f2;border-radius:9px;padding:11px 13px;font-size:12px;font-weight:750;background:#fff;color:#65549d}
+.practice-actions .practice-check{background:#694fd1;color:#fff;border-color:#694fd1}.practice-actions button:hover{filter:brightness(.96)}
+.practice-hint,.practice-feedback{font-size:12px;line-height:1.75;border-radius:10px;padding:12px 14px;margin-top:12px;background:#f4f1ff;color:#6a5799}
+.practice-hint p{margin:7px 0 0;overflow-wrap:anywhere}.practice-feedback{background:#f6f7fb;color:#626982}.practice-feedback.is-success{background:#effaf4;color:#236e4b}
+.practice-disclaimer{color:#9294a8;font-size:10px;line-height:1.7;margin:10px 0 0}
+.practice-launcher{background:#fff;color:#6244c4;border:1px solid #d8cdfd;border-radius:8px;padding:9px 12px;font-weight:800;font-size:11px}
+.practice-launcher:hover{background:#f1edff}
+@media(max-width:720px){.practice-panel{padding:14px}.practice-actions button{width:100%;font-size:13px}.practice-heading h3{font-size:16px}.practice-heading p,.practice-goal{font-size:13px}.practice-launcher{font-size:11px}}
+
+
+/* Web Lab 5.3 — thẻ bài tập responsive, dễ đọc trên iPhone */
+#practicePanel.practice-panel{
+  width:100%;min-width:0;box-sizing:border-box;overflow:hidden;
+  padding:clamp(16px,3vw,28px);margin-top:28px;
+  border:1px solid #e7e2fa;border-radius:20px;
+  background:linear-gradient(155deg,#f9f7ff 0%,#fff 62%);
+  box-shadow:0 12px 32px rgba(48,36,105,.06);
+}
+#practicePanel .practice-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;min-width:0}
+#practicePanel .practice-heading>div{min-width:0}
+#practicePanel .practice-kicker{display:inline-flex;align-items:center;max-width:100%;font-size:11px;font-weight:800;letter-spacing:.045em;line-height:1.5;color:#6c4fc5}
+#practicePanel .practice-heading h3{font-size:clamp(19px,2.3vw,26px);line-height:1.3;margin:9px 0 10px;color:#282744}
+#practicePanel .practice-heading p{font-size:14px;line-height:1.65;color:#73758f;overflow-wrap:anywhere}
+#practicePanel .practice-heading>strong{flex:none;background:#eae4ff;color:#6245bd;border:1px solid #ded5fb;border-radius:12px;padding:9px 12px;font-size:15px}
+#practicePanel .practice-goals{
+  display:grid!important;gap:10px!important;list-style:none!important;
+  margin:22px 0!important;padding:0!important;counter-reset:none!important;
+}
+#practicePanel .practice-goal{
+  display:flex!important;align-items:center;gap:12px;min-width:0;
+  list-style:none!important;margin:0!important;
+  padding:14px!important;border-radius:13px!important;border:1px solid #e9e7f4;
+  background:#fff;box-shadow:0 2px 8px rgba(32,28,77,.025);
+  font-size:14px!important;line-height:1.55;overflow-wrap:anywhere;color:#434562;
+}
+#practicePanel .practice-goal::marker{content:""!important}
+#practicePanel .practice-goal::before{content:none!important}
+#practicePanel .practice-marker{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:9px;background:#eee9ff;color:#674cc5;font-size:13px;font-weight:800}
+#practicePanel .practice-goal.passed{background:#f1fbf5;border-color:#c8e9d6;color:#22744c}
+#practicePanel .practice-goal.passed .practice-marker{background:#d9f5e5;color:#19814a}
+#practicePanel .practice-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+#practicePanel .practice-actions button,#practicePanel .practice-next-wrap button{
+  min-width:0;width:100%;min-height:44px;padding:11px 12px;border-radius:11px;
+  font-size:13px!important;font-weight:750;line-height:1.35;
+  white-space:normal;overflow-wrap:anywhere;cursor:pointer;
+  transition:background-color .15s,border-color .15s,transform .15s;
+}
+#practicePanel .practice-actions button:active,#practicePanel .practice-next-wrap button:active:not(:disabled){transform:scale(.985)}
+#practicePanel #practiceCheck{grid-column:1/-1;background:#6950ce;color:#fff;border:1px solid #6950ce}
+#practicePanel #practiceHint,#practicePanel #practiceNew{background:#fff;color:#6048ae;border:1px solid #ddd5f3}
+#practicePanel .practice-feedback,#practicePanel .practice-hint{
+  margin:15px 0 0;padding:13px 15px;border-radius:12px;
+  font-size:13px;line-height:1.6;overflow-wrap:anywhere;
+}
+#practicePanel .practice-feedback{background:#f2f4fa;color:#545c77;border:1px solid #e7eaf4}
+#practicePanel .practice-feedback.is-success{background:#eaf9f0;color:#23724b;border-color:#c7e8d5}
+#practicePanel .practice-next-wrap{margin:14px 0 0;display:flex;justify-content:flex-end}
+#practicePanel .practice-next-wrap button{width:auto;min-width:190px;background:#6550cc;border:1px solid #6550cc;color:white}
+#practicePanel .practice-next-wrap button:disabled{background:#eeeff5;color:#a4a5b4;border-color:#eaebf1;cursor:not-allowed;opacity:1}
+#practicePanel .practice-disclaimer{margin-top:19px;padding-top:15px;border-top:1px solid #edeaf6;color:#82869b;font-size:12px;line-height:1.65;overflow-wrap:anywhere}
+@media(max-width:720px){
+ #practicePanel.practice-panel{padding:16px;border-radius:16px}
+ #practicePanel .practice-heading{flex-wrap:wrap}
+ #practicePanel .practice-heading>strong{order:-1;margin-left:auto}
+ #practicePanel .practice-heading p{font-size:13px}
+ #practicePanel .practice-goal{font-size:13px!important;padding:12px!important}
+ #practicePanel .practice-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #practicePanel .practice-actions button{font-size:13px!important}
+ #practicePanel .practice-next-wrap button{width:100%;min-width:0}
+}
+@media(max-width:370px){#practicePanel .practice-actions{grid-template-columns:1fr}#practicePanel #practiceCheck{grid-column:auto}}
+
+
+/* Web Lab 5.5: inline critical styles; works even if external CSS is cached or fails to load. */
+#practicePanel.practice-panel:before{
+  content:"✓ Giao diện bài tập v5.5";
+  display:inline-block;margin:0 0 16px;padding:6px 11px;
+  border-radius:999px;background:#ede9fe;color:#6041ba;
+  font:700 11px/1.3 system-ui,sans-serif;
+}
+#practicePanel .practice-goals,#practicePanel .practice-goal{list-style:none!important}
+#practicePanel .practice-goal::marker{content:""!important}
+
+ </style>
 </head>
 <body>
  <div class="app-shell">
