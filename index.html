@@ -13,8 +13,8 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 7.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
- <link rel="stylesheet" href="style.css?v=7.0">
+ <title>Web Lab 8.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <link rel="stylesheet" href="style.css?v=8.0">
  <link rel="stylesheet" href="practice.css?v=5.5">
  <style id="practice-inline-styles">
 /* Web Lab 4.0 — practice and projects */
@@ -183,6 +183,26 @@
 @media(max-width:385px){.vscode-tools{width:100%;justify-content:space-between}.vscode-auto{font-size:10px}}
 
  </style>
+<style id="weblab-account-guide-styles">
+
+.guide-deep{margin-top:16px;border:1px solid #ede8f9;border-radius:12px;padding:15px;background:#faf9ff}
+.guide-deep h5{font-size:13px;color:#6047b1;margin:14px 0 5px;font-weight:850}.guide-deep h5:first-child{margin-top:0}
+.guide-deep p{font-size:13px;line-height:1.8;color:#555d77;margin:0 0 12px;overflow-wrap:anywhere}
+.account-dialog{width:min(540px,96vw);max-height:90dvh;overflow:auto;border:1px solid #e3dcf9;border-radius:19px;background:white;color:#2a2d48;padding:23px;box-shadow:0 20px 70px #17182855}
+.account-dialog::backdrop{background:#111528a8}.account-dialog [hidden]{display:none!important}
+.account-alert{background:#fffaed;border:1px solid #eadaaf;border-radius:11px;padding:14px;color:#644b23;line-height:1.7;font-size:13px;overflow-wrap:anywhere}
+.account-form{display:grid;gap:15px;margin-top:16px}.account-form label{display:grid;gap:6px;font-size:13px;font-weight:700;color:#43436c}
+.account-form input{width:100%;min-width:0;border:1px solid #d8d3ed;border-radius:10px;padding:12px;background:#fff;color:#26283f;outline:0;font-size:16px!important}
+.account-form input:focus{border-color:#957bef;box-shadow:0 0 0 3px #ece8fc}
+.account-buttons{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+.account-buttons button{flex:1;min-width:120px;min-height:44px;padding:12px;border-radius:10px;background:#fff;color:#6650b3;border:1px solid #dfd8f4;font-weight:800;font-size:13px;cursor:pointer}
+.account-buttons button.account-primary{background:#6d53d7;color:#fff;border-color:#6d53d7}
+.account-note,.account-privacy{color:#7a8095;font-size:12px;line-height:1.65;margin:9px 0}.account-privacy{padding-top:13px;border-top:1px solid #eeeaf6}
+.account-signed{background:#eefaf2;border-radius:10px;padding:13px;color:#217b4d;font-size:13px;overflow-wrap:anywhere}
+.account-feedback{background:#f2efff;padding:12px;border-radius:10px;color:#5e4a9e;font-size:13px;line-height:1.6}
+@media(max-width:720px){.account-dialog{padding:16px}.guide-deep{padding:12px}}
+
+</style>
 </head>
 <body>
  <div class="app-shell">
@@ -201,7 +221,7 @@
   <main class="workspace">
    <header class="topbar">
     <div class="topbar-left"><button type="button" id="menuBtn" class="icon-btn menu-button" aria-label="Mở danh mục" aria-expanded="false">☰</button><span class="breadcrumb">KHÔNG GIAN HỌC TẬP <span> / </span> <strong>Thư viện web</strong></span></div>
-    <div class="topbar-actions"><button type="button" class="top-link" id="appHelpBtn" aria-label="Hướng dẫn cài Web Lab trên điện thoại">▣ <span>Cài ứng dụng</span></button><button type="button" class="top-link" id="roadmapBtn">🗺️ <span>Lộ trình học A–Z</span></button><button type="button" class="top-primary" id="studioBtn">⌘ <span>Sân chơi code</span></button></div>
+    <div class="topbar-actions"><button type="button" class="top-link" id="accountBtn" aria-label="Tài khoản và đồng bộ">☁ <span>Đăng nhập</span></button><button type="button" class="top-link" id="appHelpBtn" aria-label="Hướng dẫn cài Web Lab trên điện thoại">▣ <span>Cài ứng dụng</span></button><button type="button" class="top-link" id="roadmapBtn">🗺️ <span>Lộ trình học A–Z</span></button><button type="button" class="top-primary" id="studioBtn">⌘ <span>Sân chơi code</span></button></div>
    </header>
    <div class="main-inner">
     <section class="hero" aria-label="Giới thiệu Web Lab">
@@ -226,6 +246,28 @@
   <button type="button" id="nativeInstallBtn" class="install-action" hidden>＋ Cài trên thiết bị này</button>
   <p class="dialog-note">Để lưu bài học offline, cần tải đủ các tệp PWA lên GitHub Pages. Mở file HTML trực tiếp sẽ không đăng ký Service Worker. Tiến độ học lưu cục bộ trên thiết bị.</p>
  </dialog>
+<dialog id="accountDialog" class="account-dialog" aria-labelledby="accountTitle">
+ <div class="dialog-head"><div><span class="dialog-kicker">WEB LAB CLOUD</span><h2 id="accountTitle">☁ Tài khoản và tiến độ</h2></div><button id="closeAccount" type="button" class="icon-btn" aria-label="Đóng">✕</button></div>
+ <p class="dialog-intro">Đăng nhập để học tiếp trên điện thoại hoặc máy tính khác. Bài đã học, bài tập, bài yêu thích và nháp code sẽ được đồng bộ khi cấu hình đám mây hoàn tất.</p>
+ <div id="accountMissing" class="account-alert" role="note"><strong>🔧 Chưa bật đăng nhập.</strong> Chủ website cần kết nối Supabase trong file <code>cloud-config.js</code> và chạy SQL <code>supabase-setup.sql</code>, theo <code>CLOUD-SETUP.md</code>. Hiện tại Web Lab vẫn lưu tiến độ offline như trước.</div>
+ <div id="accountReady">
+  <section id="accountSignedOut">
+   <form id="accountForm" class="account-form">
+    <label>Email<input id="accountLoginEmail" type="email" autocomplete="email" required placeholder="email@example.com"></label>
+    <label>Mật khẩu<input id="accountLoginPassword" type="password" minlength="8" autocomplete="current-password" required placeholder="Ít nhất 8 ký tự"></label>
+    <div class="account-buttons"><button type="submit" class="account-primary">Đăng nhập</button><button id="accountRegister" type="button">Tạo tài khoản</button></div>
+    <p class="account-note">Tài khoản mới có thể cần xác nhận email trước khi đăng nhập.</p>
+   </form>
+  </section>
+  <section id="accountSignedIn" hidden>
+   <p class="account-signed">✅ Tài khoản: <strong id="accountEmail"></strong></p>
+   <div class="account-buttons"><button id="accountSyncNow" type="button" class="account-primary">↻ Đồng bộ ngay</button><button id="accountLogout" type="button">Đăng xuất</button></div>
+   <p id="accountSyncStatus" class="account-note" role="status">Chờ đồng bộ</p>
+  </section>
+ </div>
+ <p id="accountFeedback" class="account-feedback" role="status" aria-live="polite" hidden></p>
+ <p class="account-privacy">🔐 Khi chưa cấu hình dịch vụ, Web Lab chỉ lưu dữ liệu trên thiết bị. Khi đăng xuất, tiến độ offline vẫn còn trên máy này.</p>
+</dialog>
  <div class="toast" id="toast" role="status" aria-live="polite"></div>
  <script src="html-data.js"></script>
  <script src="extra-data.js"></script>
@@ -234,9 +276,12 @@
  <script src="practice-projects.js"></script>
  <script src="course-data.js?v=5.0"></script>
  <script src="learning-paths.js?v=6.0"></script>
- <script src="script.js?v=6.0"></script>
- <script src="practice.js?v=6.0"></script>
+ <script src="learning-guide-deep.js?v=8.0"></script>
+ <script src="script.js?v=8.0"></script>
+ <script src="practice.js?v=8.0"></script>
  <script src="editor-vscode.js?v=7.0"></script>
+ <script src="cloud-config.js?v=8.0"></script>
+ <script src="cloud-sync.js?v=8.0"></script>
  <script src="pwa.js"></script>
 </body>
 </html>
