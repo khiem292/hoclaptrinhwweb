@@ -13,8 +13,8 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 8.5 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
- <link rel="stylesheet" href="style.css?v=8.1">
+ <title>Web Lab 9.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <link rel="stylesheet" href="style.css?v=9.0">
  <link rel="stylesheet" href="practice.css?v=5.5">
  <style id="practice-inline-styles">
 /* Web Lab 4.0 — practice and projects */
@@ -221,6 +221,62 @@
 #accountRecovery .account-form h3{margin:0;color:#372d79;font-size:19px}
 #accountRecovery .account-form p{margin:0}
 </style>
+ <style id="wl-animated-video-styles">
+
+/* WEB LAB 9.0 — Mini bài giảng chuyển động theo mục tiêu bài học, không phụ thuộc video bên ngoài */
+.wl-video-lesson{min-width:0}
+.wl-video-intro,.wl-video-note{font-size:13px;line-height:1.65;color:#727a95;overflow-wrap:anywhere;margin:11px 0 15px}
+.wl-video-note{font-size:12px;margin:12px 0 0;color:#7a8099}
+.wl-video-player{border-radius:18px;overflow:hidden;border:1px solid #262c4b;box-shadow:0 14px 40px #1c185020;background:#15192b;color:#eef1ff}
+.wl-video-stage{min-height:360px;aspect-ratio:16/10;box-sizing:border-box;padding:21px 24px 16px;position:relative;display:flex;flex-direction:column;gap:14px;overflow:hidden;background:radial-gradient(ellipse at 90% 15%,#55419c85,transparent 50%),radial-gradient(ellipse at 5% 95%,#234b8170,transparent 55%),linear-gradient(135deg,#161d33,#1a1834 72%);font-family:system-ui,-apple-system,Arial,sans-serif}
+.wl-video-stage:before{content:"";position:absolute;right:-120px;top:-180px;width:310px;height:310px;border:1px solid #b9aafa24;border-radius:50%;pointer-events:none}
+.wl-video-top,.wl-video-stagefooter{display:flex;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:1}
+.wl-video-brand{font-size:10px;letter-spacing:.16em;font-weight:850;color:#c6b6ff}
+.wl-video-badge{font-size:10px;letter-spacing:.09em;font-weight:800;border:1px solid #a18bfb55;color:#dbd2ff;padding:5px 9px;border-radius:99px;background:#8873d21f}
+.wl-video-copy{position:relative;z-index:1;margin:auto 0 6px}
+.wl-video-copy h4{font-size:clamp(21px,3vw,31px);font-weight:850;line-height:1.25;margin:0 0 12px;letter-spacing:-.018em;color:#fff;overflow-wrap:anywhere}
+.wl-video-copy>p{font-size:clamp(13px,1.6vw,16px);line-height:1.7;color:#dfe5ff;max-width:75ch;margin:0 0 11px;overflow-wrap:anywhere}
+.wl-video-extra{background:#ffffff12;border-left:3px solid #af9aff;border-radius:0 9px 9px 0;padding:10px 12px;font-size:13px;line-height:1.65;color:#eff0ff;overflow-wrap:anywhere}
+.wl-video-terminal{position:relative;z-index:1;background:#0e1223dd;border:1px solid #4b4c76;border-radius:12px;min-height:82px;max-height:210px;overflow:hidden}
+.wl-video-terminal[hidden]{display:none!important}
+.wl-video-terminalbar{display:flex;align-items:center;gap:5px;background:#232941;border-bottom:1px solid #3a4365;padding:8px 11px;color:#e2e5fc;font:700 11px/1.3 ui-monospace,monospace}
+.wl-video-terminalbar i{display:inline-block;flex:none;width:8px;height:8px;border-radius:50%;background:#ee7b76}
+.wl-video-terminalbar i:nth-child(2){background:#f0ca74}
+.wl-video-terminalbar i:nth-child(3){background:#74c792}
+.wl-video-terminalbar span{margin-left:12px}
+.wl-video-terminal pre{font:500 12px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;overflow:auto;max-height:160px;min-height:45px;margin:0;padding:13px;color:#bedcfb;white-space:pre-wrap;overflow-wrap:anywhere;display:block}
+.wl-video-caret{color:#e0aefe;animation:wl-video-caret-blink .9s step-end infinite}
+.wl-video-stagefooter{font-size:10px;color:#b4bad9;letter-spacing:.08em;font-weight:800;margin-top:auto}
+.wl-video-progress{display:flex;gap:14px;align-items:center;padding:13px 17px 5px;background:#191d30}
+.wl-video-progress input[type=range]{appearance:none;-webkit-appearance:none;flex:1;min-width:0;height:6px;border-radius:99px;outline-offset:6px;background:linear-gradient(to right,#a48cfb 0%,#a48cfb var(--wl-seek-fill,0%),#494d66 var(--wl-seek-fill,0%),#494d66 100%);cursor:pointer;touch-action:pan-y}
+.wl-video-progress input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:#dcd5ff;border:3px solid #9074ea;box-shadow:0 2px 7px #0008}
+.wl-video-progress input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#dcd5ff;border:3px solid #9074ea}
+.wl-video-ticks{font-size:11px;font-weight:750;color:#c5bfed;white-space:nowrap}
+.wl-video-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px;padding:11px 14px 14px;background:#191d30}
+.wl-video-controls button{font:750 12px/1.4 system-ui,-apple-system,sans-serif;min-height:42px;border:1px solid #4d4c72;border-radius:10px;background:#292b4a;color:#ebeafd;padding:10px 13px;cursor:pointer}
+.wl-video-controls button:hover{background:#37335b}
+.wl-video-controls button:focus-visible{outline:2px solid #d9c4ff;outline-offset:3px}
+.wl-video-controls button:disabled{opacity:.35;cursor:default}
+.wl-video-controls button.wl-video-play{background:#795de3;border-color:#967af0;color:#fff;min-width:140px}
+.wl-video-controls button.wl-video-play:hover{background:#8c70ed}
+.wl-video-caption{margin:0;border-top:1px solid #3d4159;background:#21263d;padding:10px 16px;font-size:12px;line-height:1.6;color:#c5cbea;overflow-wrap:anywhere}
+@keyframes wl-video-caret-blink{50%{opacity:0}}
+@media(max-width:720px){
+.wl-video-stage{aspect-ratio:auto;min-height:440px;padding:16px 15px 12px;gap:12px}
+.wl-video-copy h4{font-size:22px}
+.wl-video-copy p{font-size:13px;line-height:1.65}
+.wl-video-extra{font-size:12px}
+.wl-video-brand,.wl-video-badge,.wl-video-stagefooter{font-size:9px}
+.wl-video-terminal pre{font-size:12px}
+.wl-video-progress{gap:9px;padding:13px 12px 5px}
+.wl-video-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;padding:11px}
+.wl-video-controls button{width:100%;font-size:12px;min-height:44px}
+.wl-video-controls .wl-video-play{order:-1;grid-column:1/-1}
+.wl-video-caption{font-size:11px;padding:10px 12px}
+}
+@media(prefers-reduced-motion:reduce){.wl-video-caret{animation:none}.wl-video-controls button{transition:none}}
+
+ </style>
 </head>
 <body>
  <div class="app-shell">
@@ -305,7 +361,8 @@
  <script src="course-data.js?v=5.0"></script>
  <script src="learning-paths.js?v=6.0"></script>
  <script src="learning-guide-deep.js?v=8.0"></script>
- <script src="script.js?v=8.0"></script>
+ <script src="lesson-video.js?v=9.0"></script>
+ <script src="script.js?v=9.0"></script>
  <script src="practice.js?v=8.0"></script>
  <script src="editor-vscode.js?v=7.0"></script>
  <script src="cloud-config.js?v=8.2"></script>
