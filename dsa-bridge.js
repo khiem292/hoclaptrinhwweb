@@ -19,4 +19,6 @@ window.WebLabDSABridge={
   course?.render?.();
  }
 };
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>window.WebLabDSABridge?.activate(),{once:true});
+else queueMicrotask(()=>window.WebLabDSABridge?.activate());
 })();
