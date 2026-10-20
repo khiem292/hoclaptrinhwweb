@@ -13,7 +13,7 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 8.3 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <title>Web Lab 8.4 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
  <link rel="stylesheet" href="style.css?v=8.1">
  <link rel="stylesheet" href="practice.css?v=5.5">
  <style id="practice-inline-styles">
@@ -214,6 +214,13 @@
 @media (max-width:370px) { .topbar-actions #accountBtn {padding:8px; font-size:11px;} .topbar-actions #studioBtn span {display:none;} .topbar-actions #studioBtn {min-width:40px;} }
 .topbar-actions #accountBtn:focus-visible {outline:3px solid #baa7fc; outline-offset:2px;}
 </style>
+<style id="weblab-password-reset-styles">
+.account-forgot{display:inline-block;border:0;background:transparent;color:#6850c7;font-size:13px;font-weight:750;text-decoration:underline;text-underline-offset:3px;padding:9px 2px;cursor:pointer;text-align:left}
+.account-forgot:hover{color:#4b32a1}
+.account-forgot:focus-visible{outline:3px solid #b5a3ef;border-radius:5px}
+#accountRecovery .account-form h3{margin:0;color:#372d79;font-size:19px}
+#accountRecovery .account-form p{margin:0}
+</style>
 </head>
 <body>
  <div class="app-shell">
@@ -267,7 +274,17 @@
     <label>Email<input id="accountLoginEmail" type="email" autocomplete="email" required placeholder="email@example.com"></label>
     <label>Mật khẩu<input id="accountLoginPassword" type="password" minlength="8" autocomplete="current-password" required placeholder="Ít nhất 8 ký tự"></label>
     <div class="account-buttons"><button type="submit" class="account-primary">Đăng nhập</button><button id="accountRegister" type="button">Tạo tài khoản</button></div>
+    <button type="button" id="accountForgotPassword" class="account-forgot">Quên mật khẩu? Gửi email đặt lại</button>
     <p class="account-note">Tài khoản mới có thể cần xác nhận email trước khi đăng nhập.</p>
+   </form>
+  </section>
+  <section id="accountRecovery" hidden>
+   <form id="accountRecoveryForm" class="account-form">
+    <h3>🔐 Đặt lại mật khẩu</h3>
+    <p class="account-note">Bạn đã mở liên kết đặt lại mật khẩu từ email. Hãy chọn mật khẩu mới.</p>
+    <label>Mật khẩu mới<input id="accountNewPassword" type="password" autocomplete="new-password" minlength="8" required placeholder="Tối thiểu 8 ký tự"></label>
+    <label>Nhập lại mật khẩu<input id="accountNewPasswordConfirm" type="password" autocomplete="new-password" minlength="8" required placeholder="Nhập lại mật khẩu"></label>
+    <div class="account-buttons"><button type="submit" class="account-primary">Lưu mật khẩu mới</button></div>
    </form>
   </section>
   <section id="accountSignedIn" hidden>
@@ -292,7 +309,7 @@
  <script src="practice.js?v=8.0"></script>
  <script src="editor-vscode.js?v=7.0"></script>
  <script src="cloud-config.js?v=8.2"></script>
- <script src="cloud-sync.js?v=8.3"></script>
+ <script src="cloud-sync.js?v=8.4"></script>
  <script src="pwa.js"></script>
 </body>
 </html>
