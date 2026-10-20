@@ -126,6 +126,7 @@
     const persistDraft=()=>{
    code[active]=textarea.value;state.drafts[item.id]={...code};
    const timestamps=read('draftUpdatedAt',{});timestamps[item.id]=Date.now();persist('draftUpdatedAt',timestamps);persist('drafts',state.drafts);
+   window.dispatchEvent(new CustomEvent('webLab:codeSaved',{detail:{id:item.id,code:{...code}}}));
 };
     textarea.addEventListener('input',persistDraft);
     textarea.addEventListener('keydown',event=>{if(event.key==='Tab'){event.preventDefault();textarea.setRangeText('  ',textarea.selectionStart,textarea.selectionEnd,'end');persistDraft();}if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();runPreview();toast('Đã chạy code!')}});
@@ -211,6 +212,33 @@
   $('jsCount').textContent=LESSONS.filter(l=>l.kind==='js').length;
   $('webCount').textContent=LESSONS.filter(l=>l.kind==='web').length;
   syncTracks();renderNav();renderCatalog();updateProgress();renderLesson();
+  window.WebLabWorkspace={
+    get currentId(){return state.selected},
+    get currentTitle(){return itemMap.get(state.selected)?.name||'Bài học'},
+    getCode(){
+      const item=itemMap.get(state.selected);
+      if(!item)return null;
+      const code=currentCode(item);
+      const textarea=$('codeEditor');
+      if(textarea)code[state.editorTab]=textarea.value;
+      return code;
+    },
+    replaceCode(next){
+      const item=itemMap.get(state.selected);
+      if(!item||!next||typeof next!=='object')return false;
+      const source=currentCode(item);
+      const update={};
+      for(const field of ['html','css','scss','js']){
+        update[field]=typeof next[field]==='string'?next[field]:source[field]||'';
+      }
+      state.drafts[item.id]=update;
+      const clocks=read('draftUpdatedAt',{});clocks[item.id]=Date.now();
+      persist('draftUpdatedAt',clocks);persist('drafts',state.drafts);
+      renderLesson();
+      window.dispatchEvent(new CustomEvent('webLab:codeSaved',{detail:{id:item.id,code:{...update},restored:true}}));
+      return true;
+    }
+  };
   window.WEB_LAB_NAVIGATE=selectLesson;
   window.__WEB_LAB_TEST__={get count(){return LESSONS.length},get track(){return state.track},get selected(){return state.selected}};
 })();
