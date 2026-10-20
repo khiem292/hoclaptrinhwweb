@@ -233,7 +233,7 @@ function init(){
  $('wl13ProjectsTab')?.addEventListener('click',()=>{dialog.dataset.tab='projects';render()});
  dialog.addEventListener('click',e=>{if(e.target===dialog)dialog.close()});
  window.addEventListener('webLab:codeSaved',onChanged);
- window.addEventListener('pagehide',()=>{clearTimeout(pending);pending=null;const code=activeCode();if(code)snapshot({code})});
+ window.addEventListener('pagehide',()=>{clearTimeout(pending);pending=null;const code=activeCode();if(code)snapshot({code,force:true})});
 }
 window.WebLabV13={snapshot,zipBlob,crc32,projectList,historyList,show};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
