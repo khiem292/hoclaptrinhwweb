@@ -1,0 +1,22 @@
+/* Web Lab 14.0: DSA subject uses the existing editor, guide and practice styles. */
+.track-tab[data-track="dsa"]{
+ background:#f3edff;border:1px solid #ddcffc;color:#6944b8;
+ font-weight:850;display:inline-flex;align-items:center;gap:5px;
+}
+.track-tab[data-track="dsa"].active{background:#6b4cc6;color:white;border-color:#6b4cc6}
+.track-tab[data-track="dsa"]:hover:not(.active){background:#e8dbfc}
+.kind-pill.dsa{background:#ebe4ff;color:#573cb0;border:1px solid #d6c6fa}
+.learning-track[data-path="dsa"]{border:1px solid #d7c2fa;background:linear-gradient(120deg,#f4eeff,#fff)}
+.learning-track[data-path="dsa"].active{border-color:#9372e3;background:#ede5ff}
+.lesson:has(.kind-pill.dsa) .lesson-lead{color:#615a7d}
+.lesson:has(.kind-pill.dsa) .guide-deep{border-color:#dfd0f9;background:#fbf8ff}
+.lesson:has(.kind-pill.dsa) .lesson-guide-example{font-variant-ligatures:none}
+.lesson:has(.kind-pill.dsa) .practice-heading .practice-kicker{color:#6843ba}
+.lesson:has(.kind-pill.dsa) #practiceFeedback{
+ white-space:pre-wrap;overflow-wrap:anywhere;
+}
+#practiceCheck:disabled{opacity:.58;cursor:progress}
+@media(max-width:720px){
+ .track-tab[data-track="dsa"]{min-height:41px;flex:none}
+ .learning-track[data-path="dsa"]{min-height:100px}
+}
