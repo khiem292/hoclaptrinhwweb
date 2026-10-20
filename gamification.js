@@ -63,7 +63,7 @@ function renderOverview(root,stats){
  '<p class="wl-gam-minor">Còn <b>'+(150-current)+'</b> XP để lên cấp tiếp theo.</p>'+
  '<div class="wl-gam-progress-track wl-gam-levelbar"><div style="width:'+Math.round(current/150*100)+'%"></div></div>'+
  '<div class="wl-gam-two">'+
- '<section class="wl-gam-panel"><h3>📊 Tiến độ 7 lộ trình</h3>'+groups.join('')+'</section>'+
+ '<section class="wl-gam-panel"><h3>📊 Tiến độ '+tracks().length+' lộ trình</h3>'+groups.join('')+'</section>'+
  '<section class="wl-gam-panel"><h3>🎖️ Huy hiệu thành tích</h3><div class="wl-gam-badges">'+milestones.map(m=>
  '<div class="wl-gam-badge '+(m.earned?'earned':'locked')+'"><strong>'+esc(m.name)+'</strong><span>'+esc(m.desc)+(m.earned?' · Đã đạt':' · Chưa mở khóa')+'</span></div>').join('')+
  '</div></section></div>'+
@@ -75,7 +75,7 @@ function renderChallenges(root,stats){
  const options='<div class="wl-gam-filter"><label for="wlGamFilter">Chọn lộ trình</label><select id="wlGamFilter"><option value="all">Tất cả 7 lộ trình</option>'+
  tracks().map(t=>'<option value="'+esc(t.id)+'"'+(t.id===track?' selected':'')+'>'+esc((t.icon||'📚')+' '+t.title)+'</option>').join('')+'</select></div>';
  const items=roadmap.filter(item=>!byTrack||byTrack.has(item.id));
- root.innerHTML='<div class="wl-gam-challenge-head"><div><h3>🎯 Thử thách lập trình</h3><p>66 bài thực hành có tiêu chí kiểm tra. Chọn bài đang mở, tự sửa code và bấm <b>✓ Kiểm tra bài làm</b>.</p></div></div>'+
+ root.innerHTML='<div class="wl-gam-challenge-head"><div><h3>🎯 Thử thách lập trình</h3><p>'+roadmap.length+' bài thực hành có tiêu chí kiểm tra. Chọn bài đang mở, tự sửa code và bấm <b>✓ Kiểm tra bài làm</b>.</p></div></div>'+
  options+'<div class="wl-gam-challenge-grid">'+items.map(item=>{
   const total=item.practice.goals.length,passed=stats.counts[item.id]||0;
   const done=passed===total;
