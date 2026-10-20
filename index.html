@@ -13,8 +13,8 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 11.1 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
- <link rel="stylesheet" href="style.css?v=11.1">
+ <title>Web Lab 12.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <link rel="stylesheet" href="style.css?v=12.0">
  <link rel="stylesheet" href="practice.css?v=5.5">
  <style id="practice-inline-styles">
 /* Web Lab 4.0 — practice and projects */
@@ -239,11 +239,11 @@
   <main class="workspace">
    <header class="topbar">
     <div class="topbar-left"><button type="button" id="menuBtn" class="icon-btn menu-button" aria-label="Mở danh mục" aria-expanded="false">☰</button><span class="breadcrumb">KHÔNG GIAN HỌC TẬP <span> / </span> <strong>Thư viện web</strong></span></div>
-    <div class="topbar-actions"><button type="button" class="top-link" id="accountBtn" aria-label="Tài khoản và đồng bộ">☁ <span>Đăng nhập</span></button><button type="button" class="top-link" id="appHelpBtn" aria-label="Hướng dẫn cài Web Lab trên điện thoại">▣ <span>Cài ứng dụng</span></button><button type="button" class="top-link" id="roadmapBtn">🗺️ <span>Lộ trình học A–Z</span></button><button type="button" class="top-primary" id="studioBtn">⌘ <span>Sân chơi code</span></button></div>
+    <div class="topbar-actions"><button type="button" class="top-link" id="accountBtn" aria-label="Tài khoản và đồng bộ">☁ <span>Đăng nhập</span></button><button type="button" class="top-link wl-gam-nav" id="gamificationBtn" aria-label="Xem thành tích và thử thách">🏆 <span>Thành tích</span> <b id="gamificationXP">0</b> XP</button><button type="button" class="top-link" id="appHelpBtn" aria-label="Hướng dẫn cài Web Lab trên điện thoại">▣ <span>Cài ứng dụng</span></button><button type="button" class="top-link" id="roadmapBtn">🗺️ <span>Lộ trình học A–Z</span></button><button type="button" class="top-primary" id="studioBtn">⌘ <span>Sân chơi code</span></button></div>
    </header>
    <div class="main-inner">
     <section class="hero" aria-label="Giới thiệu Web Lab">
-     <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> TRUNG TÂM THỰC HÀNH FRONTEND</span><h1>Học làm web.<br><em>Hiểu từ gốc.</em></h1><p>Tra cứu kiến thức HTML, CSS, SCSS, JavaScript và phát triển website. Đọc giải thích, tự sửa code và xem kết quả ngay lập tức.</p><div class="hero-chips"><span>✦ Kiến thức tiếng Việt</span><span>⌘ Editor 4 ngôn ngữ</span><span>⚡ Chạy trực tiếp</span></div></div>
+     <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> TRUNG TÂM THỰC HÀNH FRONTEND</span><h1>Học làm web.<br><em>Hiểu từ gốc.</em></h1><p>Tra cứu kiến thức HTML, CSS, SCSS, JavaScript và phát triển website. Đọc giải thích, tự sửa code và xem kết quả ngay lập tức.</p><div class="hero-chips"><span>✦ Kiến thức tiếng Việt</span><span>⌘ Editor 4 ngôn ngữ</span><span>⚡ Chạy trực tiếp</span><button type="button" id="gamificationHeroBtn" class="wl-gam-hero-btn">🏆 Thử thách & XP →</button></div></div>
      <div class="hero-window" aria-hidden="true"><div class="window-head"><span class="dots"><i></i><i></i><i></i></span><span>my-first-website</span><span>↗</span></div><div class="window-code"><div><span class="pink">&lt;h1&gt;</span>Hello, world!<span class="pink">&lt;/h1&gt;</span></div><div><span class="yellow">h1</span> { <span class="blue">color</span>: <span class="green">purple</span>; }</div><div><span class="blue">console</span>.<span class="yellow">log</span>(<span class="green">"Let's build!"</span>);</div></div><div class="window-bottom"><span>● Running</span><span>HTML · CSS · SCSS · JS</span></div></div>
     </section>
     <section class="stats-row" aria-label="Thống kê thư viện"><div class="stat"><span class="stat-icon stat-orange">▤</span><span><strong id="htmlCount">—</strong><small>Thẻ & thuộc tính HTML</small></span></div><div class="stat"><span class="stat-icon stat-blue">✿</span><span><strong id="cssCount">—</strong><small>Bài học CSS</small></span></div><div class="stat"><span class="stat-icon stat-yellow">JS</span><span><strong id="jsCount">—</strong><small>Bài học JavaScript</small></span></div><div class="stat"><span class="stat-icon stat-green">⌘</span><span><strong id="webCount">—</strong><small>Web & dự án</small></span></div></section>
@@ -256,6 +256,18 @@
    </div>
   </main>
  </div>
+
+ <dialog id="gamificationDialog" class="wl-gam-dialog" aria-labelledby="gamificationTitle">
+  <div class="wl-gam-dialog-top">
+   <div><span class="wl-gam-kicker">WEB LAB • LEVEL UP</span><h2 id="gamificationTitle">🏆 Học tập & thử thách</h2><p>Học code • Vượt thử thách • Tích lũy XP</p></div>
+   <button type="button" id="gamificationClose" class="wl-gam-close" aria-label="Đóng bảng thành tích">✕</button>
+  </div>
+  <div class="wl-gam-tabs" role="tablist" aria-label="Thành tích và thử thách">
+   <button type="button" id="gamificationOverviewTab" class="selected" role="tab" aria-selected="true" aria-controls="gamificationContent">📊 Tổng quan & XP</button>
+   <button type="button" id="gamificationChallengeTab" role="tab" aria-selected="false" aria-controls="gamificationContent">🎯 66 thử thách</button>
+  </div>
+  <div class="wl-gam-body" id="gamificationContent" aria-live="polite"><p>Đang tải tiến độ học tập...</p></div>
+ </dialog>
  <dialog id="roadmapDialog" class="roadmap-dialog roadmap-dialog-v5" aria-labelledby="roadmapTitle"><div class="dialog-head"><div><span class="dialog-kicker">KHÓA HỌC TỪ A ĐẾN Z</span><h2 id="roadmapTitle">Lộ trình học làm website</h2></div><button id="closeRoadmap" class="icon-btn" aria-label="Đóng lộ trình">✕</button></div><p class="dialog-intro">7 lộ trình, 66 bài thực hành: Frontend A–Z, HTML/CSS nâng cao, JavaScript, SCSS, UI/UX, dự án và kỹ năng web. Bài tập có kiểm tra ở cuối chặng; vượt qua mới mở khóa chặng tiếp theo. Thư viện thẻ và thuộc tính HTML chỉ để tra cứu, không có bài tập bắt buộc.</p><p class="roadmap-progress-v5" id="roadmapProgressV5"></p><div id="roadmapTracksV6" class="learning-tracks" aria-label="Chọn lộ trình học"></div><p id="roadmapAboutV6" class="learning-track-about"></p><div id="roadmapStepsV5" class="roadmap-steps-v5"></div><p class="dialog-note">Kiểm tra tự động chủ yếu dựa vào mã nguồn, không đánh giá đầy đủ giao diện hay logic thực thi. Tiến độ lưu trên thiết bị này.</p></dialog>
 <dialog id="installDialog" class="roadmap-dialog install-dialog" aria-labelledby="installTitle">
   <div class="dialog-head"><div><span class="dialog-kicker">WEB LAB TRÊN ĐIỆN THOẠI</span><h2 id="installTitle">Cài Web Lab như một app</h2></div><button type="button" id="closeInstall" class="icon-btn" aria-label="Đóng hướng dẫn">✕</button></div>
@@ -311,6 +323,7 @@
  <script src="editor-vscode.js?v=7.0"></script>
  <script src="cloud-config.js?v=8.2"></script>
  <script src="cloud-sync.js?v=11.0"></script>
+ <script src="gamification.js?v=12.0"></script>
  <script src="pwa.js"></script>
 </body>
 </html>
