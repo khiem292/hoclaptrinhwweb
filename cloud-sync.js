@@ -284,6 +284,6 @@ function init(){
   updateSyncStatus('Chưa cấu hình dịch vụ đăng nhập. Tiến độ vẫn lưu trên thiết bị này.');
  }
 }
-window.WebLabCloud={sync:()=>sync({refreshView:true}),get configured(){return configured},get loggedIn(){return Boolean(session)},markChanged:field=>{if(field)stamp(field);schedule()}};
+window.WebLabCloud={sync:()=>sync({refreshView:true}),get configured(){return configured},get loggedIn(){return Boolean(session)},getAccessToken:()=>freshToken(),markChanged:field=>{if(field)stamp(field);schedule()}};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
