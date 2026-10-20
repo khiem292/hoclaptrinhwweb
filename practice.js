@@ -113,8 +113,18 @@
       }
     });
   }
-  function check(item) {
-    const code=currentCode(item),results=validate(item,code);
+  async function check(item) {
+    const code=currentCode(item);
+    let results;
+    if(item.dsa){
+      const button=$('practiceCheck');
+      button.disabled=true;
+      $('practiceFeedback').textContent='🧪 Đang chạy kiểm thử JavaScript...';
+      try{results=await window.WebLabDSA.check(item,code.js)}
+      catch(error){$('practiceFeedback').textContent='⚠ '+String(error.message||error);return}
+      finally{button.disabled=false}
+      if(window.__WEB_LAB_TEST__?.selected!==item.id)return;
+    }else results=validate(item,code);
     const old=new Set(progress[item.id]||[]);
     for (const result of results) if (result.pass) old.add(result.id);
     progress[item.id]=[...old];save();
