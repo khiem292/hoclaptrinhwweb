@@ -146,10 +146,12 @@ async function signIn(email,password){
  await sync({refreshView:true});
 }
 async function signUp(email,password){
- const d=await request('/auth/v1/signup',{method:'POST',body:{email,password}});
+ // Confirm email should return to this GitHub Pages project, not the account root.
+ const redirectUrl=new URL('./',window.location.href).href;
+ const d=await request('/auth/v1/signup?redirect_to='+encodeURIComponent(redirectUrl),{method:'POST',body:{email,password}});
  if(d?.access_token&&d?.refresh_token&&d?.user?.id){
   setSession(d);notify('✅ Đã tạo tài khoản. Đang đồng bộ...');await sync({refreshView:true});
- }else{notify('📩 Đã gửi yêu cầu đăng ký. Nếu cần, hãy kiểm tra email xác nhận rồi quay lại đăng nhập.');}
+ }else{notify('📩 Nếu bạn nhận được thư xác nhận, hãy nhấn liên kết trong email. Sau khi xác nhận, quay lại Web Lab để đăng nhập. Nếu gặp lỗi 404, kiểm tra Site URL và Redirect URLs trong Supabase.');}
 }
 async function logout(){
  try{if(session){const token=await freshToken();await request('/auth/v1/logout',{method:'POST',token})}}catch{}
