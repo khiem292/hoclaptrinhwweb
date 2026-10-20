@@ -1,13 +1,13 @@
 {
-  "version": "14.0",
+  "version": "15.0",
   "date": "2026-10-21",
-  "title": "Môn Cấu trúc dữ liệu và giải thuật (DSA)",
+  "title": "Gia sư AI hỏi đáp trực tiếp trong Web Lab",
   "notes": [
-    "🧠 Thêm lộ trình thứ 8: Cấu trúc dữ liệu & Giải thuật bằng JavaScript, gồm 18 bài từ cơ bản đến nâng cao.",
-    "📚 Giải thích bằng tiếng Việt: Array, Big O, Searching, Sorting, Stack, Queue, Linked List, Hash Map, Recursion, Tree, Graph và Dynamic Programming.",
-    "🧪 Kiểm tra đáp án thuật toán bằng các ca kiểm thử thực thi trong Web Worker riêng biệt, không chỉ tìm từ khóa trong mã.",
-    "🏆 Tổng cộng 84 bài thuộc 8 lộ trình; tiến độ bài DSA được tính vào thành tích và đồng bộ Supabase theo cơ chế học tập hiện có.",
-    "📱 Thêm danh mục DSA riêng, hoạt động trên iPhone và có thể học ngoại tuyến sau khi tải bản mới.",
-    "🔔 Bản cập nhật sẽ hiện tại chuông thông báo; giữ nguyên các dự án, tiến độ, XP và lịch sử code trước đây."
+    "✦ Thêm nút Hỏi AI riêng ở góc trang, không gây chật thanh công cụ trên iPhone.",
+    "📘 Hỏi đáp tiếng Việt theo bài học hiện tại: HTML, CSS, SCSS, JavaScript và Cấu trúc dữ liệu & Giải thuật (DSA).",
+    "🐞 Gửi code kèm câu hỏi để nhận gợi ý sửa lỗi; chỉ gửi khi người học tích chọn rõ ràng.",
+    "🛡️ Sử dụng Supabase Edge Function để giữ khóa AI trên máy chủ; phải đăng nhập Web Lab Cloud, giới hạn 12 lượt/ngày/tài khoản.",
+    "📲 Giao diện chat hỗ trợ điện thoại, gợi ý câu hỏi và nút mở cuộc trò chuyện mới.",
+    "🔐 Chủ Web Lab cần cấu hình OPENAI_API_KEY trên Supabase trước khi AI thực sự tạo câu trả lời. Dữ liệu học tập trước đây vẫn giữ nguyên."
   ]
 }
