@@ -1,12 +1,13 @@
 {
-  "version": "13.1",
+  "version": "14.0",
   "date": "2026-10-21",
-  "title": "Giao diện thanh công cụ gọn gàng trên iPhone",
+  "title": "Môn Cấu trúc dữ liệu và giải thuật (DSA)",
   "notes": [
-    "📱 Thiết kế lại thanh công cụ điện thoại thành hai hàng cân đối, không còn chữ bị xuống dòng hay nút bị cắt.",
-    "☁ Tài khoản, 🏆 XP và 🔔 thông báo hiện rõ ở hàng trên.",
-    "▣ Cài ứng dụng, 🗺️ Lộ trình học và ⌘ Viết code dễ chạm ở hàng dưới.",
-    "🖥️ Điều chỉnh thanh công cụ trên máy tính bảng và màn hình vừa để tránh chèn ép.",
-    "💾 Giữ nguyên các dự án đã lưu, tiến độ, cấp độ và các tính năng phiên bản 13.0."
+    "🧠 Thêm lộ trình thứ 8: Cấu trúc dữ liệu & Giải thuật bằng JavaScript, gồm 18 bài từ cơ bản đến nâng cao.",
+    "📚 Giải thích bằng tiếng Việt: Array, Big O, Searching, Sorting, Stack, Queue, Linked List, Hash Map, Recursion, Tree, Graph và Dynamic Programming.",
+    "🧪 Kiểm tra đáp án thuật toán bằng các ca kiểm thử thực thi trong Web Worker riêng biệt, không chỉ tìm từ khóa trong mã.",
+    "🏆 Tổng cộng 84 bài thuộc 8 lộ trình; tiến độ bài DSA được tính vào thành tích và đồng bộ Supabase theo cơ chế học tập hiện có.",
+    "📱 Thêm danh mục DSA riêng, hoạt động trên iPhone và có thể học ngoại tuyến sau khi tải bản mới.",
+    "🔔 Bản cập nhật sẽ hiện tại chuông thông báo; giữ nguyên các dự án, tiến độ, XP và lịch sử code trước đây."
   ]
 }
