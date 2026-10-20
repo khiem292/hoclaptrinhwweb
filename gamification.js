@@ -17,7 +17,8 @@ const read=(name,fallback)=>{
 const ranks=['Người mới bắt đầu','Tập sự HTML','Người học CSS','Thực hành JavaScript','Thợ xây giao diện','Frontend Explorer','Frontend Developer'];
 function rankFor(level){return ranks[Math.min(ranks.length-1,Math.floor((level-1)/3))]}
 function summary(){
- const completed=new Set((read('completed',[])||[]).filter(x=>validIds.has(x)));
+ const savedCompleted=read('completed',[]);
+ const completed=new Set((Array.isArray(savedCompleted)?savedCompleted:[]).filter(x=>validIds.has(x)));
  const values=read('practiceV4',{});
  const practice=values&&typeof values==='object'&&!Array.isArray(values)?values:{};
  let passed=0,goalsPassed=0,goalTotal=0,points=completed.size*10;
@@ -96,10 +97,13 @@ function renderChallenges(root,stats){
  }));
 }
 function render(){
- const root=$('gamificationContent');if(!root)return;
  const s=summary();
  const preview=$('gamificationXP');
  if(preview)preview.textContent=s.xp>=1000?(s.xp/1000).toFixed(1)+'k':String(s.xp);
+ // Draft autosave dispatches dataChanged on every keystroke.
+ // Never rebuild 66 challenge cards while the dialog is closed.
+ const root=$('gamificationContent');
+ if(!root||!$('gamificationDialog')?.open)return;
  root.textContent='';
  if(tab==='challenges')renderChallenges(root,s);
  else renderOverview(root,s);
@@ -109,9 +113,10 @@ function render(){
  $('gamificationChallengeTab')?.classList.toggle('selected',tab==='challenges');
 }
 function show(nextTab){
- tab=nextTab||tab;render();
+ tab=nextTab||tab;
  const modal=$('gamificationDialog');
  if(modal&&!modal.open)modal.showModal();
+ render();
 }
 function init(){
  const open=$('gamificationBtn'),dialog=$('gamificationDialog');
