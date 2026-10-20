@@ -1,0 +1,12 @@
+{
+  "version": "13.0",
+  "date": "2026-10-21",
+  "title": "Dự án cá nhân, lịch sử code và thông báo cập nhật",
+  "notes": [
+    "📁 Lưu nhiều dự án HTML, CSS, SCSS và JavaScript; đặt tên, mở lại hoặc xóa dự án.",
+    "🕘 Tự lưu các phiên bản code để có thể khôi phục khi sửa sai.",
+    "⬇️ Xuất dự án thành tệp ZIP với mã nguồn hoàn chỉnh, sử dụng được khi không có Internet.",
+    "🔔 Chuông thông báo có badge, ghi chú phiên bản mới và kiểm tra cập nhật khi mở lại website.",
+    "✅ Giữ nguyên bài tập, XP, đăng nhập Supabase; AI và video không được thêm trở lại."
+  ]
+}
