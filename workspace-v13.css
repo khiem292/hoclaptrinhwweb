@@ -1,0 +1,59 @@
+/* Web Lab 13.0 — code workspaces and version notifications */
+.wl13-update-button{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:42px;padding:8px 11px;border:1px solid #e5ddfb;border-radius:11px;background:#f2efff;color:#6046bd;font-weight:800;white-space:nowrap}
+.wl13-update-dot{position:absolute;right:-3px;top:-5px;display:grid;place-items:center;width:17px;height:17px;border-radius:50%;font-size:10px;background:#e75063;border:2px solid #fff;color:white;line-height:1}
+.wl13-update-dot[hidden],.wl13-update-strip[hidden],#wl13UpdateApply[hidden]{display:none!important}
+.wl13-update-strip{background:linear-gradient(110deg,#ede6ff,#f5faff);border:1px solid #dcd0fa;border-radius:13px;color:#493a86;padding:12px 15px;margin:4px 0 19px;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap;font-size:13px;line-height:1.5}
+.wl13-update-strip button,.wl13-hero-projects{background:#624bcd;color:#fff;padding:9px 13px;border-radius:9px;font-weight:800;font-size:12px;cursor:pointer}
+.wl13-hero-projects{background:#faf9ff;border:1px solid #dbd3f7;color:#664bbb;min-height:39px}
+.wl13-dialog{width:min(860px,96vw);max-height:90dvh;background:#fbfbff;border:1px solid #ddd5f5;color:#2b294d;border-radius:18px;padding:0;overflow:hidden;box-shadow:0 22px 65px #161a3b66}
+.wl13-dialog::backdrop{background:#131530a8}
+.wl13-modal-head{padding:19px 23px;background:linear-gradient(130deg,#2f295c,#634cc4);color:#fff;display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.wl13-modal-head small{display:block;color:#d2c6ff;font-size:10px;font-weight:850;letter-spacing:.1em}
+.wl13-modal-head h2{color:white;font-size:22px;line-height:1.3;margin:5px 0 6px}
+.wl13-modal-head p{margin:0;font-size:12px;color:#e3dfff}
+.wl13-modal-head button{width:40px;height:40px;flex:none;border-radius:10px;background:#ffffff26;color:#fff;cursor:pointer}
+.wl13-tabs{padding:11px 17px;border-bottom:1px solid #e9e4f7;display:flex;gap:10px;background:#fff}
+.wl13-tabs button{flex:1;min-height:43px;background:#f2f0fa;border:1px solid #e9e3f8;color:#69617e;border-radius:10px;font-weight:850;cursor:pointer;font-size:13px}
+.wl13-tabs button.selected{background:#eae4ff;border-color:#b6a5f2;color:#533bbd}
+.wl13-message{margin:0;color:#217651;font-size:12px;padding:0 19px;line-height:1.65}
+.wl13-message:not(:empty){padding-top:11px}
+.wl13-message.bad{color:#a12f43}
+.wl13-content{max-height:calc(90dvh - 175px);overflow:auto;padding:17px 19px 23px;overscroll-behavior:contain}
+.wl13-header h3,.wl13-content h3{margin:0 0 8px;font-size:18px;color:#3e326e}
+.wl13-header p,.wl13-note{font-size:12px;line-height:1.75;color:#777b95;margin:0 0 16px}
+.wl13-primary,.wl13-actions button,.wl13-item button,.wl13-form button{border:1px solid #dfd8f5;background:#fff;color:#5d4db4;border-radius:9px;padding:10px 13px;font-size:12px;font-weight:850;min-height:42px;cursor:pointer}
+.wl13-primary,.wl13-form button{background:#6550d2;color:#fff;border-color:#6550d2}
+.wl13-list{display:grid;gap:9px;margin-top:16px}
+.wl13-item,.wl13-project{border:1px solid #e7e3f4;border-radius:13px;background:#fff;padding:13px;display:flex;gap:12px;justify-content:space-between;align-items:center}
+.wl13-item strong,.wl13-project strong{display:block;font-size:13px;color:#35335e}
+.wl13-item span,.wl13-project span{display:block;font-size:11px;color:#8385a0;margin-top:5px;line-height:1.5}
+.wl13-item button{flex:none}
+.wl13-project{align-items:stretch;flex-direction:column}
+.wl13-actions{display:flex;gap:7px;flex-wrap:wrap}
+.wl13-actions button{font-size:11px;min-height:39px;padding:8px 11px}
+.wl13-actions button.wl13-primary{background:#6650d2;border-color:#6650d2;color:#fff}
+.wl13-actions button.wl13-danger{color:#a32943;border-color:#f1d1d9}
+.wl13-form{background:#f4f1fc;border:1px solid #e8e0f9;border-radius:12px;padding:15px}
+.wl13-form label{display:block;font-weight:750;color:#54477c;font-size:12px;margin-bottom:8px}
+.wl13-create{display:flex;gap:9px}
+.wl13-create input{background:#fff;border:1px solid #d5ceef;border-radius:9px;padding:10px;font-size:16px;flex:1;min-width:0}
+.wl13-empty{border:1px dashed #cabdf6;padding:27px 16px;text-align:center;color:#868198;font-size:13px;line-height:1.7;border-radius:13px;margin:18px 0;background:#faf9ff}
+.wl13-content>.wl13-note{margin-top:18px}
+.wl13-release-dialog{width:min(540px,96vw)}
+.wl13-version-tag{background:#f2edff;color:#664fbd;border-radius:99px;padding:8px 12px;font-weight:750;font-size:12px;display:inline-block;margin:0 0 18px}
+.wl13-release-list{padding-left:20px;display:grid;gap:12px;margin:14px 0 25px}
+.wl13-release-list li{font-size:13px;line-height:1.65;color:#57536e;padding-left:3px}
+.wl13-release-actions button{background:#6550d2;color:#fff;border-radius:9px;padding:11px 15px;font-size:13px;font-weight:850;min-height:44px;cursor:pointer}
+@media(max-width:850px){.topbar-actions #wl13UpdateBtn{display:inline-flex!important}.wl13-update-button span{display:none}.wl13-update-button{padding:9px 11px;min-width:42px;justify-content:center}}
+@media(max-width:620px){
+ .wl13-dialog{width:calc(100vw - 12px);max-height:calc(100dvh - 18px);border-radius:13px}
+ .wl13-modal-head{padding:15px}.wl13-modal-head h2{font-size:18px}
+ .wl13-content{max-height:calc(100dvh - 160px);padding:14px}
+ .wl13-create{flex-direction:column}
+ .wl13-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .wl13-actions button{font-size:11px;min-width:0;padding:8px 6px}
+ .wl13-item{flex-wrap:wrap}
+ .wl13-update-strip{font-size:12px}
+ .wl13-hero-projects{font-size:12px}
+ .topbar-actions #wl13UpdateBtn{padding:8px 9px;min-width:40px}
+}
