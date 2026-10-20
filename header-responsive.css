@@ -1,0 +1,188 @@
+/* Web Lab 13.1 — responsive toolbar repair.
+   Keep every action reachable on mobile without squeezing or wrapping labels.
+   Mobile layout: menu | account | XP | alerts, then install | roadmap | studio.
+*/
+@media (min-width:721px) and (max-width:1330px){
+  .topbar{
+    height:auto;
+    min-height:74px;
+    padding:11px clamp(14px,2vw,28px);
+    gap:10px 16px;
+    flex-wrap:wrap;
+  }
+  .topbar-left{flex:0 0 auto;min-width:0}
+  .topbar-actions{
+    flex:1 1 auto;min-width:0;
+    justify-content:flex-end;flex-wrap:wrap;gap:5px;
+  }
+  .topbar-actions > button{
+    min-height:40px;flex:0 0 auto;
+    white-space:nowrap;
+    font-size:11px;padding:9px 11px;
+  }
+  .topbar-actions #gamificationBtn{
+    display:inline-flex;white-space:nowrap;
+  }
+  .topbar-actions #wl13UpdateBtn{
+    display:inline-flex;white-space:nowrap;
+  }
+}
+@media (max-width:720px){
+  .workspace{min-width:0;max-width:100%}
+  .topbar{
+    height:auto!important;
+    min-height:0;
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    grid-template-rows:minmax(44px,auto) minmax(44px,auto);
+    gap:7px 5px;
+    padding:10px max(10px,env(safe-area-inset-right)) 10px max(10px,env(safe-area-inset-left))!important;
+    align-items:stretch;
+    justify-content:stretch;
+    box-sizing:border-box;
+    max-width:100%;
+    background:#fff;
+    border-bottom:1px solid #e9e7f4;
+  }
+  .topbar-left{
+    grid-column:1;grid-row:1;
+    display:flex;align-items:center;justify-content:center;
+    min-width:0;
+    padding:0;margin:0;
+  }
+  .topbar-left .breadcrumb{display:none!important}
+  .topbar .topbar-left #menuBtn{
+    display:grid;
+    place-items:center;
+    width:100%;max-width:48px;min-width:0;
+    min-height:44px;height:44px;
+    border-radius:11px;
+    border:1px solid #e3e0f0;
+    background:#fafaff;
+    color:#4d4378;
+    font-size:20px;
+    box-shadow:none;
+  }
+  .topbar .topbar-actions{display:contents!important}
+  .topbar .topbar-actions>button{
+    margin:0;
+    min-width:0;max-width:100%;width:100%;height:44px;min-height:44px;
+    border:1px solid #e2dcf5;
+    border-radius:11px;
+    display:flex!important;
+    justify-content:center;align-items:center;
+    gap:4px;
+    padding:6px 6px!important;
+    font:800 12px/1.2 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+    white-space:nowrap!important;
+    overflow:hidden;
+    text-align:center;
+    box-shadow:none;
+    transition:background-color .15s,border-color .15s;
+  }
+  .topbar .topbar-actions>button:focus-visible{
+    outline:3px solid #bcaaff;
+    outline-offset:2px;
+  }
+  .topbar .topbar-actions #accountBtn{
+    grid-column:2 / span 2;grid-row:1;
+    background:#f3efff;
+    color:#563fc1;
+    border-color:#dcd0fb;
+  }
+  .topbar .topbar-actions #accountBtn span{
+    display:inline!important;
+    min-width:0;max-width:100%;
+    white-space:nowrap!important;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    font-size:11px;
+  }
+  .topbar .topbar-actions #gamificationBtn{
+    grid-column:4 / span 2;grid-row:1;
+    background:#fffaf0;
+    color:#8a6208;
+    border-color:#f1e4b8;
+    gap:3px!important;
+    font-size:11px!important;
+  }
+  .topbar .topbar-actions #gamificationBtn span{
+    display:none!important;
+  }
+  .topbar .topbar-actions #gamificationBtn #gamificationXP{
+    color:inherit;
+    font-size:12px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    flex:0 1 auto;
+  }
+  .topbar .topbar-actions #wl13UpdateBtn{
+    grid-column:6;grid-row:1;
+    background:#f4f2ff;
+    color:#6046c9;
+    border-color:#e0d8fa;
+    font-size:19px!important;
+    padding:6px!important;
+    position:relative;
+    overflow:visible;
+  }
+  .topbar .topbar-actions #wl13UpdateBtn span{
+    display:none!important;
+  }
+  .topbar .topbar-actions #appHelpBtn{
+    grid-column:1;grid-row:2;
+    background:#f7f8fb;
+    color:#596276;
+    border-color:#e2e6f0;
+    font-size:19px!important;
+    padding:6px!important;
+  }
+  .topbar .topbar-actions #appHelpBtn span{display:none!important}
+  .topbar .topbar-actions #roadmapBtn{
+    grid-column:2 / span 3;grid-row:2;
+    background:#edf6ff;color:#245b92;
+    border-color:#d3e5f8;
+    font-size:13px!important;
+  }
+  .topbar .topbar-actions #roadmapBtn span{
+    display:none!important;
+  }
+  .topbar .topbar-actions #roadmapBtn::after{
+    content:"Lộ trình học";
+    font-size:12px;line-height:1.2;
+    white-space:nowrap;
+  }
+  .topbar .topbar-actions #studioBtn{
+    grid-column:5 / span 2;grid-row:2;
+    background:#6951d7;color:#fff;
+    border-color:#6951d7;
+    font-size:14px!important;
+  }
+  .topbar .topbar-actions #studioBtn span{
+    display:none!important;
+  }
+  .topbar .topbar-actions #studioBtn::after{
+    content:"Viết code";
+    font-size:12px;
+    white-space:nowrap;
+  }
+  .topbar .topbar-actions #studioBtn:hover{background:#5944c5}
+  .topbar .topbar-actions #accountBtn:hover,
+  .topbar .topbar-actions #gamificationBtn:hover,
+  .topbar .topbar-actions #roadmapBtn:hover,
+  .topbar .topbar-actions #appHelpBtn:hover,
+  .topbar .topbar-actions #wl13UpdateBtn:hover{
+    filter:brightness(.975);
+  }
+}
+@media(max-width:350px){
+  .topbar{column-gap:4px!important;padding-left:8px!important;padding-right:8px!important}
+  .topbar .topbar-actions>button{padding:5px 4px!important;font-size:11px!important}
+  .topbar .topbar-actions #accountBtn span{font-size:10px}
+  .topbar .topbar-actions #roadmapBtn::after,
+  .topbar .topbar-actions #studioBtn::after{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){
+  .topbar .topbar-actions>button{transition:none}
+}
