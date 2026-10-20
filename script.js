@@ -9,7 +9,7 @@
   const SEARCH_LABELS={html:'HTML',css:'CSS',scss:'SCSS',js:'JS',web:'WEB',roadmap:'KHÓA HỌC'};
   const DEFAULT_STUDIO={id:'studio',kind:'web',cat:'web-projects',name:'Sân chơi tự do',summary:'Tự viết một website từ đầu! Chỉnh sửa HTML, CSS, SCSS và JavaScript ngay trong trình duyệt.',syntax:'HTML + CSS + JavaScript = Website của bạn',html:'<main class="card">\n  <p class="eyebrow">✨ WEBSITE CỦA MÌNH</p>\n  <h1>Xin chào Web Lab!</h1>\n  <p>Bạn có thể sửa HTML, CSS và JavaScript.</p>\n  <button id="helloBtn">Bấm thử</button>\n  <p id="message"></p>\n</main>',css:'body { background: #f5f3ff; }\n.card { padding: 24px; border-radius: 16px; background: white; border: 1px solid #ddd6fe; box-shadow: 0 7px 22px #7c3aed18; }\n.eyebrow { letter-spacing: 2px; font-size: 11px; color: #7c3aed; }\nh1 { color: #6d28d9; }\nbutton { background: #7c3aed; color: white; border: 0; padding: 10px 16px; border-radius: 9px; cursor: pointer; }',js:'document.getElementById("helloBtn").addEventListener("click", () => {\n  document.getElementById("message").textContent = "Bạn đã viết JavaScript thành công! 🎉";\n  console.log("Hello from Web Lab!");\n});',tip:'Các tab mô phỏng ba tệp index.html, style.css và script.js; bạn có thể thử chỉnh cả ba rồi chạy lại.',challenge:'Tạo một card giới thiệu bản thân, đổi màu nền và thêm nút tương tác.',related:[]};
   itemMap.set('studio',DEFAULT_STUDIO);
-  const trackOf=item=>item.kind==='tag'||item.kind==='attribute'?'html':item.kind;
+  const trackOf=item=>item.dsa?'dsa':item.kind==='tag'||item.kind==='attribute'?'html':item.kind;
   const originalSort=(a,b)=>{const x=FEATURED.indexOf(a.id),y=FEATURED.indexOf(b.id);if(x>=0||y>=0)return (x<0?999:x)-(y<0?999:y);return a.name.localeCompare(b.name,'vi')};
   const sorted=[...LESSONS].sort(originalSort);
   const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
@@ -26,7 +26,7 @@
   let toastTimeout;
   function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>$('toast').classList.remove('show'),2350)}
   function friendly(item){return item.kind==='tag'?`<${item.name}>`:item.name}
-  function typeLabel(item){return item.kind==='attribute'?'THUỘC TÍNH HTML':item.kind==='tag'?'THẺ HTML':LABELS[item.kind]||'BÀI HỌC'}
+  function typeLabel(item){if(item.dsa)return 'CẤU TRÚC DỮ LIỆU & GIẢI THUẬT';return item.kind==='attribute'?'THUỘC TÍNH HTML':item.kind==='tag'?'THẺ HTML':LABELS[item.kind]||'BÀI HỌC'}
   function iconFor(item){return item.kind==='tag'?'&lt;/&gt;':item.kind==='attribute'?'@':item.kind==='css'?'CSS':item.kind==='scss'?'Sass':item.kind==='js'?'JS':'⌘'}
   function groupCount(cat){if(cat.id==='all')return LESSONS.length;if(cat.id==='favorites')return [...state.favorites].filter(id=>itemMap.has(id)&&id!=='studio').length;return LESSONS.filter(l=>l.cat===cat.id).length}
   function renderNav(){
@@ -36,7 +36,8 @@
       {name:'CSS',cats:CATEGORIES.filter(c=>c.track==='css')},
       {name:'SCSS / SASS',cats:CATEGORIES.filter(c=>c.track==='scss')},
       {name:'JAVASCRIPT',cats:CATEGORIES.filter(c=>c.track==='js')},
-      {name:'WEB & CÔNG CỤ',cats:CATEGORIES.filter(c=>c.track==='web')}
+      {name:'WEB & CÔNG CỤ',cats:CATEGORIES.filter(c=>c.track==='web')},
+      {name:'CẤU TRÚC DỮ LIỆU & GIẢI THUẬT',cats:CATEGORIES.filter(c=>c.track==='dsa')}
     ];
     $('navList').innerHTML=sections.map(section=>`<div class="side-group">${section.name}</div>`+section.cats.map(cat=>`<button type="button" class="nav-item ${state.category===cat.id?'active':''}" data-cat="${esc(cat.id)}" aria-current="${state.category===cat.id?'true':'false'}"><span class="nav-ico">${esc(cat.icon)}</span><span class="nav-title">${esc(cat.label)}</span><span class="nav-total">${groupCount(cat)}</span></button>`).join('')).join('');
     $('navList').querySelectorAll('[data-cat]').forEach(button=>button.addEventListener('click',()=>{
