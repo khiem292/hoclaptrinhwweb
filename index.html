@@ -13,8 +13,8 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 6.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
- <link rel="stylesheet" href="style.css?v=6.0">
+ <title>Web Lab 7.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <link rel="stylesheet" href="style.css?v=7.0">
  <link rel="stylesheet" href="practice.css?v=5.5">
  <style id="practice-inline-styles">
 /* Web Lab 4.0 — practice and projects */
@@ -138,6 +138,51 @@
 @media(max-width:380px){.learning-tracks{grid-template-columns:1fr}.lesson-guide-head h4{font-size:14px}}
 
  </style>
+ <style id="weblab-vscode-editor-styles">
+
+/* Web Lab 7.0: VS Code-style editor, local/offline and iPhone-friendly */
+.vscode-pane{background:#191f2d;min-width:0;overflow:hidden}
+.vscode-filebar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 13px;min-height:44px;flex-wrap:wrap;background:#242937;color:#d8ddf4;border-bottom:1px solid #34394c}
+.vscode-file-label{font:650 12px/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.vscode-tools{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.vscode-tools>button{background:#34394c;border:1px solid #4b5167;border-radius:7px;min-height:34px;padding:7px 10px;color:#e3e5f4;font-size:11px;font-weight:750;cursor:pointer}
+.vscode-tools>button:hover{background:#4a4d6a;color:#fff}
+.vscode-auto{display:inline-flex;align-items:center;gap:7px;color:#d3d8e8;font:500 11px system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+.vscode-auto input{width:16px;height:16px;margin:0;accent-color:#9985ff}
+.vscode-workspace{display:flex;position:relative;min-height:245px;height:clamp(245px,46vh,410px);width:100%;background:#191f2d;color:#cad7f9;isolation:isolate}
+.vscode-gutter{width:48px;flex:none;margin:0;padding:14px 9px 14px 2px;overflow:hidden;white-space:pre;user-select:none;pointer-events:none;text-align:right;background:#1e2535;color:#71819e;border-right:1px solid #333c50;font:13px/24px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.vscode-stage{flex:1;min-width:0;position:relative;height:100%;overflow:hidden}
+.vscode-highlight,.vscode-input{font:500 13px/24px ui-monospace,SFMono-Regular,Menlo,Consolas,'Courier New',monospace!important;letter-spacing:0!important;tab-size:2!important;white-space:pre!important;overflow-wrap:normal!important;word-break:normal!important;padding:14px 16px!important;margin:0!important;border:0!important;box-sizing:border-box!important}
+.vscode-highlight{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;pointer-events:none;z-index:1;background:transparent!important;color:#d5deee}
+.vscode-input{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;min-height:0!important;resize:none!important;background:transparent!important;color:transparent!important;-webkit-text-fill-color:transparent!important;caret-color:#f5ecff!important;z-index:2;outline:0!important}
+.vscode-input::selection{background:#577dd077!important;color:transparent!important;-webkit-text-fill-color:transparent!important}
+.vscode-input:focus-visible{outline:0!important;box-shadow:inset 0 0 0 1px #71649a44}
+.vs-comment{color:#83ad91}.vs-tag{color:#6daeff}.vs-attribute{color:#b1d4ff}.vs-string{color:#f1bc8e}.vs-punc{color:#909db7}.vs-entity{color:#f2c97e}.vs-keyword{color:#c89af7}.vs-number{color:#9ed5b1}.vs-property{color:#8fc3ff}.vs-function{color:#f5d98a}.vs-object{color:#88c2eb}
+.vscode-status{min-height:32px;display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:6px 12px;background:#55449f;color:#faf8ff;font:600 10px/1.45 system-ui,sans-serif}
+.vscode-status span{white-space:nowrap}.vscode-status .vscode-diagnostics{margin-right:auto}.vscode-diagnostics.vs-warn{color:#ffe39a}
+.vscode-suggestions{position:absolute;right:12px;top:9px;width:min(240px,72%);max-height:195px;overflow:auto;z-index:5;background:#282f42;border:1px solid #576080;box-shadow:0 14px 32px #0007;border-radius:9px;padding:5px}
+.vscode-suggestions[hidden]{display:none!important}
+.vscode-suggestions button{display:block;width:100%;text-align:left;border:0;border-radius:5px;background:transparent;padding:8px 10px;color:#dce7fe;font:550 12px/1.4 ui-monospace,monospace;cursor:pointer}
+.vscode-suggestions button:hover,.vscode-suggestions button.active,.vscode-suggestions button:focus-visible{background:#494a78;color:#fff}
+.vscode-pane.vscode-light,.vscode-light .vscode-workspace{background:#fbfbff;color:#28314e}
+.vscode-light .vscode-filebar{background:#f4f5fa;color:#2e3651;border-color:#e2e5ef}
+.vscode-light .vscode-tools>button{background:#fff;color:#424c75;border-color:#cfd4e3}
+.vscode-light .vscode-auto{color:#505875}
+.vscode-light .vscode-gutter{background:#f1f3fa;border-color:#e0e4ed;color:#8a92a9}
+.vscode-light .vscode-highlight{color:#27334e}
+.vscode-light .vs-comment{color:#438c69}.vscode-light .vs-tag{color:#245fbe}.vscode-light .vs-attribute{color:#7951c2}.vscode-light .vs-string{color:#b44a23}.vscode-light .vs-keyword{color:#9a3894}.vscode-light .vs-number{color:#287c63}.vscode-light .vs-property{color:#215fa9}.vscode-light .vs-function{color:#876100}
+.vscode-light .vscode-input{caret-color:#27314d!important}.vscode-light .vscode-status{background:#ecebfa;color:#3f3c73}
+.vscode-light .vscode-suggestions{background:#fff;border-color:#d1d3e4;box-shadow:0 8px 24px #24326630}
+.vscode-light .vscode-suggestions button{color:#37405d}.vscode-light .vscode-suggestions button:hover,.vscode-light .vscode-suggestions button.active{background:#eae6fa;color:#31246d}
+@media(max-width:720px){
+.vscode-filebar{padding:8px 9px;gap:6px}.vscode-file-label{font-size:11px}.vscode-tools{gap:5px}.vscode-tools>button{min-height:35px;padding:7px 9px;font-size:11px}.vscode-auto{font-size:11px}
+.vscode-workspace{height:clamp(260px,46vh,410px)}.vscode-gutter{width:39px;padding:13px 6px 13px 0;font-size:16px!important;line-height:27px!important}
+.vscode-highlight,.vscode-input{font-size:16px!important;line-height:27px!important;padding:13px 10px!important}
+.vscode-status{gap:9px;padding:6px 9px;font-size:10px;flex-wrap:wrap}.vscode-status .vscode-diagnostics{width:100%}.vscode-suggestions button{font-size:16px;padding:10px}
+}
+@media(max-width:385px){.vscode-tools{width:100%;justify-content:space-between}.vscode-auto{font-size:10px}}
+
+ </style>
 </head>
 <body>
  <div class="app-shell">
@@ -191,7 +236,7 @@
  <script src="learning-paths.js?v=6.0"></script>
  <script src="script.js?v=6.0"></script>
  <script src="practice.js?v=6.0"></script>
- <script src="editor-assist.js?v=5.2"></script>
+ <script src="editor-vscode.js?v=7.0"></script>
  <script src="pwa.js"></script>
 </body>
 </html>
