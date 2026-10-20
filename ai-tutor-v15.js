@@ -1,0 +1,157 @@
+/* Web Lab 15.0 — Vietnamese AI tutor. API key is server-side only. */
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const cfg=window.WEB_LAB_CLOUD_CONFIG||{};
+const supabase=String(cfg.url||'').replace(/\/+$/,'');
+const publishable=String(cfg.publishableKey||'');
+const service=supabase+'/functions/v1/web-lab-ai';
+let messages=[],busy=false,ready=null,checking=false;
+const suggested=[
+ {label:'📘 Giải thích bài học',question:'Giải thích bài học hiện tại thật dễ hiểu, kèm ví dụ ngắn.'},
+ {label:'🐞 Sửa lỗi code',question:'Hãy hướng dẫn mình tìm lỗi trong đoạn code đang viết và cách tự sửa.'},
+ {label:'🧠 Giải thuật DSA',question:'Giải thích tư duy và độ phức tạp Big O của thuật toán đang học, gợi ý để mình tự làm.'},
+ {label:'✍️ Bài luyện tập',question:'Hãy cho mình một bài thực hành nhỏ phù hợp bài học hiện tại, có gợi ý nhưng chưa giải.'},
+];
+function status(text,kind=''){const el=$('wlAiStatus');if(el){el.textContent=text;el.dataset.kind=kind;}}
+function onlineAccount(){return Boolean(window.WebLabCloud?.loggedIn&&window.WebLabCloud?.configured)}
+function studyContext(){
+ const id=window.WebLabWorkspace?.currentId;
+ const item=window.HTML_LAB_DATA?.LESSONS?.find(x=>x.id===id);
+ return item?[item.name,item.pathTitle,item.summary,item.guide?.intro,item.syntax].filter(Boolean).join('\n').slice(0,600):'';
+}
+function readCode(){
+ if(!$('wlAiIncludeCode')?.checked)return '';
+ const blocks=window.WebLabWorkspace?.getCode();
+ if(!blocks)return '';
+ return ['html','css','scss','js'].filter(k=>typeof blocks[k]==='string'&&blocks[k].trim()).map(k=>
+  '--- '+k.toUpperCase()+' ---\n'+blocks[k].trim()).join('\n\n').slice(0,4500);
+}
+function addMessage(role,content){
+ const feed=$('wlAiMessages');if(!feed)return;
+ const article=document.createElement('article');
+ article.className='wl-ai-msg '+(role==='user'?'wl-ai-msg-user':'wl-ai-msg-assistant');
+ const name=document.createElement('strong');name.className='wl-ai-msg-author';
+ name.textContent=role==='user'?'Bạn':'✦ Web Lab AI';article.append(name);
+ // Convert fenced code to safe textContent-only elements. Never render AI HTML.
+ const triple=String.fromCharCode(96).repeat(3);
+ const segments=String(content).split(new RegExp(triple+'([a-zA-Z0-9_+#.-]*)\\s*\\n?([\\s\\S]*?)'+triple,'g'));
+ for(let i=0;i<segments.length;i++){
+   if(i%3===1)continue;
+   if(i%3===2){
+     const pre=document.createElement('pre'),code=document.createElement('code');
+     pre.setAttribute('aria-label','Ví dụ code '+(segments[i-1]||''));
+     code.textContent=segments[i].trim();pre.append(code);article.append(pre);
+   }else if(segments[i]){
+     const el=document.createElement('span');el.className='wl-ai-answer-text';
+     el.textContent=segments[i];article.append(el);
+   }
+ }
+ feed.append(article);feed.scrollTop=feed.scrollHeight;
+}
+function renderControls(){
+ const field=$('wlAiQuestion'),send=$('wlAiSubmit');
+ if(field)field.disabled=busy;
+ if(send)send.disabled=busy||!field?.value?.trim()||!onlineAccount()||ready===false;
+ $('wlAiLoginNotice').hidden=onlineAccount();
+ $('wlAiLoginBtn').hidden=onlineAccount();
+ $('wlAiReset').disabled=busy||!messages.length;
+ $('wlAiAttachHint').textContent=$('wlAiIncludeCode')?.checked?'Code chỉ được gửi khi bạn bấm Gửi; đừng gửi mật khẩu, token.':'AI không tự đọc code của bạn.';
+ $('wlAiLessonName').textContent=window.WebLabWorkspace?.currentTitle||'Chưa chọn bài học';
+}
+function signin(){
+ if($('wlAiDialog')?.open)$('wlAiDialog').close();
+ $('accountBtn')?.click();
+}
+async function request(body){
+ const token=await window.WebLabCloud.getAccessToken();
+ const abort=new AbortController();
+ const timer=setTimeout(()=>abort.abort(),39000);
+ try{
+  return await fetch(service,{
+   method:'POST',headers:{"Authorization":"Bearer "+token,"apikey":publishable,"Content-Type":"application/json"},
+   body:JSON.stringify(body),cache:'no-store',signal:abort.signal
+  });
+ }finally{clearTimeout(timer);}
+}
+async function checkStatus(){
+ if(checking||!onlineAccount()||!navigator.onLine){renderControls();return}
+ checking=true;status('Đang kiểm tra trạng thái gia sư AI…');
+ try{
+  const response=await request({action:'status'});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw Error(data.error||'Không kiểm tra được máy chủ AI.');
+  ready=Boolean(data.configured);
+  status(ready?'Đã kết nối máy chủ · 12 lượt hỏi/ngày, tối thiểu 20 giây mỗi lượt.':'Gia sư AI chưa kích hoạt API key trên Supabase.',ready?'ok':'warn');
+ }catch(e){
+  ready=null;status('Không kiểm tra được AI: '+String(e.message||e),'warn');
+ }finally{checking=false;renderControls()}
+}
+async function ask(){
+ if(busy)return;
+ const field=$('wlAiQuestion'),question=String(field?.value||'').trim();
+ if(!question){status('Bạn hãy nhập câu hỏi.','warn');return}
+ if(!onlineAccount()){signin();return}
+ if(!navigator.onLine){status('Cần Internet để hỏi AI.','warn');return}
+ const context=studyContext(),code=readCode(),earlier=messages.slice(-8);
+ busy=true;renderControls();addMessage('user',question);field.value='';
+ status('⏳ Gia sư AI đang trả lời…');
+ try{
+  const response=await request({action:'ask',question,lesson:context,code,history:earlier});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||!data.answer){
+   const e=Error(data.error||'Chưa thể nhận câu trả lời.');
+   e.kind=data.code||'unknown';throw e;
+  }
+  addMessage('assistant',data.answer);
+  messages=[...messages,{role:'user',content:question},{role:'assistant',content:String(data.answer)}].slice(-12);
+  ready=true;status('✓ Đã trả lời · Còn '+Math.max(0,Number(data.remaining??0))+' lượt trong ngày.','ok');
+ }catch(e){
+  if(!field.value.trim())field.value=question;
+  if(e.kind==='not_configured')ready=false;
+  status(String(e.message||'Kết nối AI bị gián đoạn.'),'error');
+ }finally{busy=false;renderControls()}
+}
+function reset(){
+ if(busy)return;
+ messages=[];$('wlAiMessages').replaceChildren();
+ addMessage('assistant','Xin chào! Mình là Web Lab AI. Bạn có thể hỏi về HTML, CSS, SCSS, JavaScript và DSA. Hãy chọn một gợi ý hoặc nhập câu hỏi nhé. ✨');
+ renderControls();
+ status(onlineAccount()?'Sẵn sàng nhận câu hỏi.':'Đăng nhập Web Lab Cloud để hỏi AI.');
+}
+function open(){
+ const dialog=$('wlAiDialog');if(!dialog)return;
+ if(!dialog.open)dialog.showModal();
+ renderControls();
+ if(!onlineAccount())status('Đăng nhập Web Lab Cloud để sử dụng gia sư AI.');
+ else checkStatus();
+ $('wlAiQuestion')?.focus({preventScroll:true});
+}
+function init(){
+ if(!$('wlAiDialog')||!$('wlAiOpenBtn'))return;
+ $('wlAiOpenBtn').addEventListener('click',open);
+ $('wlAiClose').addEventListener('click',()=>$('wlAiDialog').close());
+ $('wlAiLoginBtn').addEventListener('click',signin);
+ $('wlAiForm').addEventListener('submit',e=>{e.preventDefault();ask()});
+ $('wlAiQuestion').addEventListener('input',renderControls);
+ $('wlAiQuestion').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();ask();}
+ });
+ $('wlAiIncludeCode').addEventListener('change',renderControls);
+ $('wlAiReset').addEventListener('click',reset);
+ $('wlAiDialog').addEventListener('click',e=>{if(e.target===$('wlAiDialog'))$('wlAiDialog').close()});
+ const suggestions=$('wlAiSuggestions');
+ for(const option of suggested){
+  const btn=document.createElement('button');btn.type='button';btn.className='wl-ai-suggest';btn.textContent=option.label;
+  btn.addEventListener('click',()=>{
+   $('wlAiQuestion').value=option.question;
+   renderControls();$('wlAiQuestion').focus({preventScroll:true});
+  });
+  suggestions.append(btn);
+ }
+ window.addEventListener('online',()=>{if($('wlAiDialog').open)checkStatus()});
+ reset();renderControls();
+}
+window.WebLabTutor={open,checkStatus};
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
