@@ -86,13 +86,13 @@
     const project=Boolean(item.practice),goals=goalList(item),done=progress[item.id]||[];
     const panel=document.createElement('section');
     panel.id='practicePanel';panel.className='lesson-section practice-panel';
-    panel.innerHTML=`<div class="practice-heading"><div><span class="practice-kicker">🎯 ${project?'DỰ ÁN TỔNG HỢP · '+escape(item.practice.level):'LUYỆN TẬP THEO BÀI HỌC'}</span><h3>${project?'Hoàn thành dự án':'3 bước luyện tập: '+escape(label(item))}</h3><p>Viết trực tiếp tại trình soạn thảo phía trên, nhấn <b>▶ Chạy thử</b>, sau đó kiểm tra yêu cầu.</p></div><strong id="practiceBadge">${done.length}/${goals.length}</strong></div>
+    panel.innerHTML=`<div class="practice-heading"><div><span class="practice-kicker">🎯 ${project?'DỰ ÁN TỔNG HỢP · '+escape(item.practice.level):'LUYỆN TẬP THEO BÀI HỌC'}</span><h3>${project?'Hoàn thành dự án':'3 bước luyện tập: '+escape(label(item))}</h3><p>${item.dsa?'Viết hàm trong tab JavaScript, nhấn <b>✓ Kiểm tra bài làm</b> để chạy các ca kiểm thử thực.':'Viết trực tiếp tại trình soạn thảo phía trên, nhấn <b>▶ Chạy thử</b>, sau đó kiểm tra yêu cầu.'}</p></div><strong id="practiceBadge">${done.length}/${goals.length}</strong></div>
       <ol class="practice-goals">${goals.map((g,i)=>`<li class="practice-goal ${done.includes(g.id)?'passed':''}" data-practice-goal="${escape(g.id)}"><span class="practice-marker">${done.includes(g.id)?'✓':i+1}</span><span>${escape(g.text)}</span></li>`).join('')}</ol>
       <div class="practice-actions"><button type="button" class="practice-check" id="practiceCheck">✓ Kiểm tra bài làm</button><button type="button" class="practice-help" id="practiceHint" aria-expanded="false">💡 Gợi ý</button><button type="button" class="practice-help" id="practiceNew">✍️ Tập từ code trống</button></div>
       <div id="practiceHintText" class="practice-hint" hidden><strong>Cách bắt đầu:</strong> ${escape(item.tip||'Xem cú pháp và thử điều chỉnh ví dụ.') }<p>Gợi ý: ${escape(item.syntax||'Đọc lại bài học rồi tự viết code.')}</p></div>
       <div id="practiceFeedback" class="practice-feedback" role="status" aria-live="polite">${done.length===goals.length?'🏅 Bạn đã vượt qua tất cả yêu cầu. Hãy chọn bài tiếp theo.':'Tiến độ được lưu ngay trên điện thoại hoặc máy tính này.'}</div>
       <div class="practice-next-wrap"><button type="button" id="practiceNext" class="practice-check" ${done.length===goals.length?"":"disabled"}>${window.WebLabCourse?.nextId(item.id)?"Bài tiếp theo →":"Xem lộ trình khác →"}</button></div>
-      <p class="practice-disclaimer">Bộ kiểm tra kiểm tra mã nguồn ở mức cơ bản, không thể xác nhận hoàn toàn tính đúng đắn của giao diện hay thuật toán. Hãy quan sát khung Chạy thử và tự kiểm tra hành vi thực tế.</p>`;
+      <p class="practice-disclaimer">${item.dsa?'Môn DSA chạy hàm JavaScript bằng Web Worker riêng biệt và so sánh kết quả với bộ dữ liệu kiểm thử. Đạt các ca kiểm thử không có nghĩa thuật toán luôn đúng cho mọi trường hợp.':'Bộ kiểm tra kiểm tra mã nguồn ở mức cơ bản, không thể xác nhận hoàn toàn tính đúng đắn của giao diện hay thuật toán. Hãy quan sát khung Chạy thử và tự kiểm tra hành vi thực tế.'}</p>`;
     const end=document.querySelector('#detailPanel .lesson-end');
     if(end)end.after(panel);else $('detailPanel').append(panel);
     $('practiceCheck').addEventListener('click',()=>check(item));
@@ -137,14 +137,14 @@
     $('practiceBadge').textContent=`${done}/${total}`;
     if($('practiceNext'))$('practiceNext').disabled=done!==total;
     const missing=results.filter(r=>!r.pass && !old.has(r.id));
-    $('practiceFeedback').textContent=done===total?'🏅 Hoàn thành! Bạn đã vượt qua các tiêu chí cơ bản. Thử tự kiểm tra kết quả chạy thực tế nhé.':`Đạt ${done}/${total} yêu cầu. ${missing[0]?.info || 'Tiếp tục hoàn thiện code theo nhiệm vụ.'}`;
+    $('practiceFeedback').textContent=done===total?(item.dsa?'🏅 Hoàn thành! Thuật toán đã vượt qua các ca kiểm thử.':'🏅 Hoàn thành! Bạn đã vượt qua các tiêu chí cơ bản. Thử tự kiểm tra kết quả chạy thực tế nhé.'):`Đạt ${done}/${total} yêu cầu. ${missing[0]?.info || 'Tiếp tục hoàn thiện code theo nhiệm vụ.'}`;
     $('practiceFeedback').classList.toggle('is-success',done===total);
     $('runBtn')?.click();if(done===total)window.dispatchEvent(new CustomEvent('weblab:practice-passed',{detail:{id:item.id}}));
   }
   function start(item) {
     if (!confirm('Bắt đầu code trống sẽ thay phần mã ở tab đang luyện. Bạn có thể bấm “Đặt lại” để lấy lại ví dụ gốc. Tiếp tục?'))return;
     const track=item.kind==='tag'||item.kind==='attribute'?'html':item.kind;
-    const tab=track==='web'?'html':track;
+    const tab=item.dsa?'js':item.kind==='roadmap'?(item.practice?.goals?.[0]?.[0]||'html'):track==='web'?'html':track;
     const starters={
       html:'<!doctype html>\n<html lang="vi">\n<head><meta charset="UTF-8"><title>Bài thực hành</title></head>\n<body>\n  <!-- Hãy dùng thẻ hoặc thuộc tính vừa học ở đây -->\n</body>\n</html>',
       css:'/* Hãy tự viết các quy tắc CSS tại đây */\n',
