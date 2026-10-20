@@ -1,9 +1,9 @@
 /* Web Lab v3, cache scoped to the GitHub Pages folder. */
-const CACHE='weblab-pwa-v8.1';
+const CACHE='weblab-pwa-v8.2';
 const CORE=[
  './', './index.html', './style.css?v=8.1', './practice.css?v=5.5', './html-data.js',
  './extra-data.js', './scss-data.js', './scss-compiler.js',
- './learning-paths.js?v=6.0', './learning-guide-deep.js?v=8.0', './script.js?v=8.0', './practice-projects.js', './course-data.js?v=5.0', './practice.js?v=8.0', './editor-vscode.js?v=7.0', './cloud-config.js?v=8.0', './cloud-sync.js?v=8.0', './pwa.js', './manifest.webmanifest',
+ './learning-paths.js?v=6.0', './learning-guide-deep.js?v=8.0', './script.js?v=8.0', './practice-projects.js', './course-data.js?v=5.0', './practice.js?v=8.0', './editor-vscode.js?v=7.0', './cloud-config.js?v=8.2', './cloud-sync.js?v=8.0', './pwa.js', './manifest.webmanifest',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png'
 ];
 self.addEventListener('install',event=>{
