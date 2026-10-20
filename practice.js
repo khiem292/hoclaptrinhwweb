@@ -83,12 +83,20 @@
       <div class="practice-actions"><button type="button" class="practice-check" id="practiceCheck">✓ Kiểm tra bài làm</button><button type="button" class="practice-help" id="practiceHint" aria-expanded="false">💡 Gợi ý</button><button type="button" class="practice-help" id="practiceNew">✍️ Tập từ code trống</button></div>
       <div id="practiceHintText" class="practice-hint" hidden><strong>Cách bắt đầu:</strong> ${escape(item.tip||'Xem cú pháp và thử điều chỉnh ví dụ.') }<p>Gợi ý: ${escape(item.syntax||'Đọc lại bài học rồi tự viết code.')}</p></div>
       <div id="practiceFeedback" class="practice-feedback" role="status" aria-live="polite">${done.length===goals.length?'🏅 Bạn đã vượt qua tất cả yêu cầu. Hãy chọn bài tiếp theo.':'Tiến độ được lưu ngay trên điện thoại hoặc máy tính này.'}</div>
+      <div class="practice-next-wrap"><button type="button" id="practiceNext" class="practice-check" ${done.length===goals.length?"":"disabled"}>Bài tiếp theo →</button></div>
       <p class="practice-disclaimer">Bộ kiểm tra kiểm tra mã nguồn ở mức cơ bản, không thể xác nhận hoàn toàn tính đúng đắn của giao diện hay thuật toán. Hãy quan sát khung Chạy thử và tự kiểm tra hành vi thực tế.</p>`;
     const end=document.querySelector('#detailPanel .lesson-end');
     if(end)end.after(panel);else $('detailPanel').append(panel);
     $('practiceCheck').addEventListener('click',()=>check(item));
     $('practiceHint').addEventListener('click',()=>{const hidden=$('practiceHintText').hidden;$('practiceHintText').hidden=!hidden;$('practiceHint').setAttribute('aria-expanded',String(hidden));});
     $('practiceNew').addEventListener('click',()=>start(item));
+    $('practiceNext').addEventListener('click',()=>{
+      const all=window.WebLabCourse?.lessons||[];
+      const idx=all.findIndex(lesson=>lesson.id===item.id);
+      if(idx>=0&&idx+1<all.length&&window.WebLabCourse.unlockedId(all[idx+1].id)){
+        window.WEB_LAB_NAVIGATE?.(all[idx+1].id);
+      }else if(idx===all.length-1){$('practiceFeedback').textContent='🎉 Bạn đã hoàn thành lộ trình!';}
+    });
   }
   function check(item) {
     const code=currentCode(item),results=validate(item,code);
@@ -102,6 +110,7 @@
     }
     const total=results.length,done=results.filter(r=>old.has(r.id)).length;
     $('practiceBadge').textContent=`${done}/${total}`;
+    if($('practiceNext'))$('practiceNext').disabled=done!==total;
     const missing=results.filter(r=>!r.pass && !old.has(r.id));
     $('practiceFeedback').textContent=done===total?'🏅 Hoàn thành! Bạn đã vượt qua các tiêu chí cơ bản. Thử tự kiểm tra kết quả chạy thực tế nhé.':`Đạt ${done}/${total} yêu cầu. ${missing[0]?.info || 'Tiếp tục hoàn thiện code theo nhiệm vụ.'}`;
     $('practiceFeedback').classList.toggle('is-success',done===total);
