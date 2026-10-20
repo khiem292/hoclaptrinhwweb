@@ -125,7 +125,8 @@
       finally{button.disabled=false}
       if(window.__WEB_LAB_TEST__?.selected!==item.id)return;
     }else results=validate(item,code);
-    const old=new Set(progress[item.id]||[]);
+    // DSA must pass all tests for the same code submission; never combine tests from different attempts.
+    const old=new Set(item.dsa?[]:(progress[item.id]||[]));
     for (const result of results) if (result.pass) old.add(result.id);
     progress[item.id]=[...old];save();
     for (let i=0;i<results.length;i++) {
