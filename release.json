@@ -1,13 +1,12 @@
 {
-  "version": "15.0",
+  "version": "15.1",
   "date": "2026-10-21",
-  "title": "Gia sư AI hỏi đáp trực tiếp trong Web Lab",
+  "title": "Kiểm tra lỗi xác thực và quyền truy cập AI",
   "notes": [
-    "✦ Thêm nút Hỏi AI riêng ở góc trang, không gây chật thanh công cụ trên iPhone.",
-    "📘 Hỏi đáp tiếng Việt theo bài học hiện tại: HTML, CSS, SCSS, JavaScript và Cấu trúc dữ liệu & Giải thuật (DSA).",
-    "🐞 Gửi code kèm câu hỏi để nhận gợi ý sửa lỗi; chỉ gửi khi người học tích chọn rõ ràng.",
-    "🛡️ Sử dụng Supabase Edge Function để giữ khóa AI trên máy chủ; phải đăng nhập Web Lab Cloud, giới hạn 12 lượt/ngày/tài khoản.",
-    "📲 Giao diện chat hỗ trợ điện thoại, gợi ý câu hỏi và nút mở cuộc trò chuyện mới.",
-    "🔐 Chủ Web Lab cần cấu hình OPENAI_API_KEY trên Supabase trước khi AI thực sự tạo câu trả lời. Dữ liệu học tập trước đây vẫn giữ nguyên."
+    "🔎 Thêm bước kiểm tra khóa OpenAI từ máy chủ trước khi gửi câu hỏi, không tiêu hao lượt hỏi AI.",
+    "🔐 Phân biệt khóa API bị từ chối (401), thiếu quyền truy cập (403) và mô hình không khả dụng (404).",
+    "💬 Hiển thị chẩn đoán rõ ràng bằng tiếng Việt ngay trong hộp chat ✦ Hỏi AI, không tiết lộ khóa bí mật.",
+    "🛡️ Giữ nguyên giới hạn bảo vệ 12 lượt hỏi/ngày, bảo mật Supabase và dữ liệu học tập.",
+    "✅ Các bài học, môn DSA, tiến độ, XP và dự án cá nhân không bị ảnh hưởng."
   ]
 }
