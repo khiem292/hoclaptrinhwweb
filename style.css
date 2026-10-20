@@ -134,3 +134,13 @@
 .account-signed{background:#eefaf2;border-radius:10px;padding:13px;color:#217b4d;font-size:13px;overflow-wrap:anywhere}
 .account-feedback{background:#f2efff;padding:12px;border-radius:10px;color:#5e4a9e;font-size:13px;line-height:1.6}
 @media(max-width:720px){.account-dialog{padding:16px}.guide-deep{padding:12px}}
+
+/* Web Lab 8.1: restore the Sign In button hidden by mobile .top-link rule. */
+@media (max-width:720px) {
+ .topbar-actions #accountBtn { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; gap:6px; min-height:42px; padding:8px 12px; border-radius:11px; border:1px solid #d7cafa; background:#f0ebff; color:#5a3abf; font-size:12px; font-weight:800; white-space:nowrap; }
+ .topbar-actions #accountBtn span {display:inline;}
+ .topbar-actions {gap:5px;}
+}
+@media (max-width:600px) { .topbar .breadcrumb {display:none;} .topbar-left {min-width:0;} }
+@media (max-width:370px) { .topbar-actions #accountBtn {padding:8px; font-size:11px;} .topbar-actions #studioBtn span {display:none;} .topbar-actions #studioBtn {min-width:40px;} }
+.topbar-actions #accountBtn:focus-visible {outline:3px solid #baa7fc; outline-offset:2px;}
