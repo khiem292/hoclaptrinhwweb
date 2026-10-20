@@ -1,9 +1,9 @@
 /* Web Lab v3, cache scoped to the GitHub Pages folder. */
-const CACHE='weblab-pwa-v10.1';
+const CACHE='weblab-pwa-v11.0';
 const CORE=[
- './', './index.html', './style.css?v=10.1', './practice.css?v=5.5', './html-data.js',
+ './', './index.html', './style.css?v=11.0', './practice.css?v=5.5', './html-data.js',
  './extra-data.js', './scss-data.js', './scss-compiler.js',
- './learning-paths.js?v=6.0', './learning-guide-deep.js?v=8.0', './script.js?v=10.1', './practice-projects.js', './course-data.js?v=5.0', './practice.js?v=8.0', './editor-vscode.js?v=7.0', './cloud-config.js?v=8.2', './cloud-sync.js?v=8.5', './pwa.js', './manifest.webmanifest',
+ './learning-paths.js?v=6.0', './learning-guide-deep.js?v=8.0', './script.js?v=10.1', './practice-projects.js', './course-data.js?v=5.0', './practice.js?v=8.0', './editor-vscode.js?v=7.0', './cloud-config.js?v=8.2', './cloud-sync.js?v=11.0', './ai-tutor.js?v=11.0', './pwa.js', './manifest.webmanifest',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png'
 ];
 self.addEventListener('install',event=>{
