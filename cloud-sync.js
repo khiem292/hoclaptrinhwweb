@@ -64,6 +64,7 @@ function adopt(data){
 async function request(path,{method='GET',body,token}={}){
  if(!configured)throw Error('Chưa cấu hình Supabase cho website.');
  const headers={'apikey':key,'Content-Type':'application/json'};
+ if(path.startsWith('/rest/v1/')&&method==='POST')headers.Prefer='resolution=merge-duplicates,return=minimal';
  if(token)headers.Authorization='Bearer '+token;
  const response=await fetch(url+path,{method,headers,body:body===undefined?undefined:JSON.stringify(body),cache:'no-store'});
  const str=await response.text();
