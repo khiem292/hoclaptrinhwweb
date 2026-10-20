@@ -15,7 +15,13 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const normalize=s=>String(s??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').toLowerCase().replace(/[<>]/g,'').trim();
   const read=(key,fallback)=>{try{const data=localStorage.getItem('webLab:'+key);if(data!==null)return JSON.parse(data);if(['favorites','completed','drafts'].includes(key)){const old=localStorage.getItem('htmlLab:'+key);if(old!==null)return JSON.parse(old)}}catch{}return fallback;};
-  const persist=(key,data)=>{try{localStorage.setItem('webLab:'+key,JSON.stringify(data))}catch{}};
+  const persist=(key,data)=>{
+  try{localStorage.setItem('webLab:'+key,JSON.stringify(data))}catch{}
+  if(key==='favorites'||key==='completed'){
+    try{const stamps=JSON.parse(localStorage.getItem('webLab:cloudStamps')||'{}');stamps[key]=Date.now();localStorage.setItem('webLab:cloudStamps',JSON.stringify(stamps))}catch{}
+  }
+  if(['favorites','completed','drafts'].includes(key))window.dispatchEvent(new Event('webLab:dataChanged'));
+};
   const state={selected:'web:HTML + CSS + JS',track:'all',category:'all',query:'',editorTab:'html',device:'desktop',favorites:new Set(read('favorites',[])),completed:new Set(read('completed',[])),drafts:read('drafts',{}),visibleLimit:70,runId:''};
   let toastTimeout;
   function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>$('toast').classList.remove('show'),2350)}
@@ -85,6 +91,12 @@
         '<p>'+esc(topic.why)+'</p>'+
         '<div class="lesson-guide-example-head">Ví dụ cách viết trong '+esc(topic.tab.toUpperCase())+'</div>'+
         '<pre class="lesson-guide-code"><code>'+esc(topic.example)+'</code></pre>'+
+
+        (topic.deep?'<div class="guide-deep">'+
+        '<h5>🔎 Giải thích chi tiết</h5><p>'+esc(topic.deep.meaning)+'</p>'+
+        '<h5>⌨️ Cách sử dụng</h5><p>'+esc(topic.deep.steps)+'</p>'+
+        '<h5>⚠️ Lưu ý và lỗi thường gặp</h5><p>'+esc(topic.deep.pitfalls)+'</p>'+
+        '<h5>👀 Kết quả mong đợi</h5><p>'+esc(topic.deep.expected)+'</p></div>':'')+
         '</article>').join('')+'</div>'+
       '<p class="lesson-guide-footer">✍️ Đây là ví dụ tham khảo. Hãy đọc và tự viết mã trong các tab HTML / CSS / SCSS / JavaScript bên dưới.</p>'+
       '</section>';
@@ -112,7 +124,10 @@
     const textarea=$('codeEditor');
     const selectTab=tab=>{code[active]=textarea.value;active=tab;state.editorTab=tab;textarea.value=code[tab];textarea.setAttribute('aria-label','Trình sửa mã nguồn '+(tab==='js'?'JavaScript':tab.toUpperCase()));document.querySelectorAll('[data-editor]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.editor===tab);btn.setAttribute('aria-selected',String(btn.dataset.editor===tab))});};
     textarea.value=code[active];selectTab(active);
-    const persistDraft=()=>{code[active]=textarea.value;state.drafts[item.id]={...code};persist('drafts',state.drafts)};
+    const persistDraft=()=>{
+   code[active]=textarea.value;state.drafts[item.id]={...code};
+   const timestamps=read('draftUpdatedAt',{});timestamps[item.id]=Date.now();persist('draftUpdatedAt',timestamps);persist('drafts',state.drafts);
+};
     textarea.addEventListener('input',persistDraft);
     textarea.addEventListener('keydown',event=>{if(event.key==='Tab'){event.preventDefault();textarea.setRangeText('  ',textarea.selectionStart,textarea.selectionEnd,'end');persistDraft();}if(event.key==='Enter'&&(event.ctrlKey||event.metaKey)){event.preventDefault();runPreview();toast('Đã chạy code!')}});
     document.querySelectorAll('[data-editor]').forEach(btn=>btn.addEventListener('click',()=>selectTab(btn.dataset.editor)));
