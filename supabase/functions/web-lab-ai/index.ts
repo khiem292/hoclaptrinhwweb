@@ -58,7 +58,26 @@ Deno.serve(async request=>{
   // Status is free: no token usage and no quota consumption.
   const apiKey=Deno.env.get("OPENAI_API_KEY");
   if(payload.action==="status"){
-    return json({configured:!!apiKey,quotaPerDay:12,cooldownSeconds:20},200,origin);
+    const common={configured:!!apiKey,quotaPerDay:12,cooldownSeconds:20};
+    if(!apiKey)return json({...common,verified:false,diagnostic:"Chưa có OPENAI_API_KEY trên máy chủ Supabase.",issue:"not_configured"},200,origin);
+    const model=Deno.env.get("WEB_LAB_AI_MODEL")||"gpt-4.1-mini";
+    // Model retrieval checks the OpenAI credential without creating a paid answer
+    // or consuming a student's database quota. Never reveal the key or raw response.
+    try{
+      const check=await fetch("https://api.openai.com/v1/models/"+encodeURIComponent(model),{
+        method:"GET",headers:{"Authorization":"Bearer "+apiKey},
+        signal:AbortSignal.timeout(9000),
+      });
+      if(check.ok)return json({...common,verified:true,model,diagnostic:"Đã xác thực kết nối OpenAI API."},200,origin);
+      const raw=await check.json().catch(()=>({}));
+      const code=raw?.error?.code||raw?.error?.type||"";
+      const providerCode=typeof code==="string"&&/^[a-z0-9_-]{1,70}$/i.test(code)?code:"";
+      const issue=check.status===401?"invalid_key":check.status===403?"access_denied":check.status===404?"model_unavailable":check.status===429?"provider_busy":"provider_error";
+      const diagnostic=check.status===401?"OpenAI từ chối khóa API (401). Hãy kiểm tra OPENAI_API_KEY trong Supabase.":check.status===403?"OpenAI từ chối quyền truy cập (403). Khóa có thể đúng nhưng tài khoản hoặc dự án thiếu quyền.":check.status===404?"Không tìm thấy mô hình "+model+" hoặc dự án không có quyền dùng mô hình này.":"OpenAI báo lỗi "+check.status+" khi kiểm tra kết nối. Vui lòng thử lại.";
+      return json({...common,verified:false,issue,diagnostic,provider_status:check.status,provider_code:providerCode},200,origin);
+    }catch{
+      return json({...common,verified:null,diagnostic:"Không thể kiểm tra OpenAI ngay lúc này. Vui lòng thử lại.",issue:"check_unavailable"},200,origin);
+    }
   }
   if(payload.action!=="ask")return json({error:"Thao tác không được hỗ trợ.",code:"bad_action"},400,origin);
   const question=safe(payload.question,1500),lesson=safe(payload.lesson,600),userCode=safe(payload.code,4500);
@@ -99,9 +118,12 @@ Deno.serve(async request=>{
       signal:AbortSignal.timeout(30000),
     });
     if(!response.ok){
-      const code=response.status===429?"provider_busy":response.status===401||response.status===403?"invalid_key":"provider_error";
-      const error=response.status===429?"Dịch vụ AI đang quá tải hoặc đã hết hạn mức. Thử lại sau.":response.status===401||response.status===403?"Máy chủ AI chưa có khóa API hợp lệ.":"Dịch vụ AI chưa trả lời được. Hãy kiểm tra cấu hình hoặc thử lại sau.";
-      return json({error,code},response.status===429?429:502,origin);
+      const raw=await response.json().catch(()=>({}));
+      const issue=raw?.error?.code||raw?.error?.type||"";
+      const providerCode=typeof issue==="string"&&/^[a-z0-9_-]{1,70}$/i.test(issue)?issue:"";
+      const code=response.status===401?"invalid_key":response.status===403?"access_denied":response.status===404?"model_unavailable":response.status===429?"provider_busy":"provider_error";
+      const error=response.status===401?"Khóa API bị OpenAI từ chối (401). Hãy kiểm tra secret OPENAI_API_KEY.":response.status===403?"OpenAI từ chối quyền truy cập (403). Kiểm tra quyền dùng API và mô hình của dự án.":response.status===404?"Mô hình AI chưa tồn tại hoặc dự án không có quyền sử dụng.":response.status===429?"Dịch vụ AI đang quá tải hoặc đã hết hạn mức. Thử lại sau.":"OpenAI trả về lỗi "+response.status+". Kiểm tra quyền API hoặc giới hạn dự án.";
+      return json({error,code,provider_status:response.status,provider_code:providerCode},response.status===429?429:502,origin);
     }
     const obj=await response.json();
     const answer=(Array.isArray(obj.output)?obj.output:[]).flatMap(item=>Array.isArray(item.content)?item.content:[])
