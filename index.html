@@ -13,8 +13,8 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 11.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
- <link rel="stylesheet" href="style.css?v=11.0">
+ <title>Web Lab 11.1 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <link rel="stylesheet" href="style.css?v=11.1">
  <link rel="stylesheet" href="practice.css?v=5.5">
  <style id="practice-inline-styles">
 /* Web Lab 4.0 — practice and projects */
@@ -297,27 +297,6 @@
  <p class="account-privacy">🔐 Khi chưa cấu hình dịch vụ, Web Lab chỉ lưu dữ liệu trên thiết bị. Khi đăng xuất, tiến độ offline vẫn còn trên máy này.</p>
 </dialog>
 
- <button type="button" id="aiOpenBtn" class="wl-ai-open" aria-label="Hỏi gia sư AI của Web Lab" aria-haspopup="dialog" aria-controls="aiDialog">✦ <span>Hỏi AI</span></button>
- <dialog id="aiDialog" class="wl-ai-dialog" aria-labelledby="aiTitle">
-  <div class="wl-ai-shell">
-   <header class="wl-ai-header">
-    <div><span class="wl-ai-kicker">✦ WEB LAB TUTOR</span><h2 id="aiTitle">Hỏi đáp lập trình với AI</h2><p>Gia sư HTML · CSS · SCSS · JavaScript</p></div>
-    <button type="button" id="aiCloseBtn" class="wl-ai-close" aria-label="Đóng khung hỏi AI">✕</button>
-   </header>
-   <div id="aiMessages" class="wl-ai-messages" role="log" aria-live="polite" aria-label="Cuộc trò chuyện với gia sư AI"></div>
-   <div class="wl-ai-foot">
-    <div id="aiQuickQuestions" class="wl-ai-quick" aria-label="Câu hỏi gợi ý"></div>
-    <button type="button" id="aiLoginBtn" class="wl-ai-login" hidden>☁ Đăng nhập tài khoản Web Lab Cloud</button>
-    <form id="aiForm" class="wl-ai-form">
-     <label class="wl-ai-input-label" for="aiInput">Câu hỏi của bạn</label>
-     <div class="wl-ai-compose"><textarea id="aiInput" rows="2" maxlength="1300" placeholder="Ví dụ: Tại sao code JavaScript của mình bị lỗi?"></textarea><button type="submit" id="aiSendBtn" aria-label="Gửi câu hỏi cho gia sư AI" disabled>➤ Gửi</button></div>
-     <label class="wl-ai-attach"><input type="checkbox" id="aiAttachCode"> Gửi kèm mã ở tab đang mở để AI xem lỗi</label>
-    </form>
-    <p id="aiStatus" class="wl-ai-status" role="status" aria-live="polite">Cần đăng nhập Web Lab Cloud để gửi câu hỏi.</p>
-    <p class="wl-ai-privacy">Không gửi mật khẩu, mã xác thực hoặc API key. Câu hỏi được chuyển đến nhà cung cấp AI khi bạn nhấn Gửi. Hội thoại không được lưu trên máy chủ Web Lab.</p>
-   </div>
-  </div>
- </dialog>
  <div class="toast" id="toast" role="status" aria-live="polite"></div>
  <script src="html-data.js"></script>
  <script src="extra-data.js"></script>
@@ -332,7 +311,6 @@
  <script src="editor-vscode.js?v=7.0"></script>
  <script src="cloud-config.js?v=8.2"></script>
  <script src="cloud-sync.js?v=11.0"></script>
- <script src="ai-tutor.js?v=11.0"></script>
  <script src="pwa.js"></script>
 </body>
 </html>
