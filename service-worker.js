@@ -1,7 +1,7 @@
 /* Web Lab v3, cache scoped to the GitHub Pages folder. */
-const CACHE='weblab-pwa-v5.3';
+const CACHE='weblab-pwa-v5.4';
 const CORE=[
- './', './index.html', './style.css?v=5.2', './practice.css?v=5.3', './html-data.js',
+ './', './index.html', './style.css?v=5.2', './practice.css?v=5.4', './html-data.js',
  './extra-data.js', './scss-data.js', './scss-compiler.js',
  './script.js?v=5.2', './practice-projects.js', './course-data.js?v=5.0', './practice.js?v=5.2', './editor-assist.js?v=5.2', './pwa.js', './manifest.webmanifest',
  './icon-192.png', './icon-512.png', './apple-touch-icon.png'
