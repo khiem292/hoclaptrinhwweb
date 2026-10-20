@@ -1,0 +1,126 @@
+/* Web Lab 15.0: floating AI study assistant. Does not crowd the mobile toolbar. */
+.wl-ai-launch{
+ position:fixed;right:22px;bottom:calc(22px + env(safe-area-inset-bottom));
+ z-index:45;min-height:53px;display:inline-flex;align-items:center;gap:9px;
+ color:white;background:linear-gradient(135deg,#6250d6,#8c64e6);
+ border:1px solid #a08ff1;padding:12px 19px;border-radius:999px;
+ font-size:13px;font-weight:850;line-height:1.2;box-shadow:0 12px 30px #4931aa55;
+ white-space:nowrap;cursor:pointer;transition:transform .15s,box-shadow .15s;
+}
+.wl-ai-launch:hover{transform:translateY(-2px);box-shadow:0 15px 36px #4931aa66}
+.wl-ai-launch:focus-visible{outline:3px solid #dacbff;outline-offset:3px}
+.wl-ai-dialog{
+ width:min(580px,calc(100vw - 24px));height:min(770px,calc(100dvh - 34px));
+ max-width:calc(100vw - 24px);max-height:calc(100dvh - 34px);
+ background:#fff;color:#282944;padding:0;margin:auto;
+ border:1px solid #ded9f6;border-radius:20px;overflow:hidden;
+ box-shadow:0 24px 80px #090d3080;
+}
+.wl-ai-dialog::backdrop{background:#11122fa3;backdrop-filter:blur(3px)}
+.wl-ai-wrap{display:flex;flex-direction:column;height:100%;min-height:0}
+.wl-ai-top{
+ display:flex;align-items:center;justify-content:space-between;gap:12px;
+ padding:16px 18px;color:#fff;
+ background:linear-gradient(125deg,#27274d,#5d44b4);
+}
+.wl-ai-top small{display:block;font-size:10px;color:#c6bcff;letter-spacing:.14em;font-weight:850;margin-bottom:4px}
+.wl-ai-top h2{font-size:19px;line-height:1.35;font-weight:850;color:#fff;margin:0 0 4px}
+.wl-ai-top p{font-size:11px;color:#e0dbff;margin:0}
+.wl-ai-top-actions{display:flex;align-items:center;gap:7px;flex:none}
+.wl-ai-top-actions button{
+ display:grid;place-items:center;min-width:36px;min-height:36px;padding:7px;
+ color:#fff;background:#ffffff29;border-radius:10px;font-size:14px;cursor:pointer
+}
+.wl-ai-top-actions button:hover{background:#ffffff3a}
+.wl-ai-context{
+ display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+ padding:10px 15px;border-bottom:1px solid #eae6f5;background:#fbfaff;
+ color:#71638c;font-size:11px;line-height:1.5;
+}
+.wl-ai-context strong{max-width:85%;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;color:#624cbc}
+.wl-ai-messages{
+ display:flex;flex-direction:column;flex:1;min-height:0;overflow-y:auto;
+ overscroll-behavior:contain;gap:11px;padding:15px 14px;
+ background:linear-gradient(180deg,#f7f7fd,#f9faff);
+ scrollbar-width:thin;
+}
+.wl-ai-msg{
+ border:1px solid #e7e4f4;border-radius:15px;padding:11px 13px;
+ background:#fff;color:#343952;font-size:13px;line-height:1.7;
+ max-width:92%;min-width:0;box-shadow:0 3px 13px #20234b0a;
+ overflow-wrap:anywhere;
+}
+.wl-ai-msg-assistant{align-self:flex-start;border-top-left-radius:5px}
+.wl-ai-msg-user{align-self:flex-end;border-top-right-radius:5px;background:#ede8ff;border-color:#d4c7fd}
+.wl-ai-msg-author{display:block;font-size:11px;color:#694ecc;font-weight:850;margin-bottom:7px}
+.wl-ai-msg-user .wl-ai-msg-author{color:#5144a1}
+.wl-ai-answer-text{display:block;white-space:pre-wrap;overflow-wrap:anywhere}
+.wl-ai-msg pre{
+ padding:12px;margin:9px 0 2px;white-space:pre;max-width:100%;
+ overflow-x:auto;background:#20243a;color:#e7eaff;
+ border-radius:9px;line-height:1.65;font-size:12px;tab-size:2;
+}
+.wl-ai-msg pre code{font:inherit;color:inherit}
+.wl-ai-bottom{
+ flex:none;background:#fff;border-top:1px solid #e9e4f3;
+ padding:12px 15px max(13px,env(safe-area-inset-bottom));
+}
+.wl-ai-suggestions{display:flex;gap:7px;overflow-x:auto;scrollbar-width:thin;padding-bottom:9px}
+.wl-ai-suggest{
+ min-height:35px;padding:8px 12px;border-radius:999px;border:1px solid #e1d9fa;
+ background:#f4f0ff;color:#644cbe;font-size:11px;font-weight:750;
+ white-space:nowrap;flex:none;cursor:pointer;
+}
+.wl-ai-suggest:hover{background:#e7ddff}
+.wl-ai-login-notice{
+ display:flex;align-items:center;gap:9px;justify-content:space-between;
+ padding:9px 11px;margin-bottom:9px;color:#685590;background:#f5f2ff;
+ border:1px solid #e3dcfa;border-radius:10px;font-size:12px;
+}
+.wl-ai-login-notice[hidden],#wlAiLoginBtn[hidden]{display:none!important}
+.wl-ai-login-notice button{
+ border-radius:8px;padding:9px 10px;color:white;background:#7257d5;
+ font-size:11px;font-weight:800;white-space:nowrap;
+}
+.wl-ai-form label.wl-ai-form-label{display:block;font-size:11px;font-weight:800;color:#636782;margin-bottom:6px}
+.wl-ai-input-row{display:flex;align-items:stretch;gap:8px}
+.wl-ai-input-row textarea{
+ width:100%;min-width:0;flex:1;min-height:55px;max-height:135px;
+ border:1px solid #dcd9ee;border-radius:12px;background:#fcfbff;
+ padding:10px 12px;color:#2d314c;
+ resize:vertical;font-size:16px;line-height:1.55;
+}
+.wl-ai-input-row textarea:focus{border-color:#937cde;outline:2px solid #e0d5ff;outline-offset:0}
+.wl-ai-input-row button{
+ flex:none;min-width:75px;min-height:52px;padding:9px 13px;
+ background:#6b52d3;color:white;border-radius:12px;
+ font-size:12px;font-weight:850;cursor:pointer;
+}
+.wl-ai-input-row button:hover{background:#5942c1}
+.wl-ai-input-row button:disabled{opacity:.45;cursor:default}
+.wl-ai-check{
+ display:flex;align-items:center;gap:7px;color:#59627a;
+ font-size:11px;font-weight:700;cursor:pointer;padding:10px 1px 0;
+}
+.wl-ai-check input{width:16px;height:16px;accent-color:#6552d5;flex:none}
+.wl-ai-small{font-size:10px;line-height:1.55;color:#8589a2;margin:7px 0 0}
+.wl-ai-status{font-size:11px;line-height:1.6;color:#6550ba;margin:7px 0 0;overflow-wrap:anywhere}
+.wl-ai-status[data-kind="warn"]{color:#946416}
+.wl-ai-status[data-kind="error"]{color:#ac3652}
+.wl-ai-status[data-kind="ok"]{color:#277351}
+@media(max-width:720px){
+ .wl-ai-launch{right:12px;bottom:calc(12px + env(safe-area-inset-bottom));min-height:48px;padding:11px 15px;font-size:12px}
+ .wl-ai-dialog{
+  width:calc(100vw - 12px);max-width:calc(100vw - 12px);
+  height:calc(100dvh - 20px);max-height:calc(100dvh - 20px);border-radius:14px;
+ }
+ .wl-ai-top{padding:12px 13px}
+ .wl-ai-top h2{font-size:17px}
+ .wl-ai-messages{padding:12px 10px}
+ .wl-ai-msg{font-size:13px;padding:10px 11px}
+ .wl-ai-bottom{padding:10px 10px max(10px,env(safe-area-inset-bottom))}
+ .wl-ai-input-row button{min-width:64px;padding:9px}
+ .wl-ai-context{padding:9px 11px}
+ .wl-ai-suggest{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.wl-ai-launch{transition:none}}
