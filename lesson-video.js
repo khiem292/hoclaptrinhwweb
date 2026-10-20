@@ -138,7 +138,9 @@
      el('wlVideoSeek').style.setProperty('--wl-seek-fill',state.pos/(scenes.length-1)*100+'%');
      const subtitle=scene.kind==='typing'?'⌨️ '+scene.spoken:scene.spoken;
      el('wlV10Subtitles').textContent=subtitle;
-     renderCode(scene.code?scene.code.slice(0,state.shown):scene.kind==='finish'?'// Hãy thử tự viết code tại trình soạn thảo phía dưới':'// '+scene.step);
+     const placeholder=scene.kind==='finish'?'Hãy tự viết code trong trình soạn thảo bên dưới':scene.step;
+     const comment=(scene.language==='html'?'<!-- '+placeholder+' -->':scene.language==='js'?'// '+placeholder:'/* '+placeholder+' */');
+     renderCode(scene.code?scene.code.slice(0,state.shown):comment);
      renderLabels();
    }
    function clearPlayback(){
