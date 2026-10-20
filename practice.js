@@ -9,7 +9,15 @@
   const escape = v => String(v == null ? '' : v).replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
   const tidy = s => String(s || '').trim();
   const removeComments = (s, tab) => tab === 'html' ? s.replace(/<!--[^]*?-->/g, '') : s.replace(/\/\*[^]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
-  const save = () => { try { localStorage.setItem(storageKey, JSON.stringify(progress)); } catch {} };
+  const save=()=>{
+  try{
+   localStorage.setItem(storageKey,JSON.stringify(progress));
+   const stamps=JSON.parse(localStorage.getItem('webLab:cloudStamps')||'{}');
+   stamps.practiceV4=Date.now();
+   localStorage.setItem('webLab:cloudStamps',JSON.stringify(stamps));
+  }catch{}
+  window.dispatchEvent(new Event('webLab:dataChanged'));
+};
   function currentItem() { return lessons.get(window.__WEB_LAB_TEST__?.selected); }
   function currentCode(item) {
     let drafts = {};
