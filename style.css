@@ -144,3 +144,56 @@
 @media (max-width:600px) { .topbar .breadcrumb {display:none;} .topbar-left {min-width:0;} }
 @media (max-width:370px) { .topbar-actions #accountBtn {padding:8px; font-size:11px;} .topbar-actions #studioBtn span {display:none;} .topbar-actions #studioBtn {min-width:40px;} }
 .topbar-actions #accountBtn:focus-visible {outline:3px solid #baa7fc; outline-offset:2px;}
+
+
+/* Web Lab 11.0 — AI tutoring chat, accessible on iPhone */
+.wl-ai-open{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom));z-index:13;border:1px solid #b5a9f5;border-radius:999px;background:linear-gradient(135deg,#6952d7,#8767df);color:white;box-shadow:0 10px 26px #4733a74d;min-height:52px;padding:12px 19px;font-size:14px;font-weight:850;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer}
+.wl-ai-open:hover{background:linear-gradient(135deg,#5740c2,#7753ce)}
+.wl-ai-open:focus-visible{outline:3px solid #cebcfc;outline-offset:3px}
+.wl-ai-dialog{width:min(550px,calc(100vw - 24px));height:min(750px,calc(100dvh - 54px));max-height:calc(100dvh - 30px);padding:0;border:1px solid #dcd6f7;border-radius:19px;background:#fff;color:#272a44;box-shadow:0 20px 70px #151a3f5c;overflow:hidden}
+.wl-ai-dialog::backdrop{background:rgba(13,15,34,.66);backdrop-filter:blur(3px)}
+.wl-ai-shell{height:100%;display:flex;flex-direction:column;min-width:0;min-height:0}
+.wl-ai-header{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:17px 19px;background:linear-gradient(135deg,#2c2850,#4f348f);color:#fff}
+.wl-ai-kicker{display:block;color:#cfc1ff;font-size:10px;letter-spacing:.17em;font-weight:850;margin-bottom:7px}
+.wl-ai-header h2{color:#fff;margin:0 0 5px;font-size:19px;font-weight:850}
+.wl-ai-header p{color:#dcd7f5;font-size:12px;margin:0}
+.wl-ai-close{width:38px;height:38px;display:grid;place-items:center;background:#ffffff24;border-radius:9px;color:white;flex:none;cursor:pointer}
+.wl-ai-close:hover{background:#ffffff36}
+.wl-ai-messages{display:flex;flex-direction:column;gap:13px;flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:18px 16px;background:#f7f7fd;scrollbar-width:thin}
+.wl-ai-message{max-width:92%;min-width:0;box-shadow:0 2px 8px #20234a0a;border:1px solid #e6e4f2;background:#fff;border-radius:16px;padding:12px 14px;font-size:13px;line-height:1.75;color:#37405a;word-break:break-word}
+.wl-ai-message>strong{display:block;margin-bottom:6px;font-size:12px;font-weight:850;color:#6950c3}
+.wl-ai-user{align-self:flex-end;border-color:#c8c1fb;background:#efeaff}
+.wl-ai-bot{align-self:flex-start}
+.wl-ai-user>strong{color:#4939a1}
+.wl-ai-text{white-space:pre-wrap;overflow-wrap:anywhere}
+.wl-ai-message pre{max-width:100%;white-space:pre;overflow:auto;background:#1e2335;color:#dbe7ff;border-radius:9px;padding:12px;margin:10px 0 6px;line-height:1.6;font-size:12px;tab-size:2}
+.wl-ai-message pre code{font:inherit}
+.wl-ai-foot{border-top:1px solid #e8e3f4;background:#fff;padding:13px 16px 14px}
+.wl-ai-quick{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;scrollbar-width:thin;padding-bottom:8px}
+.wl-ai-chip{background:#f3f0ff;border:1px solid #e0d9fc;color:#5946a4;border-radius:99px;padding:7px 11px;flex:none;font-size:11px;font-weight:750;cursor:pointer}
+.wl-ai-chip:hover{background:#e6defe}
+.wl-ai-chip:disabled{opacity:.55;cursor:default}
+.wl-ai-login{background:#ece9ff;color:#5948b8;font-size:12px;font-weight:800;padding:10px 12px;width:100%;margin:0 0 8px;border-radius:9px;cursor:pointer}
+.wl-ai-login[hidden]{display:none}
+.wl-ai-form{margin-top:4px}
+.wl-ai-input-label{display:block;font-size:11px;color:#767b94;font-weight:750;margin:0 0 6px}
+.wl-ai-compose{display:flex;align-items:stretch;gap:9px;min-width:0}
+.wl-ai-compose textarea{min-width:0;flex:1;resize:vertical;max-height:110px;min-height:55px;border-radius:11px;border:1px solid #dcdbe9;color:#303349;background:#fbfaff;padding:10px;font-size:14px;line-height:1.55}
+.wl-ai-compose textarea:focus{border-color:#8b78e9;outline:2px solid #dfd5ff;outline-offset:0}
+.wl-ai-compose button{border-radius:11px;min-width:65px;padding:10px 12px;background:#6850d4;color:#fff;font-size:12px;font-weight:850;cursor:pointer}
+.wl-ai-compose button:disabled{opacity:.45;cursor:default}
+.wl-ai-attach{display:flex;align-items:center;gap:8px;font-size:11px;color:#656d84;font-weight:650;padding:10px 1px 3px;cursor:pointer}
+.wl-ai-attach input{accent-color:#7555db;width:15px;height:15px}
+.wl-ai-status{font-size:11px;line-height:1.45;color:#6d59bc;margin:8px 0 0;overflow-wrap:anywhere}
+.wl-ai-status.is-error{color:#a42d45}
+.wl-ai-privacy{font-size:10px;line-height:1.5;color:#8b8d9e;margin:7px 0 0}
+@media(max-width:720px){
+ .wl-ai-open{right:13px;bottom:calc(14px + env(safe-area-inset-bottom));padding:10px 15px;min-height:46px;font-size:13px}
+ .wl-ai-dialog{width:calc(100vw - 12px);height:calc(100dvh - 28px);max-height:calc(100dvh - 18px);border-radius:14px}
+ .wl-ai-header{padding:13px 14px}
+ .wl-ai-header h2{font-size:17px}
+ .wl-ai-messages{padding:12px 10px}
+ .wl-ai-message{font-size:13px;padding:10px 12px}
+ .wl-ai-foot{padding:10px 11px max(11px,env(safe-area-inset-bottom))}
+ .wl-ai-compose textarea{font-size:16px}
+}
