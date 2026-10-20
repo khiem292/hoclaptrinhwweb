@@ -1,32 +1,37 @@
-# Web Lab AI — hướng dẫn kích hoạt
+# Web Lab 15.0 — Hỏi AI trong bài học
 
-Web Lab 11.0 đã có giao diện **✦ Hỏi AI** để người học hỏi trực tiếp về HTML, CSS, SCSS, JavaScript và bài hiện tại.
+## Đã tích hợp
 
-## Kiến trúc
+- Nút **✦ Hỏi AI** ở góc màn hình, không chiếm chỗ trên thanh công cụ iPhone.
+- Gia sư tiếng Việt hỗ trợ HTML, CSS, SCSS, JavaScript và môn **Cấu trúc dữ liệu & Giải thuật (DSA)**.
+- Tự nhận biết tên và mô tả bài học đang mở để giải thích đúng nội dung.
+- Chỉ đính kèm mã nguồn nếu người học chủ động bật **Gửi kèm code** (mặc định TẮT).
+- Hộp chat có gợi ý câu hỏi, nút xóa cuộc trò chuyện, hiển thị ví dụ code an toàn, hỗ trợ điện thoại.
+- Xác thực bằng JWT của tài khoản Web Lab Cloud. Không có khóa API trong GitHub Pages.
+- Supabase Edge Function `web-lab-ai` chạy API từ máy chủ với `store:false`, mặc định dùng `gpt-4.1-mini`.
+- PostgreSQL RPC `web_lab_ai_take_quota()`: **12 lượt/tài khoản/ngày**, tối thiểu **20 giây giữa hai lượt**.
 
-- GitHub Pages: `ai-tutor.js` hiển thị hội thoại, gửi câu hỏi lên Supabase Edge Function.
-- Supabase Edge Function: `web-lab-ai`, chỉ nhận người dùng đã đăng nhập Web Lab Cloud qua JWT.
-- PostgreSQL: `web_lab_ai_usage` và RPC `web_lab_ai_take_quota()` kiểm soát tối đa **12 yêu cầu/người/ngày** và khoảng cách **20 giây**.
-- OpenAI API: mô hình mặc định `gpt-5.4-mini`, giới hạn đầu ra; `store:false`.
-- Mã người học đang viết chỉ được gửi khi chủ động bật ô **Gửi kèm mã ở tab đang mở**. Lịch sử chat chỉ giữ trong bộ nhớ trang hiện tại.
+## Cần kích hoạt khóa API (bắt buộc để AI trả lời)
 
-## Kích hoạt nhà cung cấp AI (cần người quản trị có quyền)
+**Đã triển khai code không đồng nghĩa AI đã có khóa để hoạt động.** Người quản trị Web Lab cần tự quản lý tài khoản nhà cung cấp và chi phí API. ChatGPT Plus không bao gồm API credits. Nếu người quản trị chưa đủ tuổi để quản lý thanh toán, cần nhờ phụ huynh hoặc người giám hộ có quyền hỗ trợ.
 
-Chủ dự án hoặc người quản trị dịch vụ AI cần có khóa API hợp lệ và quản lý hạn mức phí. **Không đặt khóa API trong GitHub hoặc mã JavaScript chạy trên trình duyệt, không chia sẻ qua tin nhắn hoặc ảnh chụp màn hình.**
+1. Người quản trị mở [Supabase Edge Function Secrets](https://supabase.com/dashboard/project/qgkkdsaxfcclxvgauich/functions/secrets).
+2. Thêm tên secret: `OPENAI_API_KEY`, giá trị là khóa API do **người quản trị** tạo và quản lý. **Không gửi khóa vào ChatGPT, không đưa lên GitHub hay mã phía trình duyệt.**
+3. (Không bắt buộc) thêm `WEB_LAB_AI_MODEL` nếu muốn dùng mô hình OpenAI Responses API khác được tài khoản đó hỗ trợ. Mặc định `gpt-4.1-mini`.
+4. Kiểm soát hạn mức chi tiêu API từ bảng điều khiển nhà cung cấp.
+5. Mở [Web Lab 15.0](https://khiem292.github.io/hoclaptrinhwweb/?v=15.0), đăng nhập Web Lab Cloud và nhấn **✦ Hỏi AI**.
+6. Nếu hiện thông báo **Gia sư AI chưa kích hoạt API key**, bước 2 chưa hoàn thành. Nếu hiện lỗi quota, hãy đợi 20 giây hoặc đến ngày hôm sau tùy thông báo.
 
-1. Mở Supabase Dashboard của dự án `qgkkdsaxfcclxvgauich`.
-2. Vào **Edge Functions > Secrets**: `https://supabase.com/dashboard/project/qgkkdsaxfcclxvgauich/functions/secrets`.
-3. Thêm secret **Name**: `OPENAI_API_KEY`; **Value**: khóa API của nhà cung cấp OpenAI do người quản trị tạo, sau đó Save.
-4. (Tuỳ chọn) Thêm `WEB_LAB_AI_MODEL` nếu muốn chọn mô hình khác được tài khoản OpenAI API hỗ trợ.
-5. Mở `https://khiem292.github.io/hoclaptrinhwweb/`, đăng nhập Web Lab Cloud, mở **✦ Hỏi AI** và hỏi thử.
+## Kiến trúc và riêng tư
 
-Nếu thiếu `OPENAI_API_KEY`, Edge Function trả thông báo **chưa kích hoạt**. Web Lab vẫn học và làm bài tập bình thường; không có mô hình giả tạo câu trả lời. Khóa API có thể phát sinh phí theo mức sử dụng và không đi kèm gói ChatGPT.
+- Frontend: `ai-tutor-v15.js`, `ai-tutor-v15.css` và hộp thoại trong `index.html`.
+- Backend: `supabase/functions/web-lab-ai/index.ts`, triển khai trong Supabase Edge Functions. `verify_jwt=true`.
+- CSDL giới hạn: `public.web_lab_ai_usage` và `public.web_lab_ai_take_quota()`; không cho người dùng đọc/ghi trực tiếp bảng quota.
+- Cuộc trò chuyện chỉ giữ tạm trong bộ nhớ trang Web Lab; không lưu vào bảng chat của Web Lab. Khi người học nhấn Gửi, yêu cầu và (nếu bật chọn) mã nguồn được gửi tới nhà cung cấp AI. Tránh nhập mã bí mật, mật khẩu và dữ liệu riêng tư.
+- Không tự thực thi nội dung trả lời từ AI dưới dạng HTML hay JavaScript trên trang Web Lab.
+- Chức năng học bài, chấm DSA, XP, lưu dự án và đăng nhập vẫn hoạt động ngay cả khi chưa có API key hoặc đang offline (riêng AI cần Internet).
+- Nếu sau này dùng tên miền riêng, có thể cấu hình thêm origin hợp lệ bằng secret `WEB_LAB_ADDITIONAL_ORIGIN` trên Supabase (giá trị ví dụ `https://weblab.example.com`).
 
-## Bảo mật và riêng tư
+## Quy trình cập nhật
 
-- Người dùng phải đăng nhập tài khoản Supabase thật.
-- Edge Function bật `verify_jwt=true` và giới hạn nguồn truy cập GitHub Pages.
-- Chỉ những câu hỏi người dùng chủ động gửi mới được chuyển tới nhà cung cấp mô hình AI.
-- Không lưu lịch sử trò chuyện thành dữ liệu Web Lab; không nhập mật khẩu, token, thông tin nhạy cảm.
-- Không được cung cấp khóa `service_role`/secret keys trong `cloud-config.js`.
-- Nếu cần thay đổi quy định hạn mức, cập nhật đồng thời SQL RPC và thông báo ở giao diện.
+Khi thay đổi giao diện, tăng version script, `CACHE` trong `service-worker.js` và `release.json` để các thiết bị PWA nhận bản mới. Không xóa dữ liệu Safari để buộc làm mới vì code chưa đồng bộ có thể đang nằm trên máy.
