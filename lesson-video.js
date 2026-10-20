@@ -64,6 +64,7 @@ function stop({silence=true}={}){
  if(!active)return;
  if(active.timer)clearInterval(active.timer);
  active.timer=null;
+ active.abort?.abort();
  if(silence&&'speechSynthesis' in window)try{speechSynthesis.cancel()}catch{}
  active=null;
 }
@@ -156,13 +157,10 @@ function mount(item){
    }
  });
  // Prevent timer leakage on backgrounded Safari and free resources when leaving lessons.
+ st.abort=new AbortController();
  document.addEventListener('visibilitychange',()=>{
    if(active===st&&document.visibilityState==='hidden')pause();
- },{signal:(()=>{const c=new AbortController();st.abort=c;return c.signal;})()});
- const priorStop=stop;
- st.close=()=>{pause();st.abort?.abort()};
- const clean=()=>{if(active?.close)active.close();priorStop()};
- if(!window.WebLabVideo || window.WebLabVideo.destroy!==clean)window.WebLabVideo.destroy=clean;
+ },{signal:st.abort.signal});
  render();
 }
 window.WebLabVideo={markup,mount,destroy:()=>stop(),get lessonCount(){return (window.HTML_LAB_DATA?.LESSONS||[]).filter(x=>x.kind==='roadmap').length}};
