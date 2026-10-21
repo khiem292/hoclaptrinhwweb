@@ -18,7 +18,11 @@ function status(text,kind=''){
  const fallback=$('wlAiUseFreeBtn');
  if(fallback)fallback.hidden=isLocal()||!['error','warn'].includes(kind);
 }
-function isLocal(){return $('wlAiMode')?.value!=='online'}
+function isLocal(){return $('wlAiMode')?.value==='local'}
+function isChatGPT(){return $('wlAiMode')?.value==='chatgpt'}
+function siwcNotice(){
+ return 'Sign in with ChatGPT chưa được kích hoạt cho website Web Lab. Cần OpenAI cấp OAuth client và đăng ký callback chính thức. Bạn có thể dùng trợ lý miễn phí ngay.';
+}
 const KEY_ERRORS=new Set(['not_configured','invalid_format','invalid_key','access_denied','model_unavailable']);
 function switchToFree(message){
  // Preserve the question already typed; do not send code or conversation online.
@@ -89,14 +93,18 @@ function addMessage(role,content){
 function renderControls(){
  const field=$('wlAiQuestion'),send=$('wlAiSubmit');
  if(field)field.disabled=busy;
- if(send)send.disabled=busy||!field?.value?.trim()||(!isLocal()&&(!onlineAccount()||ready===false));
- $('wlAiLoginNotice').hidden=isLocal()||onlineAccount();
- $('wlAiLoginBtn').hidden=isLocal()||onlineAccount();
+ if(send)send.disabled=busy||!field?.value?.trim()||isChatGPT()||(!isLocal()&&(!onlineAccount()||ready===false));
+ const info=$('wlAiSIWCInfo');
+ if(info)info.hidden=!isChatGPT();
+ $('wlAiLoginNotice').hidden=isLocal()||isChatGPT()||onlineAccount();
+ $('wlAiLoginBtn').hidden=isLocal()||isChatGPT()||onlineAccount();
  $('wlAiReset').disabled=busy||!messages.length;
- $('wlAiAttachHint').textContent=isLocal()
-  ?($('wlAiIncludeCode')?.checked?'Chỉ kiểm tra code trên thiết bị, không gửi lên máy chủ.':'Không tự đọc code; hãy tích chọn nếu muốn kiểm tra tĩnh.')
-  :($('wlAiIncludeCode')?.checked?'Code chỉ được gửi tới máy chủ AI khi bạn bấm Gửi; đừng gửi mật khẩu, token.':'AI trực tuyến không tự đọc code của bạn.');
- $('wlAiSubmit').textContent=isLocal()?'➤ Hỏi miễn phí':'➤ Hỏi OpenAI';
+ $('wlAiAttachHint').textContent=isChatGPT()
+   ?'Chưa kết nối tài khoản ChatGPT. Web Lab không thu thập mật khẩu, cookie hay token ChatGPT.'
+   :isLocal()
+    ?($('wlAiIncludeCode')?.checked?'Chỉ kiểm tra code trên thiết bị, không gửi lên máy chủ.':'Không tự đọc code; hãy tích chọn nếu muốn kiểm tra tĩnh.')
+    :($('wlAiIncludeCode')?.checked?'Code chỉ được gửi tới máy chủ AI khi bạn bấm Gửi; đừng gửi mật khẩu, token.':'OpenAI API chỉ đọc code bạn chủ động đính kèm.');
+ $('wlAiSubmit').textContent=isChatGPT()?'Chờ kích hoạt':isLocal()?'➤ Hỏi miễn phí':'➤ Hỏi OpenAI API';
  $('wlAiLessonName').textContent=window.WebLabWorkspace?.currentTitle||'Chưa chọn bài học';
 }
 function signin(){
@@ -115,7 +123,7 @@ async function request(body){
  }finally{clearTimeout(timer);}
 }
 async function checkStatus(){
- if(isLocal()||checking||!onlineAccount()||!navigator.onLine){renderControls();return}
+ if(isLocal()||isChatGPT()||checking||!onlineAccount()||!navigator.onLine){renderControls();return}
  checking=true;status('Đang kiểm tra trạng thái gia sư AI…');
  try{
   const response=await request({action:'status'});
@@ -139,6 +147,7 @@ async function ask(){
  if(busy)return;
  const field=$('wlAiQuestion'),question=String(field?.value||'').trim();
  if(!question){status('Bạn hãy nhập câu hỏi.','warn');return}
+ if(isChatGPT()){status(siwcNotice(),'warn');return}
  if(isLocal()){
   const engine=window.WebLabLocalTutor;
   if(!engine){status('Chưa tải được trợ lý miễn phí. Hãy tải lại Web Lab.', 'error');return}
@@ -183,16 +192,21 @@ async function ask(){
 function reset(){
  if(busy)return;
  messages=[];$('wlAiMessages').replaceChildren();
- addMessage('assistant',isLocal()?'Xin chào! 👋 Mình là trợ lý học tập miễn phí dựa trên bài học Web Lab và quy tắc có sẵn — không phải AI tạo sinh. Hỏi mình về HTML, CSS, JS, DSA, Big O hoặc kiểm tra code nhé.':'Xin chào! ✨ Mình là Web Lab AI trực tuyến. Bạn có thể hỏi về HTML, CSS, SCSS, JavaScript và DSA.');
+ addMessage('assistant',isChatGPT()
+  ?'🔒 Kết nối bằng tài khoản ChatGPT chưa khả dụng trong Web Lab. Tính năng này cần OpenAI phê duyệt website và cấp OAuth client; hiện chưa có phiên đăng nhập ChatGPT nào được tạo.'
+  :isLocal()
+   ?'Xin chào! 👋 Mình là trợ lý học tập miễn phí dựa trên bài học Web Lab và quy tắc có sẵn — không phải AI tạo sinh. Hỏi mình về HTML, CSS, JS, DSA, Big O hoặc kiểm tra code nhé.'
+   :'Xin chào! ✨ Mình hỗ trợ hỏi đáp bằng OpenAI API trên máy chủ, với khóa hợp lệ do người quản trị cấu hình.');
  renderControls();
- status(isLocal()?'✓ Miễn phí · Hoạt động trên thiết bị, không cần khóa API hay tài khoản.':onlineAccount()?'Sẵn sàng hỏi OpenAI.':'Đăng nhập Web Lab Cloud để hỏi OpenAI.',isLocal()?'ok':'');
+ status(isChatGPT()?siwcNotice():isLocal()?'✓ Miễn phí · Hoạt động trên thiết bị, không cần khóa API hay tài khoản.':onlineAccount()?'Sẵn sàng hỏi OpenAI API.':'Đăng nhập Web Lab Cloud để hỏi OpenAI API.',isChatGPT()?'warn':isLocal()?'ok':'');
 }
 function open(){
  const dialog=$('wlAiDialog');if(!dialog)return;
  if(!dialog.open)dialog.showModal();
  renderControls();
- if(isLocal())status('✓ Chế độ trợ lý miễn phí — dùng được ngay và không gửi dữ liệu lên máy chủ.','ok');
- else if(!onlineAccount())status('Đăng nhập Web Lab Cloud để hỏi OpenAI.');
+ if(isChatGPT())status(siwcNotice(),'warn');
+ else if(isLocal())status('✓ Trợ lý miễn phí — không gửi dữ liệu lên máy chủ.','ok');
+ else if(!onlineAccount())status('Đăng nhập Web Lab Cloud để hỏi OpenAI API.');
  else checkStatus();
  $('wlAiQuestion')?.focus({preventScroll:true});
 }
@@ -213,7 +227,7 @@ function init(){
  $('wlAiMode').addEventListener('change',()=>{
   $('wlAiIncludeCode').checked=false;
   reset();renderControls();
-  if(!isLocal()&&onlineAccount())checkStatus();
+  if(!isLocal()&&!isChatGPT()&&onlineAccount())checkStatus();
  });
  $('wlAiReset').addEventListener('click',reset);
  $('wlAiDialog').addEventListener('click',e=>{if(e.target===$('wlAiDialog'))$('wlAiDialog').close()});
@@ -226,9 +240,9 @@ function init(){
   });
   suggestions.append(btn);
  }
- window.addEventListener('online',()=>{if($('wlAiDialog').open)checkStatus()});
+ window.addEventListener('online',()=>{if($('wlAiDialog').open&&!isChatGPT()&&!isLocal())checkStatus()});
  reset();renderControls();
 }
-window.WebLabTutor={open,checkStatus};
+window.WebLabTutor={open,checkStatus,mode:()=>isChatGPT()?'chatgpt':isLocal()?'local':'online'};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
