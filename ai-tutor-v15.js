@@ -45,7 +45,21 @@ function addMessage(role,content){
      code.textContent=segments[i].trim();pre.append(code);article.append(pre);
    }else if(segments[i]){
      const el=document.createElement('span');el.className='wl-ai-answer-text';
-     el.textContent=segments[i];article.append(el);
+     // Limited Markdown bold for study hints. All strings use textContent, never innerHTML.
+     const chunks=segments[i].split(/(\\*\\*[^*\\n]+\\*\\*)/g);
+     for(const chunk of chunks){
+       if(!chunk)continue;
+       if(/^\\*\\*[^*\\n]+\\*\\*$/.test(chunk)){
+         const bold=document.createElement('strong');
+         bold.textContent=chunk.slice(2,-2);
+         el.append(bold);
+       }else{
+         const text=document.createElement('span');
+         text.textContent=chunk;
+         el.append(text);
+       }
+     }
+     article.append(el);
    }
  }
  feed.append(article);feed.scrollTop=feed.scrollHeight;
