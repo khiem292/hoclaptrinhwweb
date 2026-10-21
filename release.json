@@ -1,12 +1,12 @@
 {
-  "version": "16.1",
+  "version": "16.2",
   "date": "2026-10-21",
-  "title": "Sửa lỗi font chữ và nội dung trò chuyện tiếng Việt",
+  "title": "Làm lại Web Lab AI API và xử lý lỗi khóa",
   "notes": [
-    "🔤 Sửa lỗi chữ tiếng Việt bị vỡ, thiếu ký tự hoặc dính chữ trong đoạn trả lời của trợ lý học tập.",
-    "📝 Cải thiện cách hiển thị chữ đậm và đoạn code có định dạng, giữ nguyên dấu tiếng Việt bằng Unicode.",
-    "📱 Cân chỉnh cỡ chữ, khoảng cách dòng, xuống dòng và độ rộng bong bóng chat trên iPhone.",
-    "🔐 Nội dung trả lời vẫn được hiển thị an toàn, không thực thi HTML từ trợ lý.",
-    "💾 Giữ nguyên toàn bộ bài học DSA, XP, tài khoản, tiến độ và dự án đã lưu."
+    "🛠️ Triển khai lại AI API v2 trên Supabase, kiểm tra khóa trước khi tính lượt hỏi.",
+    "🔐 Tự nhận biết khóa thử nghiệm, khóa bị từ chối và lỗi quyền truy cập hoặc mô hình; khóa thật vẫn chỉ lưu trên máy chủ.",
+    "📗 Thêm nút chuyển ngay sang trợ lý miễn phí nếu OpenAI trực tuyến chưa hoạt động.",
+    "🧪 Đã kiểm tra luồng xác thực, giới hạn lượt hỏi và trả lời với dữ liệu mô phỏng.",
+    "💾 Giữ nguyên các bài học, DSA, XP, lịch sử code và dự án cá nhân."
   ]
 }
