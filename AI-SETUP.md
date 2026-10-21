@@ -54,3 +54,11 @@ Các tệp chính:
 - `release.json`, `service-worker.js`: ghi chú cập nhật và cache PWA.
 
 **Không cần thay khóa Supabase không hợp lệ để dùng chế độ miễn phí.** Đừng cung cấp mật khẩu hoặc khóa API trong hội thoại.
+
+## Web Lab 16.2 — API v2 được làm lại
+
+Web Lab đã triển khai lại Supabase Edge Function `web-lab-ai` với cơ chế `status` và `ask`. `status` kiểm tra khóa và mô hình trước khi đếm lượt; không tạo câu trả lời hoặc trừ lượt học viên. Nếu máy chủ báo lỗi, giao diện hiển thị nút **📗 Dùng trợ lý miễn phí ngay →**. Trợ lý miễn phí không cần khóa và không sử dụng OpenAI.
+
+Các lỗi API hiện phân biệt `not_configured`, `invalid_format` (khóa mẫu), `invalid_key` (OpenAI trả 401), `access_denied` (403), `model_unavailable` (404), `provider_quota` (429). Không trả lại khóa bí mật hay toàn bộ thông báo thô từ OpenAI. Giới hạn vẫn giữ **12 lượt/ngày/tài khoản**, cách nhau **20 giây**.
+
+**Lưu ý:** Mã API không thể tự sinh khóa OpenAI hợp lệ. Chỉ chủ tài khoản API có quyền mới có thể quản lý khóa, quyền dự án và thanh toán. Nếu cần, hãy nhờ người giám hộ hỗ trợ. Không nhập chuỗi minh họa, không gửi khóa vào hội thoại hoặc đẩy lên GitHub.
