@@ -19,6 +19,17 @@ function status(text,kind=''){
  if(fallback)fallback.hidden=isLocal()||!['error','warn'].includes(kind);
 }
 function isLocal(){return $('wlAiMode')?.value!=='online'}
+const KEY_ERRORS=new Set(['not_configured','invalid_format','invalid_key','access_denied','model_unavailable']);
+function switchToFree(message){
+ // Preserve the question already typed; do not send code or conversation online.
+ const selector=$('wlAiMode');
+ if(!selector||isLocal())return;
+ selector.value='local';
+ $('wlAiIncludeCode').checked=false;
+ ready=false;
+ renderControls();
+ status(message||'📗 Đã chuyển sang trợ lý miễn phí. Nhập câu hỏi rồi nhấn Hỏi miễn phí.','ok');
+}
 function onlineAccount(){return Boolean(window.WebLabCloud?.loggedIn&&window.WebLabCloud?.configured)}
 function studyContext(){
  const id=window.WebLabWorkspace?.currentId;
@@ -114,6 +125,8 @@ async function checkStatus(){
   ready=data.available===true||data.verified===true?true:data.verified===null?null:false;
   if(ready===true){
    status('✓ API v2 kết nối OpenAI thành công. Có thể hỏi AI trực tuyến.','ok');
+  }else if(KEY_ERRORS.has(data.issue)){
+   switchToFree('📗 OpenAI trực tuyến chưa có khóa hoặc quyền hợp lệ. Đã tự chuyển sang trợ lý miễn phí — bạn có thể nhập câu hỏi và gửi ngay.');
   }else{
    const extra=data.provider_code?' · Mã: '+data.provider_code:'';
    status((data.diagnostic||'Máy chủ AI chưa sẵn sàng. Hãy chọn trợ lý miễn phí.')+extra,ready===null?'warn':'error');
@@ -160,8 +173,11 @@ async function ask(){
   ready=true;status('✓ Đã trả lời · Còn '+Math.max(0,Number(data.remaining??0))+' lượt trong ngày.','ok');
  }catch(e){
   if(!field.value.trim())field.value=question;
-  if(['not_configured','invalid_format','invalid_key','access_denied','model_unavailable'].includes(e.kind))ready=false;
-  status(String(e.message||'Kết nối AI bị gián đoạn.'),'error');
+  if(KEY_ERRORS.has(e.kind)){
+   switchToFree('📗 OpenAI chưa được kích hoạt bằng khóa hợp lệ. Câu hỏi vẫn ở ô nhập — hãy nhấn Hỏi miễn phí để tiếp tục.');
+  }else{
+   status(String(e.message||'Kết nối AI bị gián đoạn.'),'error');
+  }
  }finally{busy=false;renderControls()}
 }
 function reset(){
@@ -186,10 +202,7 @@ function init(){
  $('wlAiClose').addEventListener('click',()=>$('wlAiDialog').close());
  $('wlAiLoginBtn').addEventListener('click',signin);
  $('wlAiUseFreeBtn')?.addEventListener('click',()=>{
-  $('wlAiMode').value='local';
-  $('wlAiIncludeCode').checked=false;
-  reset();
-  status('✓ Đang dùng trợ lý miễn phí trên thiết bị. Không cần API key.','ok');
+  switchToFree('📗 Đã chuyển sang trợ lý miễn phí — nhập câu hỏi và nhấn Hỏi miễn phí.');
  });
  $('wlAiForm').addEventListener('submit',e=>{e.preventDefault();ask()});
  $('wlAiQuestion').addEventListener('input',renderControls);
