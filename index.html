@@ -4,7 +4,7 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <meta name="theme-color" content="#f7f8fd">
- <meta name="web-lab-version" content="15.1">
+ <meta name="web-lab-version" content="16.0">
  <meta name="apple-mobile-web-app-capable" content="yes">
  <meta name="apple-mobile-web-app-status-bar-style" content="default">
  <meta name="apple-mobile-web-app-title" content="Web Lab">
@@ -14,7 +14,7 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 15.1 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <title>Web Lab 16.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
  <link rel="stylesheet" href="style.css?v=12.0">
  <link rel="stylesheet" href="workspace-v13.css?v=13.0">
  <link rel="stylesheet" href="practice.css?v=5.5">
@@ -225,7 +225,7 @@
 </style>
  <link rel="stylesheet" href="header-responsive.css?v=13.1">
  <link rel="stylesheet" href="dsa-course.css?v=14.0">
- <link rel="stylesheet" href="ai-tutor-v15.css?v=15.0">
+ <link rel="stylesheet" href="ai-tutor-v15.css?v=16.0">
  </head>
 <body>
  <div class="app-shell">
@@ -336,13 +336,20 @@
  <dialog id="wlAiDialog" class="wl-ai-dialog" aria-labelledby="wlAiTitle">
   <div class="wl-ai-wrap">
    <header class="wl-ai-top">
-    <div><small>✦ WEB LAB • AI TUTOR</small><h2 id="wlAiTitle">Gia sư lập trình AI</h2><p>Hỏi đáp HTML · CSS · JS · DSA</p></div>
+    <div><small>✦ WEB LAB • LEARNING TUTOR</small><h2 id="wlAiTitle">Trợ lý học lập trình</h2><p>Miễn phí trên thiết bị · OpenAI tùy chọn</p></div>
     <div class="wl-ai-top-actions">
      <button type="button" id="wlAiReset" title="Bắt đầu cuộc trò chuyện mới" aria-label="Xóa đoạn hội thoại hiện tại">↻</button>
      <button type="button" id="wlAiClose" title="Đóng gia sư AI" aria-label="Đóng gia sư AI">✕</button>
     </div>
    </header>
    <div class="wl-ai-context"><span>📖 Đang học:</span><strong id="wlAiLessonName">Đang tải bài học…</strong></div>
+   <div class="wl-ai-modebar">
+    <label for="wlAiMode">Chế độ hỗ trợ</label>
+    <select id="wlAiMode" aria-label="Chọn trợ lý miễn phí hoặc AI trực tuyến">
+     <option value="local" selected>📗 Trợ lý miễn phí · không cần API</option>
+     <option value="online">✦ OpenAI trực tuyến · cần API key</option>
+    </select>
+   </div>
    <section id="wlAiMessages" class="wl-ai-messages" role="log" aria-live="polite" aria-label="Nội dung hỏi đáp với gia sư AI"></section>
    <div class="wl-ai-bottom">
     <div id="wlAiSuggestions" class="wl-ai-suggestions" aria-label="Câu hỏi gợi ý"></div>
@@ -353,11 +360,11 @@
       <textarea id="wlAiQuestion" rows="2" maxlength="1500" placeholder="Ví dụ: Vì sao thuật toán tìm kiếm nhị phân chạy nhanh?" aria-label="Nhập câu hỏi cho gia sư AI"></textarea>
       <button type="submit" id="wlAiSubmit" disabled>➤ Gửi</button>
      </div>
-     <label class="wl-ai-check"><input type="checkbox" id="wlAiIncludeCode"> Gửi kèm code của bài đang học để AI kiểm tra</label>
+     <label class="wl-ai-check"><input type="checkbox" id="wlAiIncludeCode"> Phân tích code của bài đang học (tùy chọn)</label>
      <p class="wl-ai-small" id="wlAiAttachHint">AI không tự đọc code của bạn.</p>
     </form>
-    <p id="wlAiStatus" class="wl-ai-status" role="status" aria-live="polite">Chưa kiểm tra kết nối AI.</p>
-    <p class="wl-ai-small">Đừng nhập mật khẩu, mã xác minh hoặc API key. Chỉ câu hỏi và code bạn chủ động gửi mới được chuyển đến nhà cung cấp AI; hội thoại không được lưu trên máy chủ Web Lab.</p>
+    <p id="wlAiStatus" class="wl-ai-status" role="status" aria-live="polite">Trợ lý miễn phí sẵn sàng sử dụng.</p>
+    <p class="wl-ai-small">Chế độ miễn phí hoạt động theo quy tắc và dữ liệu bài học, không phải AI tạo sinh; câu hỏi và code chỉ được xử lý trên máy. Chỉ khi chọn OpenAI trực tuyến và nhấn Gửi, nội dung mới được gửi đến nhà cung cấp AI. Đừng chia sẻ mật khẩu hoặc API key.</p>
    </div>
   </div>
  </dialog>
@@ -381,7 +388,8 @@
  <script src="cloud-sync.js?v=11.0"></script>
  <script src="gamification.js?v=14.0"></script>
  <script src="workspace-v13.js?v=13.0"></script>
- <script src="ai-tutor-v15.js?v=15.1"></script>
+ <script src="local-tutor-v16.js?v=16.0"></script>
+ <script src="ai-tutor-v15.js?v=16.0"></script>
  <script src="release-notifications.js?v=13.0"></script>
  <script src="pwa.js"></script>
 </body>
