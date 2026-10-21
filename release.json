@@ -1,12 +1,12 @@
 {
-  "version": "16.2",
+  "version": "16.3",
   "date": "2026-10-21",
-  "title": "Làm lại Web Lab AI API và xử lý lỗi khóa",
+  "title": "Tự chuyển trợ lý miễn phí khi OpenAI chưa có khóa hợp lệ",
   "notes": [
-    "🛠️ Triển khai lại AI API v2 trên Supabase, kiểm tra khóa trước khi tính lượt hỏi.",
-    "🔐 Tự nhận biết khóa thử nghiệm, khóa bị từ chối và lỗi quyền truy cập hoặc mô hình; khóa thật vẫn chỉ lưu trên máy chủ.",
-    "📗 Thêm nút chuyển ngay sang trợ lý miễn phí nếu OpenAI trực tuyến chưa hoạt động.",
-    "🧪 Đã kiểm tra luồng xác thực, giới hạn lượt hỏi và trả lời với dữ liệu mô phỏng.",
-    "💾 Giữ nguyên các bài học, DSA, XP, lịch sử code và dự án cá nhân."
+    "📗 Khi OpenAI báo khóa API mẫu, bị từ chối hoặc không đủ quyền, Web Lab tự chuyển sang trợ lý miễn phí; không còn kẹt ở nút Gửi bị khóa.",
+    "✍️ Giữ nguyên câu hỏi bạn đã nhập và bật nút Hỏi miễn phí ngay khi có nội dung.",
+    "🔒 Tự tắt lựa chọn gửi/đọc code khi chuyển chế độ; trợ lý miễn phí xử lý trên thiết bị.",
+    "✦ Vẫn giữ chế độ OpenAI trực tuyến cho khi người quản trị cấu hình khóa API thật và hợp lệ.",
+    "💾 Giữ nguyên 84 bài học, môn DSA, XP, dự án và dữ liệu đồng bộ."
   ]
 }
