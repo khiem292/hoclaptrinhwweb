@@ -1,13 +1,12 @@
 {
-  "version": "16.0",
+  "version": "16.1",
   "date": "2026-10-21",
-  "title": "Trợ lý học lập trình miễn phí, dùng được ngay",
+  "title": "Sửa lỗi font chữ và nội dung trò chuyện tiếng Việt",
   "notes": [
-    "📗 Thêm chế độ trợ lý học tập miễn phí ngay trong hộp chat, sử dụng kiến thức của các bài học Web Lab, không cần OpenAI API key.",
-    "🧠 Hỗ trợ giải thích bài học, gợi ý từng bước, bài thực hành và độ phức tạp Big O cho môn DSA.",
-    "🐞 Phân tích tĩnh một số lỗi JavaScript, HTML và CSS trên thiết bị khi bạn chủ động tích chọn; không tự chạy code và không gửi dữ liệu lên mạng.",
-    "✦ Giữ chế độ OpenAI trực tuyến riêng cho người dùng có tài khoản và API key hợp lệ; không mặc định dùng hoặc tiêu hao lượt hỏi.",
-    "📱 Thiết kế bộ chọn chế độ dễ dùng trên iPhone, cập nhật PWA để trợ lý miễn phí hoạt động kể cả khi offline sau lần tải đầu tiên.",
-    "🔐 Không thay đổi tài khoản, tiến độ, XP, lịch sử code, dự án hoặc 84 bài học đã có."
+    "🔤 Sửa lỗi chữ tiếng Việt bị vỡ, thiếu ký tự hoặc dính chữ trong đoạn trả lời của trợ lý học tập.",
+    "📝 Cải thiện cách hiển thị chữ đậm và đoạn code có định dạng, giữ nguyên dấu tiếng Việt bằng Unicode.",
+    "📱 Cân chỉnh cỡ chữ, khoảng cách dòng, xuống dòng và độ rộng bong bóng chat trên iPhone.",
+    "🔐 Nội dung trả lời vẫn được hiển thị an toàn, không thực thi HTML từ trợ lý.",
+    "💾 Giữ nguyên toàn bộ bài học DSA, XP, tài khoản, tiến độ và dự án đã lưu."
   ]
 }
