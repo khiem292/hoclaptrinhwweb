@@ -27,7 +27,7 @@ const KEY_ERRORS=new Set(['not_configured','invalid_format','invalid_key','acces
 function switchToFree(message){
  // Preserve the question already typed; do not send code or conversation online.
  const selector=$('wlAiMode');
- if(!selector||isLocal())return;
+ if(!selector||isLocal()||isChatGPT())return;
  selector.value='local';
  $('wlAiIncludeCode').checked=false;
  ready=false;
@@ -93,6 +93,7 @@ function addMessage(role,content){
 function renderControls(){
  const field=$('wlAiQuestion'),send=$('wlAiSubmit');
  if(field)field.disabled=busy;
+ if($('wlAiMode'))$('wlAiMode').disabled=busy;
  if(send)send.disabled=busy||!field?.value?.trim()||isChatGPT()||(!isLocal()&&(!onlineAccount()||ready===false));
  const info=$('wlAiSIWCInfo');
  if(info)info.hidden=!isChatGPT();
@@ -129,7 +130,7 @@ async function checkStatus(){
   const response=await request({action:'status'});
   const data=await response.json().catch(()=>({}));
   if(!response.ok)throw Error(data.error||'Không kiểm tra được máy chủ AI.');
-  if(isLocal())return;
+  if(isLocal()||isChatGPT())return;
   ready=data.available===true||data.verified===true?true:data.verified===null?null:false;
   if(ready===true){
    status('✓ API v2 kết nối OpenAI thành công. Có thể hỏi AI trực tuyến.','ok');
@@ -140,7 +141,9 @@ async function checkStatus(){
    status((data.diagnostic||'Máy chủ AI chưa sẵn sàng. Hãy chọn trợ lý miễn phí.')+extra,ready===null?'warn':'error');
   }
  }catch(e){
-  ready=null;status('Không kiểm tra được AI: '+String(e.message||e),'warn');
+  if(!isLocal()&&!isChatGPT()){
+   ready=null;status('Không kiểm tra được AI: '+String(e.message||e),'warn');
+  }
  }finally{checking=false;renderControls()}
 }
 async function ask(){
