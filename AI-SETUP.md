@@ -35,3 +35,22 @@
 ## Quy trình cập nhật
 
 Khi thay đổi giao diện, tăng version script, `CACHE` trong `service-worker.js` và `release.json` để các thiết bị PWA nhận bản mới. Không xóa dữ liệu Safari để buộc làm mới vì code chưa đồng bộ có thể đang nằm trên máy.
+
+## Web Lab 16.0 — Trợ lý miễn phí không cần khóa API
+
+Web Lab nay có 2 chế độ trong hộp thoại **✦ Hỏi AI**:
+
+1. **📗 Trợ lý miễn phí (mặc định):** Hoạt động trực tiếp trên trình duyệt, dùng nội dung bài học hiện có và các quy tắc hỗ trợ; không cần đăng nhập, không cần API key, có thể chạy offline sau khi trang đã lưu cache. Hỗ trợ giải thích bài học, gợi ý làm bài, Big O, bài thực hành và phát hiện một số lỗi HTML/CSS/JS. **Đây không phải mô hình AI tạo sinh**, không có khả năng trả lời linh hoạt như ChatGPT.
+2. **✦ OpenAI trực tuyến (tùy chọn):** Cần tài khoản Web Lab Cloud, Internet và khóa `OPENAI_API_KEY` **thật** do người quản trị dịch vụ OpenAI API quản lý. Khóa minh họa không hoạt động. Mọi vấn đề API 401 / 403 sẽ hiển thị trong hộp chat.
+
+Người dùng chuyển chế độ bằng menu chọn ngay dưới tên bài học. Khi chuyển chế độ, Web Lab xóa nội dung trò chuyện của chế độ trước và bỏ chọn phân tích code để tránh gửi nhầm nội dung sang máy chủ.
+
+Ở chế độ miễn phí, chỉ khi chọn **Phân tích code hiện tại** thì trợ lý mới đọc code bài đang mở. Việc phân tích này chạy trong trình duyệt và **không gửi code đi đâu**. Trình phân tích chỉ có các quy tắc tĩnh, không chạy JavaScript của người dùng. Trong chế độ OpenAI, ô chọn tương tự có nghĩa là đính kèm code trong yêu cầu gửi đến nhà cung cấp AI, nên người học cần tự kiểm tra nội dung trước khi gửi.
+
+Các tệp chính:
+- `local-tutor-v16.js`: bộ trợ lý học tập cục bộ, không có lệnh gọi network.
+- `ai-tutor-v15.js`: hộp chat, chọn chế độ và nút gửi.
+- `ai-tutor-v15.css`: giao diện trên máy tính và điện thoại.
+- `release.json`, `service-worker.js`: ghi chú cập nhật và cache PWA.
+
+**Không cần thay khóa Supabase không hợp lệ để dùng chế độ miễn phí.** Đừng cung cấp mật khẩu hoặc khóa API trong hội thoại.
