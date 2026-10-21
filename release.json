@@ -1,12 +1,13 @@
 {
-  "version": "15.1",
+  "version": "16.0",
   "date": "2026-10-21",
-  "title": "Kiểm tra lỗi xác thực và quyền truy cập AI",
+  "title": "Trợ lý học lập trình miễn phí, dùng được ngay",
   "notes": [
-    "🔎 Thêm bước kiểm tra khóa OpenAI từ máy chủ trước khi gửi câu hỏi, không tiêu hao lượt hỏi AI.",
-    "🔐 Phân biệt khóa API bị từ chối (401), thiếu quyền truy cập (403) và mô hình không khả dụng (404).",
-    "💬 Hiển thị chẩn đoán rõ ràng bằng tiếng Việt ngay trong hộp chat ✦ Hỏi AI, không tiết lộ khóa bí mật.",
-    "🛡️ Giữ nguyên giới hạn bảo vệ 12 lượt hỏi/ngày, bảo mật Supabase và dữ liệu học tập.",
-    "✅ Các bài học, môn DSA, tiến độ, XP và dự án cá nhân không bị ảnh hưởng."
+    "📗 Thêm chế độ trợ lý học tập miễn phí ngay trong hộp chat, sử dụng kiến thức của các bài học Web Lab, không cần OpenAI API key.",
+    "🧠 Hỗ trợ giải thích bài học, gợi ý từng bước, bài thực hành và độ phức tạp Big O cho môn DSA.",
+    "🐞 Phân tích tĩnh một số lỗi JavaScript, HTML và CSS trên thiết bị khi bạn chủ động tích chọn; không tự chạy code và không gửi dữ liệu lên mạng.",
+    "✦ Giữ chế độ OpenAI trực tuyến riêng cho người dùng có tài khoản và API key hợp lệ; không mặc định dùng hoặc tiêu hao lượt hỏi.",
+    "📱 Thiết kế bộ chọn chế độ dễ dùng trên iPhone, cập nhật PWA để trợ lý miễn phí hoạt động kể cả khi offline sau lần tải đầu tiên.",
+    "🔐 Không thay đổi tài khoản, tiến độ, XP, lịch sử code, dự án hoặc 84 bài học đã có."
   ]
 }
