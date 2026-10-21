@@ -1,11 +1,13 @@
 {
-  "version": "16.5",
+  "version": "17.0",
   "date": "2026-10-21",
-  "title": "Gỡ bỏ mục Hỏi AI khỏi Web Lab",
+  "title": "Giải thích mã nguồn từng dòng và từng ký hiệu",
   "notes": [
-    "🧹 Đã gỡ hoàn toàn nút Hỏi AI, cửa sổ chat, chế độ OpenAI và kết nối tài khoản ChatGPT khỏi giao diện website.",
-    "📦 Không tải các tệp JavaScript và CSS của trợ lý AI nữa, giúp giao diện và tài nguyên PWA gọn hơn.",
-    "📱 Cập nhật bộ nhớ đệm để iPhone nhận giao diện không có Hỏi AI.",
-    "✅ Giữ nguyên 84 bài học, môn DSA, hệ thống XP, lịch sử code, dự án và đăng nhập đồng bộ Supabase."
+    "🔍 Thêm công cụ Giải thích code: dán mã nguồn hoặc chọn file .js, .html, .css, .scss, .json và .txt ngay trên iPhone.",
+    "📖 Giải thích bằng tiếng Việt từng dòng và từng thành phần, như console.log, const, hàm, dấu ngoặc, thẻ HTML, thuộc tính CSS, biến SCSS.",
+    "⌘ Nút Giải thích code trong trình soạn thảo Web Lab sẽ lấy nội dung của tab code hiện tại.",
+    "📄 Có thể mở rộng từng dòng, xem tất cả lời giải thích, sao chép hoặc xuất thành file TXT để học lại.",
+    "🔒 Phân tích trên trình duyệt, không chạy code tải lên, không cần tài khoản hoặc API key, dùng offline sau khi cập nhật PWA.",
+    "✅ Giữ nguyên 84 bài học, DSA, XP, dự án, lịch sử code và đồng bộ. Công cụ dựa trên quy tắc, không phải AI tạo sinh."
   ]
 }
