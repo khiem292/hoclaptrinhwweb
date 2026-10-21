@@ -1,12 +1,11 @@
 {
-  "version": "16.4",
+  "version": "16.5",
   "date": "2026-10-21",
-  "title": "Chuẩn bị kết nối tài khoản ChatGPT chính thức",
+  "title": "Gỡ bỏ mục Hỏi AI khỏi Web Lab",
   "notes": [
-    "🔒 Thêm mục ChatGPT tài khoản (chờ cấp quyền) vào hộp thoại Hỏi AI, giải thích rõ trạng thái OAuth chưa kích hoạt trên website.",
-    "📘 Liên kết tài liệu và biểu mẫu quan tâm chính thức của OpenAI dành cho chủ dự án.",
-    "🛡️ Không yêu cầu mật khẩu, cookie hoặc token ChatGPT; không tạo kết nối giả và không gửi nội dung lên máy chủ khi chưa được phê duyệt.",
-    "🤖 Giữ hai chế độ hiện có: trợ lý miễn phí trên thiết bị và OpenAI API (cần khóa API hợp lệ).",
-    "📱 Cải thiện bố cục trên iPhone; giữ nguyên 84 bài học, XP, dự án và đồng bộ Supabase."
+    "🧹 Đã gỡ hoàn toàn nút Hỏi AI, cửa sổ chat, chế độ OpenAI và kết nối tài khoản ChatGPT khỏi giao diện website.",
+    "📦 Không tải các tệp JavaScript và CSS của trợ lý AI nữa, giúp giao diện và tài nguyên PWA gọn hơn.",
+    "📱 Cập nhật bộ nhớ đệm để iPhone nhận giao diện không có Hỏi AI.",
+    "✅ Giữ nguyên 84 bài học, môn DSA, hệ thống XP, lịch sử code, dự án và đăng nhập đồng bộ Supabase."
   ]
 }
