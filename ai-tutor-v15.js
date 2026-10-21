@@ -32,36 +32,43 @@ function addMessage(role,content){
  const feed=$('wlAiMessages');if(!feed)return;
  const article=document.createElement('article');
  article.className='wl-ai-msg '+(role==='user'?'wl-ai-msg-user':'wl-ai-msg-assistant');
- const name=document.createElement('strong');name.className='wl-ai-msg-author';
- name.textContent=role==='user'?'Bạn':isLocal()?'📗 Trợ lý miễn phí':'✦ Web Lab AI';article.append(name);
- // Convert fenced code to safe textContent-only elements. Never render AI HTML.
- const triple=String.fromCharCode(96).repeat(3);
- const segments=String(content).split(new RegExp(triple+'([a-zA-Z0-9_+#.-]*)\\s*\\n?([\\s\\S]*?)'+triple,'g'));
- for(let i=0;i<segments.length;i++){
-   if(i%3===1)continue;
-   if(i%3===2){
-     const pre=document.createElement('pre'),code=document.createElement('code');
-     pre.setAttribute('aria-label','Ví dụ code '+(segments[i-1]||''));
-     code.textContent=segments[i].trim();pre.append(code);article.append(pre);
-   }else if(segments[i]){
-     const el=document.createElement('span');el.className='wl-ai-answer-text';
-     // Limited Markdown bold for study hints. All strings use textContent, never innerHTML.
-     const chunks=segments[i].split(/(\\*\\*[^*\\n]+\\*\\*)/g);
-     for(const chunk of chunks){
-       if(!chunk)continue;
-       if(/^\\*\\*[^*\\n]+\\*\\*$/.test(chunk)){
-         const bold=document.createElement('strong');
-         bold.textContent=chunk.slice(2,-2);
-         el.append(bold);
-       }else{
-         const text=document.createElement('span');
-         text.textContent=chunk;
-         el.append(text);
-       }
-     }
-     article.append(el);
-   }
+ const label=document.createElement('strong');label.className='wl-ai-msg-author';
+ label.textContent=role==='user'?'Bạn':isLocal()?'📗 Trợ lý miễn phí':'✦ Web Lab AI';
+ article.append(label);
+ const body=document.createElement('div');body.className='wl-ai-msg-body';
+ // Actual text nodes keep Vietnamese Unicode and spaces intact.
+ // Safe bold nodes are created only for complete double-asterisk pairs.
+ function appendInline(parent,text){
+  const pattern=/\*\*([^*\n]+)\*\*/g;
+  let offset=0;
+  for(const match of text.matchAll(pattern)){
+   if(match.index>offset)parent.append(document.createTextNode(text.slice(offset,match.index)));
+   const bold=document.createElement('strong');
+   bold.textContent=match[1];
+   parent.append(bold);
+   offset=match.index+match[0].length;
+  }
+  if(offset<text.length)parent.append(document.createTextNode(text.slice(offset)));
  }
+ const source=String(content??'').replace(/\r\n?/g,'\n').normalize('NFC');
+ const ticks=String.fromCharCode(96).repeat(3);
+ const fences=new RegExp(ticks+'([a-zA-Z0-9_+#.-]*)[ \\t]*\\n([\\s\\S]*?)'+ticks,'g');
+ let offset=0;
+ function addText(part){
+  if(!part)return;
+  const el=document.createElement('div');el.className='wl-ai-answer-text';
+  appendInline(el,part);body.append(el);
+ }
+ for(const match of source.matchAll(fences)){
+  addText(source.slice(offset,match.index));
+  const pre=document.createElement('pre'),code=document.createElement('code');
+  pre.setAttribute('aria-label','Ví dụ code '+(match[1]||''));
+  code.textContent=match[2].replace(/^\n+|\n+$/g,'');
+  pre.append(code);body.append(pre);
+  offset=match.index+match[0].length;
+ }
+ addText(source.slice(offset));
+ article.append(body);
  feed.append(article);feed.scrollTop=feed.scrollHeight;
 }
 function renderControls(){
