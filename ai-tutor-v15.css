@@ -124,3 +124,23 @@
  .wl-ai-suggest{font-size:11px}
 }
 @media(prefers-reduced-motion:reduce){.wl-ai-launch{transition:none}}
+
+/* Web Lab 16.0 — visible, accessible offline/online mode selector */
+.wl-ai-modebar{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ padding:9px 15px;background:#f0f1ff;
+ border-bottom:1px solid #e1dcf4;
+}
+.wl-ai-modebar label{
+ flex:none;color:#5d5187;font-size:11px;font-weight:850;
+}
+.wl-ai-modebar select{
+ background:white;color:#42356e;border:1px solid #cec3ef;
+ border-radius:10px;padding:9px 12px;min-width:0;max-width:100%;
+ font-weight:750;font-size:14px;cursor:pointer;
+}
+.wl-ai-modebar select:focus-visible{outline:3px solid #c4b2ff;outline-offset:1px}
+@media(max-width:720px){
+ .wl-ai-modebar{flex-direction:column;align-items:stretch;gap:6px;padding:9px 10px}
+ .wl-ai-modebar select{font-size:16px;min-height:40px;width:100%}
+}
