@@ -4,7 +4,7 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <meta name="theme-color" content="#f7f8fd">
- <meta name="web-lab-version" content="16.5">
+ <meta name="web-lab-version" content="17.0">
  <meta name="apple-mobile-web-app-capable" content="yes">
  <meta name="apple-mobile-web-app-status-bar-style" content="default">
  <meta name="apple-mobile-web-app-title" content="Web Lab">
@@ -14,7 +14,7 @@
  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
  <meta name="description" content="Web Lab – học HTML, CSS, JavaScript và kiến thức phát triển website bằng bài học tiếng Việt và code chạy thử trực tiếp, không cần tài khoản.">
- <title>Web Lab 16.5 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
+ <title>Web Lab 17.0 — Học và luyện tập HTML, CSS, SCSS và JavaScript</title>
  <link rel="stylesheet" href="style.css?v=12.0">
  <link rel="stylesheet" href="workspace-v13.css?v=13.0">
  <link rel="stylesheet" href="practice.css?v=5.5">
@@ -225,6 +225,7 @@
 </style>
  <link rel="stylesheet" href="header-responsive.css?v=13.1">
  <link rel="stylesheet" href="dsa-course.css?v=14.0">
+ <link rel="stylesheet" href="code-explainer.css?v=17.0">
  </head>
 <body>
  <div class="app-shell">
@@ -248,7 +249,7 @@
    <div class="main-inner">
     <div class="wl13-update-strip" id="wl13UpdateStrip" hidden><span id="wl13UpdateStripText">🔔 Web Lab có bản cập nhật mới.</span><button type="button" id="wl13UpdateStripOpen">Xem bản mới →</button></div>
     <section class="hero" aria-label="Giới thiệu Web Lab">
-     <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> TRUNG TÂM THỰC HÀNH FRONTEND</span><h1>Học làm web.<br><em>Hiểu từ gốc.</em></h1><p>Tra cứu kiến thức HTML, CSS, SCSS, JavaScript và phát triển website. Đọc giải thích, tự sửa code và xem kết quả ngay lập tức.</p><div class="hero-chips"><span>✦ Kiến thức tiếng Việt</span><span>⌘ Editor 4 ngôn ngữ</span><span>⚡ Chạy trực tiếp</span><button type="button" id="gamificationHeroBtn" class="wl-gam-hero-btn">🏆 Thử thách & XP →</button><button type="button" class="wl13-hero-projects" id="wl13GlobalProjects">📁 Dự án của tôi →</button></div></div>
+     <div class="hero-copy"><span class="eyebrow"><span class="eyebrow-dot"></span> TRUNG TÂM THỰC HÀNH FRONTEND</span><h1>Học làm web.<br><em>Hiểu từ gốc.</em></h1><p>Tra cứu kiến thức HTML, CSS, SCSS, JavaScript và phát triển website. Đọc giải thích, tự sửa code và xem kết quả ngay lập tức.</p><div class="hero-chips"><span>✦ Kiến thức tiếng Việt</span><span>⌘ Editor 4 ngôn ngữ</span><span>⚡ Chạy trực tiếp</span><button type="button" id="gamificationHeroBtn" class="wl-gam-hero-btn">🏆 Thử thách & XP →</button><button type="button" class="wl13-hero-projects" id="wl13GlobalProjects">📁 Dự án của tôi →</button><button type="button" class="ce-hero" id="ceHeroBtn">🔍 Giải thích code →</button></div></div>
      <div class="hero-window" aria-hidden="true"><div class="window-head"><span class="dots"><i></i><i></i><i></i></span><span>my-first-website</span><span>↗</span></div><div class="window-code"><div><span class="pink">&lt;h1&gt;</span>Hello, world!<span class="pink">&lt;/h1&gt;</span></div><div><span class="yellow">h1</span> { <span class="blue">color</span>: <span class="green">purple</span>; }</div><div><span class="blue">console</span>.<span class="yellow">log</span>(<span class="green">"Let's build!"</span>);</div></div><div class="window-bottom"><span>● Running</span><span>HTML · CSS · SCSS · JS</span></div></div>
     </section>
     <section class="stats-row" aria-label="Thống kê thư viện"><div class="stat"><span class="stat-icon stat-orange">▤</span><span><strong id="htmlCount">—</strong><small>Thẻ & thuộc tính HTML</small></span></div><div class="stat"><span class="stat-icon stat-blue">✿</span><span><strong id="cssCount">—</strong><small>Bài học CSS</small></span></div><div class="stat"><span class="stat-icon stat-yellow">JS</span><span><strong id="jsCount">—</strong><small>Bài học JavaScript</small></span></div><div class="stat"><span class="stat-icon stat-green">⌘</span><span><strong id="webCount">—</strong><small>Web & dự án</small></span></div></section>
@@ -330,6 +331,57 @@
  <p class="account-privacy">🔐 Khi chưa cấu hình dịch vụ, Web Lab chỉ lưu dữ liệu trên thiết bị. Khi đăng xuất, tiến độ offline vẫn còn trên máy này.</p>
 </dialog>
 
+
+ <dialog id="ceDialog" class="ce-dialog" aria-labelledby="ceTitle">
+  <div class="ce-shell">
+   <header class="ce-heading">
+    <div><small>WEB LAB • GIẢI THÍCH CODE</small><h2 id="ceTitle">🔍 Hiểu từng dòng mã nguồn</h2><p>Dán code hoặc chọn file · Tiếng Việt dễ hiểu · Không cần AI</p></div>
+    <button type="button" id="ceClose" aria-label="Đóng công cụ giải thích code">✕</button>
+   </header>
+   <div class="ce-scroll">
+    <p class="ce-intro">Công cụ phân tích <strong>từng dòng và từng thành phần</strong> như <code>console.log</code>, <code>const</code>, dấu ngoặc, thẻ HTML và thuộc tính CSS. Mã nguồn được xử lý trực tiếp trên thiết bị, không cần đăng nhập hay gửi file lên máy chủ.</p>
+    <div class="ce-tools">
+     <label class="ce-upload">📄 Chọn file code
+      <input id="ceFile" type="file" accept=".js,.mjs,.cjs,.ts,.tsx,.jsx,.html,.htm,.css,.scss,.sass,.json,.txt,text/plain,text/html,text/css,application/json" aria-label="Chọn file mã nguồn để giải thích">
+     </label>
+     <button type="button" id="ceFromEditor">⌘ Lấy code đang học</button>
+     <button type="button" id="ceExample">✦ Xem ví dụ</button>
+     <span id="ceFileName" class="ce-file-label">Chưa chọn file</span>
+    </div>
+    <div id="ceDrop" class="ce-drop">
+     <label class="ce-code-label" for="ceSource">Mã nguồn cần giải thích</label>
+     <textarea id="ceSource" class="ce-editor" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" aria-label="Dán mã nguồn cần phân tích" placeholder="Dán code vào đây, hoặc nhấn Chọn file code…"></textarea>
+    </div>
+    <div class="ce-under">
+     <label for="ceLanguage">Ngôn ngữ
+      <select id="ceLanguage" aria-label="Chọn ngôn ngữ của đoạn mã">
+       <option value="auto">Tự nhận diện</option>
+       <option value="js">JavaScript</option>
+       <option value="html">HTML</option>
+       <option value="css">CSS</option>
+       <option value="scss">SCSS</option>
+       <option value="json">JSON</option>
+      </select>
+     </label>
+     <button type="button" id="ceAnalyze">🔍 Giải thích toàn bộ</button>
+    </div>
+    <p id="ceFeedback" class="ce-feedback" role="status" aria-live="polite">Bạn có thể thử ví dụ JavaScript hoặc dán một đoạn code của riêng mình.</p>
+    <section id="ceResult" class="ce-result" aria-label="Giải thích mã nguồn" hidden>
+     <div class="ce-result-head">
+      <div><h3>📖 Kết quả phân tích</h3><p id="ceStats" class="ce-stats"></p></div>
+      <div class="ce-result-actions">
+       <button type="button" id="ceExpand">Mở rộng tất cả</button>
+       <button type="button" id="ceCopy">⧉ Sao chép</button>
+       <button type="button" id="ceDownload">⬇ Xuất TXT</button>
+      </div>
+     </div>
+     <p id="ceOverview" class="ce-overview"></p>
+     <div id="ceLines" class="ce-lines"></div>
+     <p id="ceImportantNote" class="ce-important"></p>
+    </section>
+   </div>
+  </div>
+ </dialog>
  <div class="toast" id="toast" role="status" aria-live="polite"></div>
  <script src="html-data.js"></script>
  <script src="extra-data.js"></script>
@@ -349,6 +401,8 @@
  <script src="cloud-sync.js?v=11.0"></script>
  <script src="gamification.js?v=14.0"></script>
  <script src="workspace-v13.js?v=13.0"></script>
+ <script src="code-explainer-engine.js?v=17.0"></script>
+ <script src="code-explainer-ui.js?v=17.0"></script>
  <script src="release-notifications.js?v=13.0"></script>
  <script src="pwa.js"></script>
 </body>
