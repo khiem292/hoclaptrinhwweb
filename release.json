@@ -1,12 +1,12 @@
 {
-  "version": "16.3",
+  "version": "16.4",
   "date": "2026-10-21",
-  "title": "Tự chuyển trợ lý miễn phí khi OpenAI chưa có khóa hợp lệ",
+  "title": "Chuẩn bị kết nối tài khoản ChatGPT chính thức",
   "notes": [
-    "📗 Khi OpenAI báo khóa API mẫu, bị từ chối hoặc không đủ quyền, Web Lab tự chuyển sang trợ lý miễn phí; không còn kẹt ở nút Gửi bị khóa.",
-    "✍️ Giữ nguyên câu hỏi bạn đã nhập và bật nút Hỏi miễn phí ngay khi có nội dung.",
-    "🔒 Tự tắt lựa chọn gửi/đọc code khi chuyển chế độ; trợ lý miễn phí xử lý trên thiết bị.",
-    "✦ Vẫn giữ chế độ OpenAI trực tuyến cho khi người quản trị cấu hình khóa API thật và hợp lệ.",
-    "💾 Giữ nguyên 84 bài học, môn DSA, XP, dự án và dữ liệu đồng bộ."
+    "🔒 Thêm mục ChatGPT tài khoản (chờ cấp quyền) vào hộp thoại Hỏi AI, giải thích rõ trạng thái OAuth chưa kích hoạt trên website.",
+    "📘 Liên kết tài liệu và biểu mẫu quan tâm chính thức của OpenAI dành cho chủ dự án.",
+    "🛡️ Không yêu cầu mật khẩu, cookie hoặc token ChatGPT; không tạo kết nối giả và không gửi nội dung lên máy chủ khi chưa được phê duyệt.",
+    "🤖 Giữ hai chế độ hiện có: trợ lý miễn phí trên thiết bị và OpenAI API (cần khóa API hợp lệ).",
+    "📱 Cải thiện bố cục trên iPhone; giữ nguyên 84 bài học, XP, dự án và đồng bộ Supabase."
   ]
 }
