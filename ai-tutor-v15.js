@@ -13,7 +13,11 @@ const suggested=[
  {label:'🧠 Giải thuật DSA',question:'Giải thích tư duy và độ phức tạp Big O của thuật toán đang học, gợi ý để mình tự làm.'},
  {label:'✍️ Bài luyện tập',question:'Hãy cho mình một bài thực hành nhỏ phù hợp bài học hiện tại, có gợi ý nhưng chưa giải.'},
 ];
-function status(text,kind=''){const el=$('wlAiStatus');if(el){el.textContent=text;el.dataset.kind=kind;}}
+function status(text,kind=''){
+ const el=$('wlAiStatus');if(el){el.textContent=text;el.dataset.kind=kind;}
+ const fallback=$('wlAiUseFreeBtn');
+ if(fallback)fallback.hidden=isLocal()||!['error','warn'].includes(kind);
+}
 function isLocal(){return $('wlAiMode')?.value!=='online'}
 function onlineAccount(){return Boolean(window.WebLabCloud?.loggedIn&&window.WebLabCloud?.configured)}
 function studyContext(){
@@ -106,16 +110,13 @@ async function checkStatus(){
   const response=await request({action:'status'});
   const data=await response.json().catch(()=>({}));
   if(!response.ok)throw Error(data.error||'Không kiểm tra được máy chủ AI.');
-  ready=Boolean(data.configured)&&data.verified!==false;
-  if(!data.configured){
-   status('Chưa tìm thấy OPENAI_API_KEY trong Supabase.','error');
-  }else if(data.verified===false){
-   const extra=data.provider_code?' · Mã lỗi: '+data.provider_code:'';
-   status((data.diagnostic||'Khóa API chưa được OpenAI xác thực.')+extra,'error');
-  }else if(data.verified===true){
-   status('✓ Khóa OpenAI đã được xác thực · 12 lượt hỏi/ngày · 20 giây mỗi lượt.','ok');
+  if(isLocal())return;
+  ready=data.available===true||data.verified===true?true:data.verified===null?null:false;
+  if(ready===true){
+   status('✓ API v2 kết nối OpenAI thành công. Có thể hỏi AI trực tuyến.','ok');
   }else{
-   status(data.diagnostic||'Tạm thời chưa kiểm tra được khóa. Bạn có thể thử lại sau.','warn');
+   const extra=data.provider_code?' · Mã: '+data.provider_code:'';
+   status((data.diagnostic||'Máy chủ AI chưa sẵn sàng. Hãy chọn trợ lý miễn phí.')+extra,ready===null?'warn':'error');
   }
  }catch(e){
   ready=null;status('Không kiểm tra được AI: '+String(e.message||e),'warn');
@@ -159,7 +160,7 @@ async function ask(){
   ready=true;status('✓ Đã trả lời · Còn '+Math.max(0,Number(data.remaining??0))+' lượt trong ngày.','ok');
  }catch(e){
   if(!field.value.trim())field.value=question;
-  if(['not_configured','invalid_key','access_denied','model_unavailable'].includes(e.kind))ready=false;
+  if(['not_configured','invalid_format','invalid_key','access_denied','model_unavailable'].includes(e.kind))ready=false;
   status(String(e.message||'Kết nối AI bị gián đoạn.'),'error');
  }finally{busy=false;renderControls()}
 }
@@ -184,6 +185,12 @@ function init(){
  $('wlAiOpenBtn').addEventListener('click',open);
  $('wlAiClose').addEventListener('click',()=>$('wlAiDialog').close());
  $('wlAiLoginBtn').addEventListener('click',signin);
+ $('wlAiUseFreeBtn')?.addEventListener('click',()=>{
+  $('wlAiMode').value='local';
+  $('wlAiIncludeCode').checked=false;
+  reset();
+  status('✓ Đang dùng trợ lý miễn phí trên thiết bị. Không cần API key.','ok');
+ });
  $('wlAiForm').addEventListener('submit',e=>{e.preventDefault();ask()});
  $('wlAiQuestion').addEventListener('input',renderControls);
  $('wlAiQuestion').addEventListener('keydown',e=>{
