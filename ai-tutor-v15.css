@@ -216,3 +216,24 @@
  .wl-ai-msg{font-size:14px;max-width:96%;line-height:1.75}
  .wl-ai-msg .wl-ai-answer-text{font-size:14px}
 }
+
+
+/* Web Lab 16.2 — easy fallback when remote OpenAI API isn't configured. */
+.wl-ai-fallback{
+ display:block;
+ width:100%;
+ min-height:43px;
+ border:1px solid #c9b9fc;
+ border-radius:11px;
+ margin:9px 0 3px;
+ padding:10px 14px;
+ background:#ede8ff;
+ color:#5133af;
+ font-size:13px;
+ font-weight:800;
+ text-align:center;
+ cursor:pointer;
+}
+.wl-ai-fallback:hover{background:#e0d6fd}
+.wl-ai-fallback:focus-visible{outline:3px solid #b3a0e9;outline-offset:2px}
+.wl-ai-fallback[hidden]{display:none!important}
