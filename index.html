@@ -336,7 +336,7 @@
  <dialog id="wlAiDialog" class="wl-ai-dialog" aria-labelledby="wlAiTitle">
   <div class="wl-ai-wrap">
    <header class="wl-ai-top">
-    <div><small>✦ WEB LAB • LEARNING TUTOR</small><h2 id="wlAiTitle">Trợ lý học lập trình</h2><p>Miễn phí trên thiết bị · OpenAI tùy chọn</p></div>
+    <div><small>✦ WEB LAB • LEARNING TUTOR</small><h2 id="wlAiTitle">Trợ lý học lập trình</h2><p>Miễn phí · OpenAI API · ChatGPT (chờ phê duyệt)</p></div>
     <div class="wl-ai-top-actions">
      <button type="button" id="wlAiReset" title="Bắt đầu cuộc trò chuyện mới" aria-label="Xóa đoạn hội thoại hiện tại">↻</button>
      <button type="button" id="wlAiClose" title="Đóng gia sư AI" aria-label="Đóng gia sư AI">✕</button>
@@ -345,11 +345,21 @@
    <div class="wl-ai-context"><span>📖 Đang học:</span><strong id="wlAiLessonName">Đang tải bài học…</strong></div>
    <div class="wl-ai-modebar">
     <label for="wlAiMode">Chế độ hỗ trợ</label>
-    <select id="wlAiMode" aria-label="Chọn trợ lý miễn phí hoặc AI trực tuyến">
+    <select id="wlAiMode" aria-label="Chọn trợ lý miễn phí, OpenAI API hoặc trạng thái kết nối ChatGPT">
      <option value="local" selected>📗 Trợ lý miễn phí · không cần API</option>
-     <option value="online">✦ OpenAI trực tuyến · cần API key</option>
+     <option value="online">✦ OpenAI API · cần API key hợp lệ</option>
+     <option value="chatgpt">🔒 ChatGPT tài khoản · chờ cấp quyền</option>
     </select>
    </div>
+   <section id="wlAiSIWCInfo" class="wl-siwc-info" hidden aria-label="Trạng thái kết nối ChatGPT">
+    <strong>🔒 Kết nối ChatGPT chưa được kích hoạt</strong>
+    <p>OpenAI hiện yêu cầu cấp quyền tham gia và thông tin OAuth cho luồng đăng nhập trên website. Web Lab chưa có OAuth client được phê duyệt nên không thể dùng gói ChatGPT để trả lời trực tiếp.</p>
+    <p>Đăng nhập ChatGPT và dùng gói ChatGPT là hai quyền khác nhau. Web Lab sẽ chỉ triển khai đăng nhập sau khi được phê duyệt — không yêu cầu mật khẩu, cookie hoặc token của bạn.</p>
+    <div class="wl-siwc-links">
+     <a href="https://developers.openai.com/siwc/website" target="_blank" rel="noopener noreferrer">Tài liệu chính thức <span aria-hidden="true">↗</span></a>
+     <a href="https://openai.com/form/sign-in-with-chatgpt-interest/" target="_blank" rel="noopener noreferrer">Đăng ký quan tâm (chủ dự án) <span aria-hidden="true">↗</span></a>
+    </div>
+   </section>
    <section id="wlAiMessages" class="wl-ai-messages" role="log" aria-live="polite" aria-label="Nội dung hỏi đáp với gia sư AI"></section>
    <div class="wl-ai-bottom">
     <div id="wlAiSuggestions" class="wl-ai-suggestions" aria-label="Câu hỏi gợi ý"></div>
