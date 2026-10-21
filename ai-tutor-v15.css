@@ -237,3 +237,39 @@
 .wl-ai-fallback:hover{background:#e0d6fd}
 .wl-ai-fallback:focus-visible{outline:3px solid #b3a0e9;outline-offset:2px}
 .wl-ai-fallback[hidden]{display:none!important}
+
+/* Web Lab 16.4 — ChatGPT sign-in readiness, shown only while awaiting approval.
+   This is NOT a live OAuth form and does not collect credentials. */
+.wl-siwc-info{
+ padding:14px 16px;
+ background:#f4f1ff;
+ border-bottom:1px solid #dbd2f6;
+ color:#453874;
+ font-size:12px;
+ line-height:1.7;
+ max-height:32vh;
+ overflow:auto;
+}
+.wl-siwc-info[hidden]{display:none!important}
+.wl-siwc-info strong{font-size:13px;color:#4e389a;display:block;margin-bottom:6px}
+.wl-siwc-info p{margin:0 0 9px;line-height:1.7}
+.wl-siwc-links{display:flex;gap:8px;flex-wrap:wrap}
+.wl-siwc-links a{
+ display:inline-flex;
+ align-items:center;
+ gap:5px;
+ padding:8px 10px;
+ border:1px solid #cbbcf0;
+ background:#fff;
+ color:#5644af;
+ border-radius:9px;
+ font-size:11px;
+ font-weight:750;
+ text-decoration:none;
+}
+.wl-siwc-links a:hover{text-decoration:underline;background:#faf9ff}
+.wl-siwc-links a:focus-visible{outline:3px solid #a18fdd;outline-offset:2px}
+@media(max-width:720px){
+ .wl-siwc-info{padding:10px 12px;max-height:26dvh}
+ .wl-siwc-links a{flex:1 1 auto;justify-content:center}
+}
